@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: Metronet Profile Picture
+Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: ronalfy
-Version: 1.2.1
+Version: 1.2.2
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
-Contributors: ronalfy, metronet
+Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */ 
@@ -42,7 +42,7 @@ class Metronet_Profile_Picture	{
 		add_action( 'admin_print_scripts-profile.php', array( &$this, 'print_media_scripts' ) );
 		
 		add_action( 'wp_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 );
-		add_action( 'acf/input/admin_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 );
+		add_action( 'acf/input/admin_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 ); //Advanced Custom Field compatibility 
 		
 		//Styles
 		add_action( 'admin_print_styles-user-edit.php', array( &$this, 'print_media_styles' ) );
@@ -405,7 +405,7 @@ class Metronet_Profile_Picture	{
 		$post_id = $this->get_post_id( $this->get_user_id() );
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
-		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20150409', true );
+		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20150416', true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
 				'set_profile_text' => __( 'Set profile image', 'metronet-profile-picture' ),
