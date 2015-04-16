@@ -1,9 +1,9 @@
-=== Metronet Profile Picture ===
-Contributors: metronet, ronalfy
+=== User Profile Picture ===
+Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
-Tested up to: 4.1.1
-Stable tag: 1.2.1
+Tested up to: 4.2
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,8 +105,14 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.2.2 =
+* Released 16 April 2015
+* Added compatibility to Advanced Custom Fields.
+* Added increased capabilities check to Ajax calls.
+* Ensuring WordPress 4.2 compatibility.
+
 = 1.2.1 =
-* Released 03 March 2014
+* Released 03 March 2015
 * Fixed internationalization errors.
 * Added Spanish translation.
 
@@ -173,6 +179,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Added compatibility to Advanced Custom Fields.  Ensuring WordPress 4.2 compatibility.
 
 = 1.2.1 =
 Fixed internationalization errors. Added Spanish translation.
