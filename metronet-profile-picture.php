@@ -40,7 +40,9 @@ class Metronet_Profile_Picture	{
 		//Scripts
 		add_action( 'admin_print_scripts-user-edit.php', array( &$this, 'print_media_scripts' ) );
 		add_action( 'admin_print_scripts-profile.php', array( &$this, 'print_media_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ) );
+		
+		add_action( 'wp_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 );
+		add_action( 'acf/input/admin_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 );
 		
 		//Styles
 		add_action( 'admin_print_styles-user-edit.php', array( &$this, 'print_media_styles' ) );
