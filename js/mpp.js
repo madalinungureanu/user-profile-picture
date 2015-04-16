@@ -1,5 +1,4 @@
 jQuery( document ).ready( function( $ ) {
-	
 	//Refresh the profile image thumbnail
 	function mt_ajax_thumbnail_refresh() {
 		var post_id = jQuery( "#metronet_post_id" ).val();
@@ -15,18 +14,17 @@ jQuery( document ).ready( function( $ ) {
 	};
 	//Remove the profile image
 	function mt_remove_profile_image() {
-		var settings = wp.media.view.settings;
-			$.post( metronet_profile_image.ajax_url, { 
-					action: 'metronet_remove_thumbnail', 
-					post_id: settings.post.id, 
-					user_id: jQuery( "#metronet_profile_id" ).val(), 
-					_wpnonce: settings.post.nonce 
-				}, 
-				function( response ) {
-					jQuery( "#metronet-profile-image" ).html( response.thumb_html );
-				},
-				'json'
-			);	
+		$.post( metronet_profile_image.ajax_url, { 
+				action: 'metronet_remove_thumbnail', 
+				post_id: metronet_profile_image.user_post_id, 
+				user_id: jQuery( "#metronet_profile_id" ).val(), 
+				_wpnonce: metronet_profile_image.nonce
+			}, 
+			function( response ) {
+				jQuery( "#metronet-profile-image" ).html( response.thumb_html );
+			},
+			'json'
+		);	
 	}
 	
 	$('#mpp').on( "click", '.mpp_add_media', function(e) {
@@ -69,13 +67,12 @@ jQuery( document ).ready( function( $ ) {
 		
 		//For when the featured thumbnail is set
 		uploader.mt_featured_set = function( id ) {
-			var settings = wp.media.view.settings;
 			$.post( metronet_profile_image.ajax_url, { 
 					action: 'metronet_add_thumbnail', 
-					post_id: settings.post.id, 
+					post_id: metronet_profile_image.user_post_id, 
 					user_id: jQuery( "#metronet_profile_id" ).val(), 
 					thumbnail_id: id,
-					_wpnonce: settings.post.nonce 
+					_wpnonce: metronet_profile_image.nonce 
 				}, 
 				function( response ) {
 					jQuery( "#metronet-profile-image" ).html( response.thumb_html );
@@ -86,14 +83,12 @@ jQuery( document ).ready( function( $ ) {
 		
 		//For when the Add Profile Image is clicked
 		uploader.state('featured-image').on( 'select', function() {
-			var settings = wp.media.view.settings,
-				selection = this.get('selection').single();
+			var featured_id = this.get('selection').single().id;
 
-			if ( ! settings.post.featuredImageId )
+			if ( ! featured_id )
 				return;
 			
-			settings.post.featuredImageId = selection.id;
-			uploader.mt_featured_set( selection ? selection.id : -1 );
+			uploader.mt_featured_set( featured_id );
 		} );
 		
 		//When the remove buttons is clicked

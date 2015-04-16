@@ -67,11 +67,12 @@ class Metronet_Profile_Picture	{
 	*
 	*/
 	public function ajax_add_thumbnail() {
+		if ( !current_user_can( 'upload_files' ) ) die( '' );
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		$thumbnail_id = isset( $_POST[ 'thumbnail_id' ] ) ? absint( $_POST[ 'thumbnail_id' ] ) : 0;
 		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 ) die( '' );
-		check_ajax_referer( "update-post_$post_id" );
+		check_ajax_referer( "mt-update-post_$post_id" );
 		
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
@@ -99,6 +100,7 @@ class Metronet_Profile_Picture	{
 	*
 	*/
 	public function ajax_get_thumbnail() {
+		if ( !current_user_can( 'upload_files' ) ) die( '' );
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 
 		if ( has_post_thumbnail( $post_id ) ) {
@@ -126,10 +128,11 @@ class Metronet_Profile_Picture	{
 	*
 	*/
 	public function ajax_remove_thumbnail() {
+		if ( !current_user_can( 'upload_files' ) ) die( '' );
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		if ( $post_id == 0 || $user_id == 0 ) die( '' );
-		check_ajax_referer( "update-post_$post_id" );
+		check_ajax_referer( "mt-update-post_$post_id" );
 		
 		$thumb_html = '<a href="#" class="mpp_add_media">';
 		$thumb_html.= sprintf( '<img src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
@@ -400,13 +403,15 @@ class Metronet_Profile_Picture	{
 		$post_id = $this->get_post_id( $this->get_user_id() );
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
-		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20141111', true );
+		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20150409', true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
 				'set_profile_text' => __( 'Set profile image', 'metronet-profile-picture' ),
 				'remove_profile_text' => __( 'Remove profile image', 'metronet-profile-picture' ),
 				'crop' => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
-				'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) )
+				'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'user_post_id' => absint( $post_id ),
+				'nonce' => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) )
 			) 
 		);
 		?>
