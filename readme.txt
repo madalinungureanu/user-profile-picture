@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.2
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,12 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.2.3 =
+* Released 20 May 2015
+* Revised post type initialization to make sure post type is completely hidden.
+* Refactored function mt_profile_img to use a different API call so that output isn't inadvertently filtered.
+* Added new filter, mpp_thumbnail_html, to filter output.
+
 = 1.2.2 =
 * Released 16 April 2015
 * Added compatibility to Advanced Custom Fields.
@@ -179,6 +185,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+Made MPP post type completely hidden. mt_profile_img refactored to avoid filtered output.
 
 = 1.2.2 =
 Added compatibility to Advanced Custom Fields.  Ensuring WordPress 4.2 compatibility.

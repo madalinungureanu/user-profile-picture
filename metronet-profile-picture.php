@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: ronalfy
-Version: 1.2.2
+Version: 1.2.3
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -309,7 +309,7 @@ class Metronet_Profile_Picture	{
 		//Register post types
 		$post_type_args = array(
 			'public' => false,
-			'publicly_queryable' => true,
+			'publicly_queryable' => false,
 			'show_ui' => false,
 			'show_in_menu' => false,
 			'query_var' => true,
@@ -506,13 +506,18 @@ function mt_profile_img( $user_id, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
+	
+	$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+	
 	//Return false or echo nothing if there is no post thumbnail
-	if( !has_post_thumbnail( $profile_post_id ) ) {
+	if( !$post_thumbnail_id ) {
 		if ( $echo ) echo '';
 		else return false;
 		return;
 	}
-	$post_thumbnail = get_the_post_thumbnail( $profile_post_id, $size, $attr );
+	
+	$post_thumbnail =  wp_get_attachment_image( $post_thumbnail_id, $size, false, $attr );
+	$post_thumbnail = apply_filters( 'mpp_thumbnail_html', $post_thumbnail, $profile_post_id, $post_thumbnail_id, $user_id );
 	if ( $echo ) {
 		echo $post_thumbnail;
 	} else {
