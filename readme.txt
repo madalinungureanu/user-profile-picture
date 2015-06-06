@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
-Tested up to: 4.2
-Stable tag: 1.2.3
+Tested up to: 4.2.2
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,11 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.2.5 =
+* Released 06 June 2015
+* Bug fix: get_avatar override now accepts custom classes.
+* Added `mpp_avatar_classes` filter to get_avatar override to allow global class overrides/additions.
+
 = 1.2.3 =
 * Released 20 May 2015
 * Revised post type initialization to make sure post type is completely hidden.
@@ -185,6 +190,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.5 =
+Bug fix for avatar override to accept custom CSS classes.
 
 = 1.2.3 =
 Made MPP post type completely hidden. mt_profile_img refactored to avoid filtered output.

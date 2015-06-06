@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: ronalfy
-Version: 1.2.3
+Version: 1.2.5
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -59,7 +59,7 @@ class Metronet_Profile_Picture	{
 		
 		
 		//User Avatar override
-		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 5 );
+		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 6 );
 	} //end constructor
 	
 	/**
@@ -157,7 +157,7 @@ class Metronet_Profile_Picture	{
 	* @param string $default URL to the default image
 	* @param string $alt Alternative text
 	**/
-	public function avatar_override( $avatar, $id_or_email, $size, $default, $alt ) {
+	public function avatar_override( $avatar, $id_or_email, $size, $default, $alt, $args ) {
 		global $pagenow;
 		if ( 'options-discussion.php' == $pagenow ) return $avatar; //Stop overriding gravatars on options-discussion page
 		
@@ -184,11 +184,28 @@ class Metronet_Profile_Picture	{
 		$avatar_override = get_user_option( 'metronet_avatar_override', $user_id );
 		if ( !$avatar_override || $avatar_override != 'on' ) return $avatar;
 		
-		//Determine if the user has a profile image
+		//Build classes array based on passed in args, else set defaults - see get_avatar in /wp-includes/pluggable.php
+		$classes = array(
+			'avatar',
+			sprintf( 'avatar-%s', esc_attr( $size ) ),
+			'photo'
+		);	
+		if ( isset( $args[ 'class' ] ) ) {
+			if ( is_array( $args['class'] ) ) {
+				$classes = array_merge( $classes, $args['class'] );
+			} else {
+				$args[ 'class' ] = explode( ' ', $args[ 'class' ] );
+				$classes = array_merge( $classes, $args[ 'class' ] );
+			}
+		} 
 		
+		//Get custom filter classes
+		$classes = (array)apply_filters( 'mpp_avatar_classes', $classes );
+
+		//Determine if the user has a profile image
 		$custom_avatar = mt_profile_img( $user_id, array( 
 			'size' => array( $size, $size ), 
-			'attr' => array( 'alt' => $alt, 'class' => "avatar avatar-{$size} photo" ), 
+			'attr' => array( 'alt' => $alt, 'class' => implode( ' ', $classes ) ), 
 			'echo' => false )
 		);
 		
@@ -505,7 +522,7 @@ function mt_profile_img( $user_id, $args = array() ) {
 		'echo' => true
 	);
 	$args = wp_parse_args( $args, $defaults );
-	extract( $args );
+	extract( $args ); //todo - get rid of evil extract
 	
 	$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 	
@@ -514,6 +531,13 @@ function mt_profile_img( $user_id, $args = array() ) {
 		if ( $echo ) echo '';
 		else return false;
 		return;
+	}
+	
+	//Implode Classes if set and array - dev note: edge case
+	if ( is_array( $attr ) && isset( $attr[ 'class' ] ) ) {
+		if ( is_array( $attr[ 'class' ] ) ) {
+			$attr[ 'class' ] = implode( ' ', $attr[ 'class' ] );	
+		}	
 	}
 	
 	$post_thumbnail =  wp_get_attachment_image( $post_thumbnail_id, $size, false, $attr );
