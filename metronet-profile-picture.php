@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: ronalfy
-Version: 1.2.5
+Version: 1.2.7
 Requires at least: 3.5
 Author URI: http://www.ronalfy.com
 Contributors: ronalfy
@@ -157,7 +157,7 @@ class Metronet_Profile_Picture	{
 	* @param string $default URL to the default image
 	* @param string $alt Alternative text
 	**/
-	public function avatar_override( $avatar, $id_or_email, $size, $default, $alt, $args ) {
+	public function avatar_override( $avatar, $id_or_email, $size, $default, $alt, $args = array() ) {
 		global $pagenow;
 		if ( 'options-discussion.php' == $pagenow ) return $avatar; //Stop overriding gravatars on options-discussion page
 		

@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.2.5
+Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.2.7 =
+* Released 10 June 2015
+* Bug fix: warning message saying missing argument for avatar_override
+
 = 1.2.5 =
 * Released 06 June 2015
 * Bug fix: get_avatar override now accepts custom classes.
@@ -190,6 +194,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.7 =
+Bug fix for warning message saying missing argument for avatar_override.
 
 = 1.2.5 =
 Bug fix for avatar override to accept custom CSS classes.
