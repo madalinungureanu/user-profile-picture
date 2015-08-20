@@ -2,7 +2,7 @@
 Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
-Tested up to: 4.2.2
+Tested up to: 4.3
 Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -106,6 +106,7 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 == Changelog ==
 
 = 1.2.7 =
+* Updated 20 August 2015 for WP 4.3 compatibility
 * Released 10 June 2015
 * Bug fix: warning message saying missing argument for avatar_override
 
