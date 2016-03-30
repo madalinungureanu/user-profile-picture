@@ -60,6 +60,9 @@ class Metronet_Profile_Picture	{
 		
 		//User Avatar override
 		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 6 );
+		
+		//Rest API
+		add_action( 'rest_api_init', array( $this, 'rest_api_register' ) );
 	} //end constructor
 	
 	/**
@@ -471,6 +474,74 @@ class Metronet_Profile_Picture	{
 	
 	public function print_media_styles() {
 	} //end print_media_styles
+	
+	/**
+	* rest_api_register()
+	*
+	* Registers REST API endpoint
+	**/
+	public function rest_api_register() {
+		register_rest_route( 
+			'mpp/v1', 
+			'/user/(?P<id>\d+)',
+			array(
+				'methods' => 'GET',
+				'callback' =>  array( $this, 'rest_api_get_profile' ),
+				'args'       =>  array(
+					'id' => array(
+						'validate_callback' => array( $this, 'rest_api_validate' ),
+						'sanitize_callback' => array( $this, 'rest_api_sanitize' ),
+					)
+				)
+			)
+		);
+	}
+	
+	/**
+	* rest_api_get_profile()
+	*
+	* Returns an attachment image ID and profile image if available
+	**/
+	public function rest_api_get_profile( $data ) {
+		$user_id = $data[ 'id' ];
+		$user = get_user_by( 'id', $user_id );
+		if ( ! $user ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		}
+		
+		//Get attachment ID
+		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+		if ( ! $post_thumbnail_id ) {
+			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		}
+		
+		//Get attachment URL
+		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+		
+		return array(
+			'attachment_id'  => $post_thumbnail_id,
+			'attachment_url' => $attachment_url
+		);
+	}
+	
+	/**
+	* rest_api_validate()
+	*
+	* Makes sure the ID we are passed is numeric
+	**/
+	public function rest_api_validate( $param, $request, $key ) {
+		return is_numeric( $param );
+	}
+	
+	/**
+	* rest_api_validate()
+	*
+	* Sanitizes user ID
+	**/
+	public function rest_api_sanitize( $param, $request, $key ) {
+		return absint( $param );
+	}
 	
 	/**
 	* save_user_profile()
