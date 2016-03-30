@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.2.7
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,16 @@ If you want the "Override Avatar" checkbox to be checked by default, drop this i
 If you want to hide the "Override Avatar" checkbox, use this filter (the override functionality will be enabled by default):
 `add_filter( 'mpp_hide_avatar_override', '__return_true' );`
 
+The REST API is currently supported for versions of WordPress 4.4 and up.
+
+The endpoint is: `http://www.yourdomain.com/wp-json/mpp/v1/user/{user_id}`
+
+If a profile picture is found, it'll return JSON as follows:
+
+`
+{"attachment_id":"3638","attachment_url":"http:\/\/localhost\/ronalfy\/wp-content\/uploads\/2015\/12\/Leaderboard-All-Time.png"}
+`
+
 == Frequently Asked Questions ==
 
 = How do you set a user profile image? =
@@ -104,6 +114,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 1.3.0 =
+* Adding REST API endpoint
 
 = 1.2.7 =
 * Updated 20 August 2015 for WP 4.3 compatibility
@@ -195,6 +208,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Adding REST API endpoint.
 
 = 1.2.7 =
 Bug fix for warning message saying missing argument for avatar_override.
