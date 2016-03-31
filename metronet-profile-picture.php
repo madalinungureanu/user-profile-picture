@@ -109,7 +109,8 @@ class Metronet_Profile_Picture	{
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 
 		if ( has_post_thumbnail( $post_id ) ) {
-			$post_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail' );
+			$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), 'thumbnail' , false, '' );
+			$post_thumbnail = sprintf( '<img src="%s" width="150" height="150" title="%s" />', $thumb_src[0], esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$crop_html = $this->get_post_thumbnail_editor_link( $post_id );
 			$thumb_html = sprintf( '<a href="#" class="mpp_add_media">%s</a>', $post_thumbnail );
 			$thumb_html .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( "Remove profile image", "metronet-profile-picture" ) );
@@ -367,7 +368,8 @@ class Metronet_Profile_Picture	{
 					if ( has_post_thumbnail( $post_id ) ) {
 						$has_profile_image = true;
 						echo '<a href="#" class="mpp_add_media">';
-						$post_thumbnail = get_the_post_thumbnail( $post_id, 'thumbnail' );
+						$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), 'thumbnail' , false, '' );
+						$post_thumbnail = sprintf( '<img src="%s" width="150" height="150" title="%s" />', $thumb_src[0], esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 						echo $post_thumbnail;
 						echo '</a>';
 					} else {
