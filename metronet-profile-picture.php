@@ -85,7 +85,7 @@ class Metronet_Profile_Picture	{
 		set_post_thumbnail( $post_id, $thumbnail_id );
 
 		if ( has_post_thumbnail( $post_id ) ) {
-			$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), 'thumbnail' , false, '' );
+			$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail' , false, '' );
 			$post_thumbnail = sprintf( '<img src="%s" width="150" height="150" title="%s" />', esc_url( $thumb_src[0] ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$crop_html = $this->get_post_thumbnail_editor_link( $post_id );
 			$thumb_html = sprintf( '<a href="#" class="mpp_add_media">%s</a>', $post_thumbnail );
