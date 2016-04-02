@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,14 +15,6 @@ Set or remove a custom profile image for a user using the standard WordPress med
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
 If you like this plugin, please leave a rating/review and mark the plugin as working.
-
-<h3>Translations</h3>
-
-<ul>
-<li>Spanish - Thanks Eva F.</li>
-</ul>
-
-If you would like to contribute a translation, please leave a support request with a link to your translation  or <a href="http://www.ronalfy.com/contact/">get in touch</a>.
 
 == Installation ==
 
@@ -115,61 +107,66 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.3.1 =
+* Released 2016-04-02
+* Fixing thumbnail calls that could potential be inadvertently filtered and cause the profile picture to provide an erroneous callback. Props @Monter.
+
 = 1.3.0 =
+* Released 2016-03-28
 * Adding REST API endpoint
 
 = 1.2.7 =
-* Updated 20 August 2015 for WP 4.3 compatibility
-* Released 10 June 2015
+* Updated 2015-08-20 for WP 4.3 compatibility
+* Released 2015-06-10
 * Bug fix: warning message saying missing argument for avatar_override
 
 = 1.2.5 =
-* Released 06 June 2015
+* Released 2015-06-06
 * Bug fix: get_avatar override now accepts custom classes.
 * Added `mpp_avatar_classes` filter to get_avatar override to allow global class overrides/additions.
 
 = 1.2.3 =
-* Released 20 May 2015
+* Released 2015-05-20
 * Revised post type initialization to make sure post type is completely hidden.
 * Refactored function mt_profile_img to use a different API call so that output isn't inadvertently filtered.
 * Added new filter, mpp_thumbnail_html, to filter output.
 
 = 1.2.2 =
-* Released 16 April 2015
+* Released 2015-04-16
 * Added compatibility to Advanced Custom Fields.
 * Added increased capabilities check to Ajax calls.
 * Ensuring WordPress 4.2 compatibility.
 
 = 1.2.1 =
-* Released 03 March 2015
+* Released 2015-03-03
 * Fixed internationalization errors.
 * Added Spanish translation.
 
 = 1.2.0 =
-* Released 07 December 2014
+* Released 2014-12-07
 * Reducing clutter in the interface.  Removed text option to upload.  Added default image if no profile image is available.  Added option to remove the profile image.
 * Fixed internationalization bug in the JavaScript.
 
 = 1.1.0 = 
-* Released 11 November 2014
+* Released 2014-11-11
 * Added the ability to remove profile images (aside from deleting the image).
 * Added better internationalization capabilities.
 * Added compatibility with <a href="https://wordpress.org/plugins/theme-my-login/">Theme My Login</a>.
 
 = 1.0.23 =
-* Released 20 October 2014
+* Released 2014-10-20
 * Added a new filter to allow the "Override Avatar" interface to be hidden (and turned on my default).
 
 = 1.0.22 =
-* Released 02 September 2014
+* Released 2014-09-02
 * Added minor update to additional user meta for easier querying (props Solinx)
 
 = 1.0.21 =
-* Released 09 September 2013
+* Released 2013-09-09
 * Fixed avatar override on options discussion page.
 
 = 1.0.20 = 
-* Released 13 May 2013.
+* Released 2013-05-13
 * Added a filter for turning on "Override Avatar" by default.
 
 = 1.0.19 = 
@@ -208,6 +205,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+Fixing thumbnail calls that could potential be inadvertently filtered and cause the profile picture to provide an erroneous callback.
 
 = 1.3.0 =
 Adding REST API endpoint.

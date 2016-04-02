@@ -3,10 +3,10 @@
 Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
-Author: ronalfy
-Version: 1.3.0
+Author: Ronald Huereca
+Version: 1.3.1
 Requires at least: 3.5
-Author URI: http://www.ronalfy.com
+Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
