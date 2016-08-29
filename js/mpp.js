@@ -7,7 +7,7 @@ jQuery( document ).ready( function( $ ) {
 				post_id: post_id, 
 			}, 
 			function( response ) {
-				jQuery( "#metronet-profile-image" ).html( response.thumb_html );
+				jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
 			},
 			'json'
 		);
@@ -21,10 +21,18 @@ jQuery( document ).ready( function( $ ) {
 				_wpnonce: metronet_profile_image.nonce
 			}, 
 			function( response ) {
-				jQuery( "#metronet-profile-image" ).html( response.thumb_html );
+				jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
 			},
 			'json'
 		);	
+	}
+	// Set thumbnail img and wrapping a to display:block to fix visual bug
+	function mt_display_block(htmlString) {
+		var temp = document.createElement('div');
+		temp.innerHTML = htmlString;
+		temp.firstElementChild.style.display = 'block';
+		temp.firstElementChild.firstElementChild.style.display = 'block';
+		return temp.innerHTML;
 	}
 	
 	$('#mpp').on( "click", '.mpp_add_media', function(e) {
@@ -75,7 +83,7 @@ jQuery( document ).ready( function( $ ) {
 					_wpnonce: metronet_profile_image.nonce 
 				}, 
 				function( response ) {
-					jQuery( "#metronet-profile-image" ).html( response.thumb_html );
+					jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
 				},
 				'json'
 			);
