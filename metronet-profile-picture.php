@@ -431,8 +431,8 @@ class Metronet_Profile_Picture	{
 		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20150416', true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
-				'set_profile_text' => __( 'Set profile image', 'metronet-profile-picture' ),
-				'remove_profile_text' => __( 'Remove profile image', 'metronet-profile-picture' ),
+				'set_profile_text' => __( 'Set Profile Image', 'metronet-profile-picture' ),
+				'remove_profile_text' => __( 'Remove Profile Image', 'metronet-profile-picture' ),
 				'crop' => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
 				'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'user_post_id' => absint( $post_id ),
