@@ -36,20 +36,25 @@ jQuery( document ).ready( function( $ ) {
 	}
 	
 	$('#mpp').on( "click", '.mpp_add_media', function(e) {
+
 		//Assign the default view for the media uploader
+
 		var uploader = wp.media({
-			state: 'featured-image',
-			states: [ new wp.media.controller.FeaturedImage() ],
+			title: metronet_profile_image.set_profile_text,
+			button: {
+				text: metronet_profile_image.remove_profile_text
+			},
+			multiple: false  // Set to true to allow multiple files to be selected
 		});
-		uploader.state('featured-image').set( 'title', metronet_profile_image.set_profile_text );
-		
-		uploader.on( 'toolbar:create:featured-image', function( toolbar ) {
-			var options = {
-			};
+
+		// CUSTOM TOOLBAR ON BOTTOM OF MEDIA MANAGER. SETS UP THE TWO ACTION BUTTONS
+
+		uploader.on( 'toolbar:create', function( toolbar ) {
+			var options = {};
 			options.items = {};
 			options.items.select = {
 				text: metronet_profile_image.set_profile_text,
-				style:    'primary',
+				style: 'primary',
 				click: wp.media.view.Toolbar.Select.prototype.clickSelect,
 				requires: { selection: true },
 				event: 'select',
@@ -90,17 +95,20 @@ jQuery( document ).ready( function( $ ) {
 		};
 		
 		//For when the Add Profile Image is clicked
-		uploader.state('featured-image').on( 'select', function() {
-			var featured_id = this.get('selection').single().id;
+		uploader.on( 'select', function() {
 
-			if ( ! featured_id )
+			var featured_id = uploader.state().get('selection').first().id;
+
+			if ( ! featured_id ) {
 				return;
+			}
 			
 			uploader.mt_featured_set( featured_id );
+
 		} );
 		
 		//When the remove buttons is clicked
-		uploader.state( 'featured-image' ).on( 'remove', function() {
+		uploader.on( 'remove', function() {
 			mt_remove_profile_image();
 		} );
 		
