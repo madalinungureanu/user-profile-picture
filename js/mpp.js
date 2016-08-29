@@ -57,7 +57,7 @@ jQuery( document ).ready( function( $ ) {
 				close: true,
 				state: false
 			};
-			if ( $( '#metronet-profile-image img' ).length > 0 ) {
+			if ( ! $( '#metronet-profile-image a' ).hasClass('default-image') ) {
 				options.items.remove = {
 					text: metronet_profile_image.remove_profile_text,
 					style:    'secondary',

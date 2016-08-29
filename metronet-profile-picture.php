@@ -121,7 +121,7 @@ class Metronet_Profile_Picture	{
 				'has_thumb' => true
 			) ) );
 		} else {
-			$thumb_html = '<a style="display:block" href="#" class="mpp_add_media">';
+			$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 			$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$thumb_html .= '</a>';	
 		}
@@ -141,7 +141,7 @@ class Metronet_Profile_Picture	{
 		if ( $post_id == 0 || $user_id == 0 ) die( '' );
 		check_ajax_referer( "mt-update-post_$post_id" );
 		
-		$thumb_html = '<a style="display:block" href="#" class="mpp_add_media">';
+		$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 		$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 		$thumb_html .= '</a>';
 
@@ -374,7 +374,7 @@ class Metronet_Profile_Picture	{
 						echo $post_thumbnail;
 						echo '</a>';
 					} else {
-						echo '<a style="display:block" href="#" class="mpp_add_media">';
+						echo '<a style="display:block" href="#" class="mpp_add_media default-image">';
 						$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 						echo $post_thumbnail;
 						echo '</a>';
