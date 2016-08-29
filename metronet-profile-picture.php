@@ -461,6 +461,7 @@ class Metronet_Profile_Picture	{
 			content: "\f182";
 			color: #fd6a6a;
 			font-size: 20px;
+			margin-right:20px;
 		}
 		#metronet-remove:hover:before {
 			color: #ff3e3e;
