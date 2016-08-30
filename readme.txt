@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -11,11 +11,17 @@ Donate link: https://mediaron.com/contribute/
 Set a custom profile image for a user using the standard WordPress media upload tool.
 == Description ==
 
-Set or remove a custom profile image for a user using the standard WordPress media upload tool.  
+Set or remove a custom profile image for a user using the standard WordPress media upload tool.
+
+Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/members/">Members</a> to allow other roles (e.g. subscribers) the ability to upload images.
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
-If you like this plugin, please leave a rating/review and mark the plugin as working.
+<h3>Help Contribute</h3>
+
+* Leave a star rating
+* <a href="https://translate.wordpress.org/projects/wp-plugins/metronet-profile-picture">Contribute a translation</a>
+* <a href="https://github.com/ronalfy/user-profile-picture">Contribute some code</a>
 
 == Installation ==
 
@@ -107,6 +113,12 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 1.4.0 =
+* Released 2016-08-29 (props kelderic)
+* Bug fix: CSS Fixes to the trashcan icon and image placeholders
+* Bug fix: Modal window was set to the wrong settings
+* Enhancement: Avatar override is now the default option
 
 = 1.3.1 =
 * Released 2016-04-02
@@ -206,6 +218,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Avatar override is now a default option. Numerous bug fixes. Please see changelog.
 
 = 1.3.1 =
 Fixing thumbnail calls that could potential be inadvertently filtered and cause the profile picture to provide an erroneous callback.

@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 1.3.1
+Version: 1.4.0
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -63,6 +63,9 @@ class Metronet_Profile_Picture	{
 		
 		//Rest API
 		add_action( 'rest_api_init', array( $this, 'rest_api_register' ) );
+		
+		//Avatar check overridden - Can be overridden using a higher priority
+		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
 	} //end constructor
 	
 	/**
