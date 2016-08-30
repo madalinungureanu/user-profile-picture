@@ -369,6 +369,7 @@ class Metronet_Profile_Picture	{
 		
 		$user_id = $this->get_user_id();
 		$post_id = $this->get_post_id( $user_id );
+		$image_id = get_user_option('metronet_image_id', $user_id);
 		
 		?>
 		<tr valign="top">
@@ -376,6 +377,7 @@ class Metronet_Profile_Picture	{
 			<td id="mpp">
 				<input type="hidden" name="metronet_profile_id" id="metronet_profile_id" value="<?php echo esc_attr( $user_id ); ?>" />
 				<input type="hidden" name="metronet_post_id" id="metronet_post_id" value="<?php echo esc_attr( $post_id ); ?>" />
+				<input type="hidden" name="metronet_image_id" id="metronet_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
 				<div id="metronet-profile-image">
 				<?php
 					$has_profile_image = false;

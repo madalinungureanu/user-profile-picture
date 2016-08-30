@@ -14,6 +14,7 @@ jQuery( document ).ready( function( $ ) {
 	};
 	//Remove the profile image
 	function mt_remove_profile_image() {
+		jQuery( "#metronet_image_id" ).val( '0' );
 		$.post( metronet_profile_image.ajax_url, { 
 				action: 'metronet_remove_thumbnail', 
 				post_id: metronet_profile_image.user_post_id, 
@@ -76,10 +77,21 @@ jQuery( document ).ready( function( $ ) {
 			}
 			this.createSelectToolbar( toolbar, options );
 		}, uploader );
-			
+
+		uploader.on('open', function () {
+			var attachment,
+				post_id = jQuery( "#metronet_image_id" ).val(),
+				selection = uploader.state().get('selection');
+
+			attachment = wp.media.attachment(post_id);
+			attachment.fetch();
+
+			selection.add(attachment ? [ attachment ] : []);
+		});			
 		
 		//For when the featured thumbnail is set
 		uploader.mt_featured_set = function( id ) {
+			jQuery( "#metronet_image_id" ).val( id );
 			$.post( metronet_profile_image.ajax_url, { 
 					action: 'metronet_add_thumbnail', 
 					post_id: metronet_profile_image.user_post_id, 
