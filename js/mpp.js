@@ -40,11 +40,13 @@ jQuery( document ).ready( function( $ ) {
 		//Assign the default view for the media uploader
 
 		var uploader = wp.media({
+			state: 'featured-image',
+			states: [ new wp.media.controller.FeaturedImage() ],
 			title: metronet_profile_image.set_profile_text,
 			button: {
 				text: metronet_profile_image.remove_profile_text
 			},
-			multiple: false  // Set to true to allow multiple files to be selected
+			multiple: false,
 		});
 
 		// CUSTOM TOOLBAR ON BOTTOM OF MEDIA MANAGER. SETS UP THE TWO ACTION BUTTONS
@@ -58,9 +60,10 @@ jQuery( document ).ready( function( $ ) {
 				click: wp.media.view.Toolbar.Select.prototype.clickSelect,
 				requires: { selection: true },
 				event: 'select',
-				reset: true,
+				reset: false,
 				close: true,
-				state: false
+				state: false,
+				syncSelection: true
 			};
 			if ( ! $( '#metronet-profile-image a' ).hasClass('default-image') ) {
 				options.items.remove = {
@@ -71,7 +74,8 @@ jQuery( document ).ready( function( $ ) {
 					event: 'remove',
 					reset: true,
 					close: true,
-					state: false
+					state: false,
+					syncSelection: true
 				};
 			}
 			this.createSelectToolbar( toolbar, options );
@@ -97,18 +101,20 @@ jQuery( document ).ready( function( $ ) {
 		//For when the Add Profile Image is clicked
 		uploader.on( 'select', function() {
 
-			var featured_id = uploader.state().get('selection').first().id;
-
-			if ( ! featured_id ) {
+			var featured = uploader.state().get('selection').single();
+			wp.media.featuredImage.set( featured ? featured.id : -1 );
+			if ( ! featured.id ) {
 				return;
 			}
 			
-			uploader.mt_featured_set( featured_id );
+			uploader.mt_featured_set( featured.id );
+			
 
 		} );
 		
 		//When the remove buttons is clicked
 		uploader.on( 'remove', function() {
+			wp.media.featuredImage.set( -1 );
 			mt_remove_profile_image();
 		} );
 		
@@ -124,6 +130,7 @@ jQuery( document ).ready( function( $ ) {
 	});
 	$( "#mpp" ).on( 'click', 'a#metronet-remove', function( e ) {
 		e.preventDefault();
+		wp.media.featuredImage.set( -1 );
 		mt_remove_profile_image();
 	} );
 	
