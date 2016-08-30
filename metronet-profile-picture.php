@@ -75,13 +75,21 @@ class Metronet_Profile_Picture	{
 	*
 	*/
 	public function ajax_add_thumbnail() {
-		if ( !current_user_can( 'upload_files' ) ) die( '' );
+
+		if ( !current_user_can( 'upload_files' ) ) {
+			die( '' );
+		}
+
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		$thumbnail_id = isset( $_POST[ 'thumbnail_id' ] ) ? absint( $_POST[ 'thumbnail_id' ] ) : 0;
-		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) die( '' );
+
+		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) {
+			die( '' );
+		}
+
 		check_ajax_referer( "mt-update-post_$post_id" );
-		
+
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
 		update_user_option( $user_id, 'metronet_image_id', $thumbnail_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
@@ -99,7 +107,9 @@ class Metronet_Profile_Picture	{
 				'has_thumb' => true
 			) ) );
 		}
+
 		die( json_encode( array( 'thumb_html' => '', 'crop_html' => '', 'has_thumb' => false ) ) );
+
 	} //end ajax_add_thumbnail
 	
 	/**
