@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -114,6 +114,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.4.1 =
+* Released 2016-08-30 (Props @Monter)
+* Fix select states in image modal
+
 = 1.4.0 =
 * Released 2016-08-29 (props kelderic)
 * Bug fix: CSS Fixes to the trashcan icon and image placeholders
@@ -219,30 +223,8 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Upgrade Notice ==
 
+= 1.4.1 =
+Fix select states in image modal.
+
 = 1.4.0 =
 Avatar override is now a default option. Numerous bug fixes. Please see changelog.
-
-= 1.3.1 =
-Fixing thumbnail calls that could potential be inadvertently filtered and cause the profile picture to provide an erroneous callback.
-
-= 1.3.0 =
-Adding REST API endpoint.
-
-= 1.2.7 =
-Bug fix for warning message saying missing argument for avatar_override.
-
-= 1.2.5 =
-Bug fix for avatar override to accept custom CSS classes.
-
-= 1.2.3 =
-Made MPP post type completely hidden. mt_profile_img refactored to avoid filtered output.
-
-= 1.2.2 =
-Added compatibility to Advanced Custom Fields.  Ensuring WordPress 4.2 compatibility.
-
-= 1.2.1 =
-Fixed internationalization errors. Added Spanish translation.
-
-= 1.2.0 =
-Reducing clutter in the interface.  Removed text option to upload.  Added default image if no profile image is available.  Added option to remove the profile image.
-
