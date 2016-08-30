@@ -79,7 +79,7 @@ class Metronet_Profile_Picture	{
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		$thumbnail_id = isset( $_POST[ 'thumbnail_id' ] ) ? absint( $_POST[ 'thumbnail_id' ] ) : 0;
-		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 ) die( '' );
+		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) die( '' );
 		check_ajax_referer( "mt-update-post_$post_id" );
 		
 		//Save user meta
