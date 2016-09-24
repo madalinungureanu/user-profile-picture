@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 1.4.1
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -114,6 +114,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.4.3 =
+* Released 2016-09-24
+* Bug fix: Post featured image is being shown as user's profile picture when no avatar is selected.
+
 = 1.4.1 =
 * Released 2016-08-30 (Props @Monter)
 * Fix select states in image modal
@@ -222,6 +226,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.4.3 =
+Bug fix: Post featured image is being shown as user's profile picture when no avatar is selected.
 
 = 1.4.1 =
 Fix select states in image modal.
