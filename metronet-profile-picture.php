@@ -75,13 +75,21 @@ class Metronet_Profile_Picture	{
 	*
 	*/
 	public function ajax_add_thumbnail() {
-		if ( !current_user_can( 'upload_files' ) ) die( '' );
+
+		if ( !current_user_can( 'upload_files' ) ) {
+			die( '' );
+		}
+
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		$thumbnail_id = isset( $_POST[ 'thumbnail_id' ] ) ? absint( $_POST[ 'thumbnail_id' ] ) : 0;
-		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) die( '' );
+
+		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) {
+			die( '' );
+		}
+
 		check_ajax_referer( "mt-update-post_$post_id" );
-		
+
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
 		update_user_option( $user_id, 'metronet_image_id', $thumbnail_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
@@ -89,9 +97,9 @@ class Metronet_Profile_Picture	{
 
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail' , false, '' );
-			$post_thumbnail = sprintf( '<img src="%s" width="150" height="150" title="%s" />', esc_url( $thumb_src[0] ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
+			$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', esc_url( $thumb_src[0] ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$crop_html = $this->get_post_thumbnail_editor_link( $post_id );
-			$thumb_html = sprintf( '<a href="#" class="mpp_add_media">%s</a>', $post_thumbnail );
+			$thumb_html = sprintf( '<a style="display:block" href="#" class="mpp_add_media">%s</a>', $post_thumbnail );
 			$thumb_html .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( "Remove profile image", "metronet-profile-picture" ) );
 			die( json_encode( array(
 				'thumb_html' => $thumb_html,
@@ -99,7 +107,9 @@ class Metronet_Profile_Picture	{
 				'has_thumb' => true
 			) ) );
 		}
+
 		die( json_encode( array( 'thumb_html' => '', 'crop_html' => '', 'has_thumb' => false ) ) );
+
 	} //end ajax_add_thumbnail
 	
 	/**
@@ -359,6 +369,7 @@ class Metronet_Profile_Picture	{
 		
 		$user_id = $this->get_user_id();
 		$post_id = $this->get_post_id( $user_id );
+		$image_id = get_user_option('metronet_image_id', $user_id);
 		
 		?>
 		<tr valign="top">
@@ -366,6 +377,7 @@ class Metronet_Profile_Picture	{
 			<td id="mpp">
 				<input type="hidden" name="metronet_profile_id" id="metronet_profile_id" value="<?php echo esc_attr( $user_id ); ?>" />
 				<input type="hidden" name="metronet_post_id" id="metronet_post_id" value="<?php echo esc_attr( $post_id ); ?>" />
+				<input type="hidden" name="metronet_image_id" id="metronet_image_id" value="<?php echo esc_attr( $image_id ); ?>" />
 				<div id="metronet-profile-image">
 				<?php
 					$has_profile_image = false;
