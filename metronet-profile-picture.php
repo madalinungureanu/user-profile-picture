@@ -530,6 +530,10 @@ class Metronet_Profile_Picture	{
 		if ( ! $user_id ) {
 			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
+		$is_post_owner = ( get_current_user_id() == get_post($media_id) ->post_author ) ? true  : false ;
+		if ( ! $is_post_owner ) {
+			return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		}
 		
 		$post_id=$this->get_post_id($user_id);
 		//Save user meta
