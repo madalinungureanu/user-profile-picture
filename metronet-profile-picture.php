@@ -60,6 +60,7 @@ class Metronet_Profile_Picture	{
 		
 		//User Avatar override
 		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 6 );
+		add_filter( 'pre_get_avatar_data', array( $this, 'pre_avatar_override' ), 10, 2 );
 		
 		//Rest API
 		add_action( 'rest_api_init', array( $this, 'rest_api_register' ) );
@@ -67,7 +68,7 @@ class Metronet_Profile_Picture	{
 		//Avatar check overridden - Can be overridden using a higher priority
 		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
 	} //end constructor
-	
+
 	/**
 	* ajax_add_thumbnail()
 	*
@@ -220,6 +221,51 @@ class Metronet_Profile_Picture	{
 		if ( ! $custom_avatar ) return $avatar; 
 		return $custom_avatar;	
 	} //end avatar_override
+	
+	/**
+	 * pre_avatar_override()
+	 *
+	 * Overrides an avatar with a profile image
+	 *
+	 * @param array $args Arguments to determine the avatar dimensions
+	 * @param mixed $id_or_email 
+	 * @return array $args Overridden URL or default if none can be found
+	 **/
+	public function pre_avatar_override( $args, $id_or_email ) {
+
+		//Get user data
+		if ( is_numeric( $id_or_email ) ) {
+			$user = get_user_by( 'id', ( int )$id_or_email );
+		} elseif( is_object( $id_or_email ) )  {
+			$comment = $id_or_email;
+			if ( empty( $comment->user_id ) ) {
+				$user = get_user_by( 'id', $comment->user_id );
+			} else {
+				$user = get_user_by( 'email', $comment->comment_author_email );
+			}
+			if ( !$user ) return $args;
+		} elseif( is_string( $id_or_email ) ) {
+			$user = get_user_by( 'email', $id_or_email );
+		} else {
+			return $args;
+		}
+		if ( ! $user ) return $args;
+		$user_id = $user->ID;
+
+		// Get the post the user is attached to
+		$size = $args[ 'size' ];
+
+		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+
+		// Attempt to get the image in the right size
+		$avatar_image = get_the_post_thumbnail_url( $profile_post_id, array( $size, $size ) );
+		if ( empty( $avatar_image ) ) {
+			return $args;
+		}
+		$args[ 'url' ] = $avatar_image;
+		return $args;
+	}
 	
 	/**
 	* get_plugin_dir()
