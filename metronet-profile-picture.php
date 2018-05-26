@@ -524,18 +524,23 @@ class Metronet_Profile_Picture	{
 	}
 	
 	public function rest_api_put_profile( $request ) {
+		
 		$user_id = get_current_user_id();
 		$media_id = (int) $request['media_id'];
+
+		if ( ! current_user_can( 'upload_files' ) ) {
+			eturn new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		}
 		
 		if ( ! $user_id ) {
 			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
-		$is_post_owner = ( get_current_user_id() == get_post($media_id) ->post_author ) ? true  : false ;
+		$is_post_owner = ( $user_id == get_post($media_id) ->post_author ) ? true  : false ;
 		if ( ! $is_post_owner ) {
 			return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
 		
-		$post_id=$this->get_post_id($user_id);
+		$post_id = $this->get_post_id( $user_id );
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
 		update_user_option( $user_id, 'metronet_image_id', $media_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
@@ -551,58 +556,62 @@ class Metronet_Profile_Picture	{
 			'full'=> $attachment_url
 		);
 	}
-	/**
-	* rest_api_get_profile()
-	*
-	* Returns an attachment image ID and profile image if available
-	**/
-	public function rest_api_add_profile_to_user( $object, $field_name, $request ) {
-		$user_id = $object[ 'id' ];
-		$user = get_user_by( 'id', $user_id );
-		if ( ! $user ) {
-			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		/**
+		* rest_api_get_profile()
+		*
+		* Returns an attachment image ID and profile image if available
+		**/
+		public function rest_api_add_profile_to_user( $object, $field_name, $request ) {
+			$user_id = $object[ 'id' ];
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+
+			if ( ! current_user_can( 'upload_files' ) ) {
+				eturn new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+			}
+			
+			//Get attachment ID
+			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+			if ( ! $post_thumbnail_id ) {
+				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment URL
+			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+			
+			return array(
+				'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+				'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+				'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'full'=> $attachment_url
+			);
 		}
-		
-		//Get attachment ID
-		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-		if ( ! $post_thumbnail_id ) {
-			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-		}
-		
-		//Get attachment URL
-		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-		
-		return array(
-			'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
-			'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
-			'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
-			'full'=> $attachment_url
-		);
-	}
 	
 		public function rest_api_get_profile( $data ) {
-		$user_id = $data[ 'id' ];
-		$user = get_user_by( 'id', $user_id );
-		if ( ! $user ) {
-			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			$user_id = $data[ 'id' ];
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment ID
+			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+			if ( ! $post_thumbnail_id ) {
+				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment URL
+			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+			
+			return array(
+				'attachment_id'  => $post_thumbnail_id,
+				'attachment_url' => $attachment_url
+			);
 		}
-		
-		//Get attachment ID
-		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-		if ( ! $post_thumbnail_id ) {
-			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-		}
-		
-		//Get attachment URL
-		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-		
-		return array(
-			'attachment_id'  => $post_thumbnail_id,
-			'attachment_url' => $attachment_url
-		);
-	}
 	
 	/**
 	* rest_api_validate()
