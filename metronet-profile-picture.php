@@ -575,7 +575,7 @@ class Metronet_Profile_Picture	{
 		$media_id = (int) $request['media_id'];
 
 		if ( ! current_user_can( 'upload_files' ) ) {
-			eturn new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+			return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
 		
 		if ( ! $user_id ) {
