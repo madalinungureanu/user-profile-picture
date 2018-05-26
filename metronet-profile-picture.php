@@ -374,7 +374,7 @@ class Metronet_Profile_Picture	{
 	* Initializes plugin localization, post types, updaters, plugin info, and adds actions/filters
 	*
 	*/
-	function init() {		
+	public function init() {		
 		
 		add_theme_support( 'post-thumbnails' ); //This should be part of the theme, but the plugin registers it just in case.
 		//Register post types
@@ -757,4 +757,3 @@ function mt_profile_img( $user_id, $args = array() ) {
 		return $post_thumbnail;
 	}
 } //end mt_profile_img
-?>
