@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 1.4.3
+Version: 1.5.0
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -539,7 +539,7 @@ class Metronet_Profile_Picture	{
 	public function rest_api_register() {
 		register_rest_field(
 			'user',
-			'avatar',
+			'mpp_avatar',
 			array(
 				'get_callback' =>  array( $this, 'rest_api_add_profile_to_user' )
 			)
@@ -573,7 +573,6 @@ class Metronet_Profile_Picture	{
 		
 		$user_id = get_current_user_id();
 		$media_id = (int) $request['media_id'];
-
 		if ( ! current_user_can( 'upload_files' ) ) {
 			return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
@@ -614,9 +613,7 @@ class Metronet_Profile_Picture	{
 				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 			}
 
-			if ( ! current_user_can( 'upload_files' ) ) {
-				return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
-			}
+			// No capability check here because we're just returning user profile data
 			
 			//Get attachment ID
 			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
