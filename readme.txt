@@ -2,13 +2,13 @@
 Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
-Tested up to: 4.9
-Stable tag: 1.4.3
+Tested up to: 4.9.7
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
 
-Set a custom profile image for a user using the standard WordPress media upload tool.
+Set a custom profile image (avatar) for a user using the standard WordPress media upload tool.
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
@@ -17,18 +17,13 @@ Users must have the ability to upload images (typically author role or greater).
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
-<h3>Help Contribute</h3>
-
-* Leave a star rating
-* <a href="https://translate.wordpress.org/projects/wp-plugins/metronet-profile-picture">Contribute a translation</a>
-* <a href="https://github.com/ronalfy/user-profile-picture">Contribute some code</a>
+See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
 == Installation ==
 
 1. Upload `metronet-profile-picture` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Place `<?php mt_profile_img() ?>` in your templates (arguments and usage are below)
-4. Use the "Override Avatar" function to change your default avatar.
 
 Arguments: 
 
@@ -59,28 +54,9 @@ if (function_exists ( 'mt_profile_img' ) ) {
 }
 ?>
 `
-View the code on <a href="http://pastebin.com/Xaf8dJqQ">Pastebin</a>.
-
-The `mt_profile_img` function internally uses the <a href="http://codex.wordpress.org/Function_Reference/get_the_post_thumbnail">get_the_post_thumbnail</a> function to retrieve the profile image.
-
-Optionally, if you choose the "Override Avatar" function, you can use <a href="http://codex.wordpress.org/Function_Reference/get_avatar">get_avatar</a> to retrieve the profile image.
-
-If you want the "Override Avatar" checkbox to be checked by default, drop this into your theme's `functions.php` file or <a href="http://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-creating-a-site-specific-wordpress-plugin/">Site-specific plugin</a>:
-
-`add_filter( 'mpp_avatar_override', '__return_true' );`
-
-If you want to hide the "Override Avatar" checkbox, use this filter (the override functionality will be enabled by default):
-`add_filter( 'mpp_hide_avatar_override', '__return_true' );`
+View the code on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
 The REST API is currently supported for versions of WordPress 4.4 and up.
-
-The endpoint is: `http://www.yourdomain.com/wp-json/mpp/v1/user/{user_id}`
-
-If a profile picture is found, it'll return JSON as follows:
-
-`
-{"attachment_id":"3638","attachment_url":"http:\/\/localhost\/ronalfy\/wp-content\/uploads\/2015\/12\/Leaderboard-All-Time.png"}
-`
 
 == Frequently Asked Questions ==
 
@@ -89,15 +65,13 @@ If a profile picture is found, it'll return JSON as follows:
 1.  Visit the profile page you would like to edit.
 2.  Click on the profile picture to add, edit, or remove the profile picture.
 
-To override an avatar, select the "Override Avatar?" checkbox and save the profile page.
-
 = What role does a user have to be to set a profile image? =
 
 Author or greater.
 
 = How do I create specific thumbnail sizes? =
 
-Since the plugin uses the native uploader, you'll have to make use of <a href='http://codex.wordpress.org/Function_Reference/add_image_size'>add_image_size</a> in your theme.  You can then call `mt_profile_img` and pass in the custom image size.
+As of 1.5, three image sizes are created: profile_24, profile_48, and profile_96. You are not limited to these sizes, however.
 
 = The image is cropped wrong.  How do I fix this? = 
 
@@ -113,6 +87,11 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 1.5.0 =
+* Released 2018-07-11
+* Support for AMP avatar has been added
+* Two REST API endpoints have been added to facilitate better programatic avatar selection
 
 = 1.4.3 =
 * Released 2016-09-24
@@ -226,6 +205,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+AMP now supported. Two REST API Endpoints added.
 
 = 1.4.3 =
 Bug fix: Post featured image is being shown as user's profile picture when no avatar is selected.

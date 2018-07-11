@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 1.4.3
+Version: 1.5.0
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -60,6 +60,7 @@ class Metronet_Profile_Picture	{
 		
 		//User Avatar override
 		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 6 );
+		add_filter( 'pre_get_avatar_data', array( $this, 'pre_avatar_override' ), 10, 2 );
 		
 		//Rest API
 		add_action( 'rest_api_init', array( $this, 'rest_api_register' ) );
@@ -67,7 +68,7 @@ class Metronet_Profile_Picture	{
 		//Avatar check overridden - Can be overridden using a higher priority
 		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
 	} //end constructor
-	
+
 	/**
 	* ajax_add_thumbnail()
 	*
@@ -222,6 +223,51 @@ class Metronet_Profile_Picture	{
 	} //end avatar_override
 	
 	/**
+	 * pre_avatar_override()
+	 *
+	 * Overrides an avatar with a profile image
+	 *
+	 * @param array $args Arguments to determine the avatar dimensions
+	 * @param mixed $id_or_email 
+	 * @return array $args Overridden URL or default if none can be found
+	 **/
+	public function pre_avatar_override( $args, $id_or_email ) {
+
+		//Get user data
+		if ( is_numeric( $id_or_email ) ) {
+			$user = get_user_by( 'id', ( int )$id_or_email );
+		} elseif( is_object( $id_or_email ) )  {
+			$comment = $id_or_email;
+			if ( empty( $comment->user_id ) ) {
+				$user = get_user_by( 'id', $comment->user_id );
+			} else {
+				$user = get_user_by( 'email', $comment->comment_author_email );
+			}
+			if ( !$user ) return $args;
+		} elseif( is_string( $id_or_email ) ) {
+			$user = get_user_by( 'email', $id_or_email );
+		} else {
+			return $args;
+		}
+		if ( ! $user ) return $args;
+		$user_id = $user->ID;
+
+		// Get the post the user is attached to
+		$size = $args[ 'size' ];
+
+		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+
+		// Attempt to get the image in the right size
+		$avatar_image = get_the_post_thumbnail_url( $profile_post_id, array( $size, $size ) );
+		if ( empty( $avatar_image ) ) {
+			return $args;
+		}
+		$args[ 'url' ] = $avatar_image;
+		return $args;
+	}
+	
+	/**
 	* get_plugin_dir()
 	* 
 	* Returns an absolute path to a plugin item
@@ -328,7 +374,7 @@ class Metronet_Profile_Picture	{
 	* Initializes plugin localization, post types, updaters, plugin info, and adds actions/filters
 	*
 	*/
-	function init() {		
+	public function init() {		
 		
 		add_theme_support( 'post-thumbnails' ); //This should be part of the theme, but the plugin registers it just in case.
 		//Register post types
@@ -344,6 +390,9 @@ class Metronet_Profile_Picture	{
 			'supports' => array( 'thumbnail' )
 		);
 		register_post_type( 'mt_pp', $post_type_args );
+		add_image_size( 'profile_24', 24, 24, true );
+		add_image_size( 'profile_48', 48, 48, true );
+		add_image_size( 'profile_96', 96, 96, true );
 		
 	}//end function init
 	
@@ -488,6 +537,22 @@ class Metronet_Profile_Picture	{
 	* Registers REST API endpoint
 	**/
 	public function rest_api_register() {
+		register_rest_field(
+			'user',
+			'mpp_avatar',
+			array(
+				'get_callback' =>  array( $this, 'rest_api_add_profile_to_user' )
+			)
+		);
+		register_rest_route( 
+			'mpp/v2', 
+			'/profile-image/me',
+			array(
+				'methods' => 'POST',
+				'callback' =>  array( $this, 'rest_api_put_profile' )
+			)
+		);
+		// keep it for backward compatibility
 		register_rest_route( 
 			'mpp/v1', 
 			'/user/(?P<id>\d+)',
@@ -504,33 +569,92 @@ class Metronet_Profile_Picture	{
 		);
 	}
 	
-	/**
-	* rest_api_get_profile()
-	*
-	* Returns an attachment image ID and profile image if available
-	**/
-	public function rest_api_get_profile( $data ) {
-		$user_id = $data[ 'id' ];
-		$user = get_user_by( 'id', $user_id );
-		if ( ! $user ) {
-			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+	public function rest_api_put_profile( $request ) {
+		
+		$user_id = get_current_user_id();
+		$media_id = (int) $request['media_id'];
+		if ( ! current_user_can( 'upload_files' ) ) {
+			return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
 		
-		//Get attachment ID
-		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-		if ( ! $post_thumbnail_id ) {
-			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		if ( ! $user_id ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		}
+		$is_post_owner = ( $user_id == get_post($media_id) ->post_author ) ? true  : false ;
+		if ( ! $is_post_owner ) {
+			return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
 		
-		//Get attachment URL
-		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+		$post_id = $this->get_post_id( $user_id );
+		//Save user meta
+		update_user_option( $user_id, 'metronet_post_id', $post_id );
+		update_user_option( $user_id, 'metronet_image_id', $media_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
+		
+		set_post_thumbnail( $post_id, $media_id );
+		
+		$attachment_url = wp_get_attachment_url( $media_id );
 		
 		return array(
-			'attachment_id'  => $post_thumbnail_id,
-			'attachment_url' => $attachment_url
+			'24'  => wp_get_attachment_image_url( $media_id, 'profile_24', false, '' ),
+			'48'  => wp_get_attachment_image_url( $media_id, 'profile_48', false, '' ),
+			'96'  => wp_get_attachment_image_url( $media_id, 'profile_96', false, '' ),
+			'full'=> $attachment_url
 		);
 	}
+		/**
+		* rest_api_get_profile()
+		*
+		* Returns an attachment image ID and profile image if available
+		**/
+		public function rest_api_add_profile_to_user( $object, $field_name, $request ) {
+			$user_id = $object[ 'id' ];
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+
+			// No capability check here because we're just returning user profile data
+			
+			//Get attachment ID
+			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+			if ( ! $post_thumbnail_id ) {
+				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment URL
+			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+			
+			return array(
+				'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+				'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+				'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'full'=> $attachment_url
+			);
+		}
+	
+		public function rest_api_get_profile( $data ) {
+			$user_id = $data[ 'id' ];
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment ID
+			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+			if ( ! $post_thumbnail_id ) {
+				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+			}
+			
+			//Get attachment URL
+			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+			
+			return array(
+				'attachment_id'  => $post_thumbnail_id,
+				'attachment_url' => $attachment_url
+			);
+		}
 	
 	/**
 	* rest_api_validate()
@@ -630,4 +754,3 @@ function mt_profile_img( $user_id, $args = array() ) {
 		return $post_thumbnail;
 	}
 } //end mt_profile_img
-?>
