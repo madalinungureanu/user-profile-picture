@@ -88,6 +88,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 1.5.1 =
+* Released 2018-07-12
+* Fixed a condition where a featured image was shown for the author instead of a blank gravatar
+
 = 1.5.0 =
 * Released 2018-07-11
 * Support for AMP avatar has been added
@@ -205,6 +209,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Fixed a condition where a featured image was shown for the author instead of a blank gravatar
 
 = 1.5.0 =
 AMP now supported. Two REST API Endpoints added.
