@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
-Tested up to: 4.9.7
-Stable tag: 1.5
+Tested up to: 4.9
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -87,6 +87,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 1.5.1 =
+* Released 2018-07-12
+* Fixed a condition where a featured image was shown for the author instead of a blank gravatar
 
 = 1.5.0 =
 * Released 2018-07-11
@@ -205,6 +209,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Fixed a condition where a featured image was shown for the author instead of a blank gravatar
 
 = 1.5.0 =
 AMP now supported. Two REST API Endpoints added.
