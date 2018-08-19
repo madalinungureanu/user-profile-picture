@@ -2,6 +2,7 @@ jQuery( document ).ready( function( $ ) {
 	//Refresh the profile image thumbnail
 	function mt_ajax_thumbnail_refresh() {
 		var post_id = jQuery( "#metronet_post_id" ).val();
+		jQuery( '#metronet-profile-image' ).html( '<img class="mpp-loading" alt="Loading" width="150" height="150" src="' + metronet_profile_image.loading_gif + '" />' );
 		$.post( metronet_profile_image.ajax_url, { 
 				action: 'metronet_get_thumbnail', 
 				post_id: post_id, 
@@ -19,6 +20,7 @@ jQuery( document ).ready( function( $ ) {
 	};
 	//Remove the profile image
 	function mt_remove_profile_image() {
+		jQuery( '#metronet-profile-image' ).html( '<img class="mpp-loading" alt="Loading" width="150" height="150" src="' + metronet_profile_image.loading_gif + '" />' );
 		$.post( metronet_profile_image.ajax_url, { 
 				action: 'metronet_remove_thumbnail', 
 				post_id: metronet_profile_image.user_post_id, 
@@ -94,6 +96,7 @@ jQuery( document ).ready( function( $ ) {
 		
 		//For when the featured thumbnail is set
 		uploader.mt_featured_set = function( id ) {
+			jQuery( '#metronet-profile-image' ).html( '<img class="mpp-loading" alt="Loading" width="150" height="150" src="' + metronet_profile_image.loading_gif + '" />' );
 			$.post( metronet_profile_image.ajax_url, { 
 					action: 'metronet_add_thumbnail', 
 					post_id: metronet_profile_image.user_post_id, 
