@@ -13,6 +13,8 @@ Set a custom profile image (avatar) for a user using the standard WordPress medi
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
 
+https://www.youtube.com/watch?v=9icnOWWZUpA
+
 Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/members/">Members</a> to allow other roles (e.g. subscribers) the ability to upload images.
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
