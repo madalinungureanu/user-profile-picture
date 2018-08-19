@@ -3,10 +3,10 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 1.5.1
+Stable tag: 1.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/contribute/
+Donate link: https://mediaron.com/give/
 
 Set a custom profile image (avatar) for a user using the standard WordPress media upload tool.
 == Description ==
@@ -87,6 +87,14 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 1.5.5 =
+* Released 2018-08-19
+* Enhancement: Loading image now shows between states for better UX
+* Enhancement: Plugin attempts to override the default WordPress avatar in the User Profile page
+* Enhancement: Plugin attempts to override the admin bar avatars if the users match
+* Enhancement: Added Click to Edit bar to make it more obvious what to do with the profile picture
+* Refactor: Plugin now uses wp_send_json instead of json_encode for more compatibility
 
 = 1.5.1 =
 * Released 2018-07-12
@@ -209,6 +217,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.5 = 
+Loading image now shows between states. New "Click to Edit" bar added to interface.
 
 = 1.5.1 =
 Fixed a condition where a featured image was shown for the author instead of a blank gravatar
