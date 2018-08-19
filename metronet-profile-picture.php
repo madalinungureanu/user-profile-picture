@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 1.5.1
+Version: 1.5.5
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -487,6 +487,9 @@ class Metronet_Profile_Picture	{
 					}
 				?>
 					<a id="metronet-remove" class="<?php echo implode( ' ', $remove_classes ); ?>" href="#" title="<?php esc_attr_e( 'Remove profile image', 'metronet-profile-picture' ); ?>"><?php esc_html_e( "Remove profile image", "metronet-profile-picture" );?></a>
+					<div style="display: none">
+						<?php printf( '<img class="mpp-loading" width="150" height="150" alt="Loading" src="%s" />', esc_url( $this->get_plugin_url( '/img/loading.gif' ) ) ); ?>
+					</div>
 				</div><!-- #metronet-profile-image -->
 				<div id="metronet-override-avatar">
 					<input type="hidden" name="metronet-user-avatar" value="off" /> 
@@ -533,12 +536,13 @@ class Metronet_Profile_Picture	{
 		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20160830', true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
-				'set_profile_text' => __( 'Set Profile Image', 'metronet-profile-picture' ),
+				'set_profile_text'    => __( 'Set Profile Image', 'metronet-profile-picture' ),
 				'remove_profile_text' => __( 'Remove Profile Image', 'metronet-profile-picture' ),
-				'crop' => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
-				'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
-				'user_post_id' => absint( $post_id ),
-				'nonce' => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) )
+				'crop'                => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
+				'ajax_url'            => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'user_post_id'        => absint( $post_id ),
+				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) ),
+				'loading_gif'         => esc_url( $this->get_plugin_url( '/img/loading.gif' ) )
 			) 
 		);
 		?>
@@ -777,15 +781,15 @@ function mt_mpp_instantiate() {
 	$mt_pp = new Metronet_Profile_Picture();
 }
 /**
-* mt_profile_img
-* 
-* Adds a profile image
-*
-@param $user_id INT - The user ID for the user to retrieve the image for
-@ param $args mixed
-	size - string || array (see get_the_post_thumbnail)
-	attr - string || array (see get_the_post_thumbnail)
-	echo - bool (true or false) - whether to echo the image or return it
+ * mt_profile_img
+ * 
+ * Adds a profile image
+ *
+ * @param $user_id INT - The user ID for the user to retrieve the image for
+ * @param $args mixed
+ *	size - string || array (see get_the_post_thumbnail)
+ *	attr - string || array (see get_the_post_thumbnail)
+ *	echo - bool (true or false) - whether to echo the image or return it
 */
 function mt_profile_img( $user_id, $args = array() ) {
 	$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
@@ -819,6 +823,18 @@ function mt_profile_img( $user_id, $args = array() ) {
 	}
 	
 	$post_thumbnail =  wp_get_attachment_image( $post_thumbnail_id, $size, false, $attr );
+
+	/**
+	 * Filter outputted HTML.
+	 *
+	 * Filter outputted HTML.
+	 * 
+	 * @param string $post_thumbnail       img tag with formed HTML
+	 * @param int	 $profile_post_id      The profile in which the image is attached 
+	 * @param int    $profile_thumbnail_id The thumbnail ID for the attached image 
+	 * @param int    $user_id              The user id for which the image is attached
+	 * 
+	 */
 	$post_thumbnail = apply_filters( 'mpp_thumbnail_html', $post_thumbnail, $profile_post_id, $post_thumbnail_id, $user_id );
 	if ( $echo ) {
 		echo $post_thumbnail;
