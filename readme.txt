@@ -19,7 +19,7 @@ A template tag is supplied for outputting to a theme and the option to override 
 
 See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
-Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a> or <a href="https://mediaron.com/give/">Give Back</a> to show support.
+> Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a> or <a href="https://mediaron.com/give/">Give Back</a> to show support.
 
 == Installation ==
 
