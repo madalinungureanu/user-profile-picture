@@ -8,6 +8,11 @@ jQuery( document ).ready( function( $ ) {
 			}, 
 			function( response ) {
 				jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
+				jQuery( '.user-profile-picture img ').replaceWith( response.avatar );
+				if ( response.user_id === response.logged_in_user_id ) {
+					jQuery( '#wp-admin-bar-my-account img.avatar-26' ).replaceWith( response.avatar_admin_small );
+					jQuery( '#wp-admin-bar-my-account img.avatar-64' ).replaceWith( response.avatar_admin_medium );
+				}
 			},
 			'json'
 		);
@@ -22,6 +27,11 @@ jQuery( document ).ready( function( $ ) {
 			}, 
 			function( response ) {
 				jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
+				jQuery( '.user-profile-picture img ').replaceWith( response.avatar );
+				if ( response.user_id === response.logged_in_user_id ) {
+					jQuery( '#wp-admin-bar-my-account img.avatar-26' ).replaceWith( response.avatar_admin_small );
+					jQuery( '#wp-admin-bar-my-account img.avatar-64' ).replaceWith( response.avatar_admin_medium );
+				}
 			},
 			'json'
 		);	
@@ -93,6 +103,11 @@ jQuery( document ).ready( function( $ ) {
 				}, 
 				function( response ) {
 					jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );
+					jQuery( '.user-profile-picture img ').replaceWith( response.avatar );
+					if ( response.user_id === response.logged_in_user_id ) {
+						jQuery( '#wp-admin-bar-my-account img.avatar-26' ).replaceWith( response.avatar_admin_small );
+						jQuery( '#wp-admin-bar-my-account img.avatar-64' ).replaceWith( response.avatar_admin_medium );
+					}
 				},
 				'json'
 			);

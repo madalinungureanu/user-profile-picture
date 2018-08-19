@@ -94,13 +94,27 @@ class Metronet_Profile_Picture	{
 			$crop_html = $this->get_post_thumbnail_editor_link( $post_id );
 			$thumb_html = sprintf( '<a href="#" class="mpp_add_media">%s%s</a>', $post_thumbnail, sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) ) );
 			$thumb_html .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( "Remove profile image", "metronet-profile-picture" ) );
-			die( json_encode( array(
-				'thumb_html' => $thumb_html,
-				'crop_html' => $crop_html,
-				'has_thumb' => true
-			) ) );
+			wp_send_json( array(
+				'thumb_html'          => $thumb_html,
+				'crop_html'           => $crop_html,
+				'has_thumb'           => true,
+				'avatar'              => get_avatar( $user_id, 96 ),
+				'avatar_admin_small'  => get_avatar( $user_id, 26 ),
+				'avatar_admin_medium' => get_avatar( $user_id, 64 ),
+				'user_id'             => $user_id,
+				'logged_in_user_id'   => get_current_user_id(),
+			) );
 		}
-		die( json_encode( array( 'thumb_html' => '', 'crop_html' => '', 'has_thumb' => false ) ) );
+		wp_send_json( array( 
+				'thumb_html'          => '', 
+				'crop_html'           => '', 
+				'has_thumb'           => false, 
+				'avatar'              => get_avatar( $user_id, 96 ),
+				'avatar_admin_small'  => get_avatar( $user_id, 26 ),
+				'avatar_admin_medium' => get_avatar( $user_id, 64 ),
+				'user_id'             => $user_id,
+				'logged_in_user_id'   => get_current_user_id(),
+		) );
 	} //end ajax_add_thumbnail
 	
 	/**
@@ -112,6 +126,12 @@ class Metronet_Profile_Picture	{
 	public function ajax_get_thumbnail() {
 		if ( !current_user_can( 'upload_files' ) ) die( '' );
 		$post_id = isset( $_POST[ 'post_id' ] ) ? absint( $_POST[ 'post_id' ] ) : 0;
+		$post = get_post( $post_id );
+		$user_id = 0;
+		if( $post ) {
+			$user_id = $post->post_author;
+		}
+
 
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumb_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail' , false, '' );
@@ -119,18 +139,32 @@ class Metronet_Profile_Picture	{
 			$crop_html = $this->get_post_thumbnail_editor_link( $post_id );
 			$thumb_html = sprintf( '<a href="#" class="mpp_add_media">%s%s</a>', $post_thumbnail, sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) ) );
 			$thumb_html .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( "Remove profile image", "metronet-profile-picture" ) );
-			die( json_encode( array(
-				'thumb_html' => $thumb_html,
-				'crop_html' => $crop_html,
-				'has_thumb' => true
-			) ) );
+			wp_send_json( array(
+				'thumb_html'          => $thumb_html,
+				'crop_html'           => $crop_html,
+				'has_thumb'           => true,
+				'avatar'              => get_avatar( $user_id, 96 ),
+				'avatar_admin_small'  => get_avatar( $user_id, 26 ),
+				'avatar_admin_medium' => get_avatar( $user_id, 64 ),
+				'user_id'             => $user_id,
+				'logged_in_user_id'   => get_current_user_id(),
+			) );
 		} else {
 			$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 			$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 			$thumb_html .= '</a>';	
 		}
-		die( json_encode( array( 'thumb_html' => $thumb_html, 'crop_html' => '', 'has_thumb' => false ) ) );
+		wp_send_json( array( 
+			'thumb_html'          => $thumb_html, 
+			'crop_html'           => '', 
+			'has_thumb'           => false,
+			'avatar'              => get_avatar( $user_id, 96 ),
+			'avatar_admin_small'  => get_avatar( $user_id, 26 ),
+			'avatar_admin_medium' => get_avatar( $user_id, 64 ),
+			'user_id'             => $user_id,
+			'logged_in_user_id'   => get_current_user_id(), 
+		) );
 	} //end ajax_get_thumbnail
 	
 	/**
@@ -154,7 +188,16 @@ class Metronet_Profile_Picture	{
 		//Save user meta and update thumbnail
 		update_user_option( $user_id, 'metronet_image_id', 0 ); 
 		delete_post_meta( $post_id, '_thumbnail_id' );
-		die( json_encode( array( 'thumb_html' => $thumb_html, 'crop_html' => '' ) ) );
+		wp_send_json( array( 
+			'thumb_html'          => $thumb_html, 
+			'crop_html'           => '',
+			'has_thumb'           => false,
+			'avatar'              => get_avatar( $user_id, 96 ),
+			'avatar_admin_small'  => get_avatar( $user_id, 26 ),
+			'avatar_admin_medium' => get_avatar( $user_id, 64 ),
+			'user_id'             => $user_id,
+			'logged_in_user_id'   => get_current_user_id(),
+		) );
 	}
 	
 	/**
