@@ -67,6 +67,10 @@ class Metronet_Profile_Picture	{
 		
 		//Avatar check overridden - Can be overridden using a higher priority
 		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
+		
+		// Include Gutenberg
+		include_once self::get_plugin_dir('/gutenberg/class-gutenberg.php');
+		new Metronet_Profile_Picture_Gutenberg();
 	} //end constructor
 
 	/**
@@ -151,7 +155,7 @@ class Metronet_Profile_Picture	{
 			) );
 		} else {
 			$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
-			$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
+			$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 			$thumb_html .= '</a>';	
 		}
@@ -181,7 +185,7 @@ class Metronet_Profile_Picture	{
 		check_ajax_referer( "mt-update-post_$post_id" );
 		
 		$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
-		$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
+		$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 		$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 		$thumb_html .= '</a>';
 
@@ -323,12 +327,12 @@ class Metronet_Profile_Picture	{
 	* @param		string    $path	Relative path to make absolute (e.g., /css/image.png)
 	* @return		string               An absolute path (e.g., /htdocs/ithemes/wp-content/.../css/image.png)
 	*/
-	public function get_plugin_dir( $path = '' ) {
-		$dir = $this->plugin_dir;
+	public static function get_plugin_dir( $path = '' ) {
+		$dir = rtrim( plugin_dir_path(__FILE__), '/' );
 		if ( !empty( $path ) && is_string( $path) )
 			$dir .= '/' . ltrim( $path, '/' );
 		return $dir;		
-	} //end get_plugin_dir
+	}
 	
 	
 	/**
@@ -339,12 +343,12 @@ class Metronet_Profile_Picture	{
 	* @param		string    $path	Relative path to plugin (e.g., /css/image.png)
 	* @return		string               An absolute url (e.g., http://www.domain.com/plugin_url/.../css/image.png)
 	*/
-	public function get_plugin_url( $path = '' ) {
-		$dir = $this->plugin_url;
+	public static function get_plugin_url( $path = '' ) {
+		$dir = rtrim( plugin_dir_url(__FILE__), '/' );
 		if ( !empty( $path ) && is_string( $path) )
 			$dir .= '/' . ltrim( $path, '/' );
 		return $dir;	
-	} //get_plugin_url
+	}
 	
 	/**
 	* get_post_id
@@ -476,7 +480,7 @@ class Metronet_Profile_Picture	{
 						echo '</a>';
 					} else {
 						echo '<a style="display:block" href="#" class="mpp_add_media default-image">';
-						$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', $this->get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
+						$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 						echo $post_thumbnail;
 						echo sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 						echo '</a>';
@@ -488,7 +492,7 @@ class Metronet_Profile_Picture	{
 				?>
 					<a id="metronet-remove" class="<?php echo implode( ' ', $remove_classes ); ?>" href="#" title="<?php esc_attr_e( 'Remove profile image', 'metronet-profile-picture' ); ?>"><?php esc_html_e( "Remove profile image", "metronet-profile-picture" );?></a>
 					<div style="display: none">
-						<?php printf( '<img class="mpp-loading" width="150" height="150" alt="Loading" src="%s" />', esc_url( $this->get_plugin_url( '/img/loading.gif' ) ) ); ?>
+						<?php printf( '<img class="mpp-loading" width="150" height="150" alt="Loading" src="%s" />', esc_url( self::get_plugin_url( '/img/loading.gif' ) ) ); ?>
 					</div>
 				</div><!-- #metronet-profile-image -->
 				<div id="metronet-override-avatar">
@@ -533,7 +537,7 @@ class Metronet_Profile_Picture	{
 		$post_id = $this->get_post_id( $this->get_user_id() );
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
-		wp_enqueue_script( 'mt-pp', $this->get_plugin_url( '/js/mpp.js' ), $script_deps, '20180819', true );
+		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, '20180819', true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
 				'set_profile_text'    => __( 'Set Profile Image', 'metronet-profile-picture' ),
@@ -542,7 +546,7 @@ class Metronet_Profile_Picture	{
 				'ajax_url'            => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'user_post_id'        => absint( $post_id ),
 				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) ),
-				'loading_gif'         => esc_url( $this->get_plugin_url( '/img/loading.gif' ) )
+				'loading_gif'         => esc_url( self::get_plugin_url( '/img/loading.gif' ) )
 			) 
 		);
 		?>

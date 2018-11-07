@@ -35,9 +35,11 @@ var CSS_SOURCE_DIR = path.resolve(__dirname, 'src/css');
 var CSS_BUILD_DIR = path.resolve(__dirname, 'dist/css');
 var JS_SOURCE_DIR = path.resolve(__dirname, 'src/js');
 var JS_BUILD_DIR = path.resolve(__dirname, 'dist/js');
+var GUTENBERG_SOURCE_DIR = path.resolve(__dirname, 'src/gutenberg');
 
 var webpackJSPaths = [
-	'src/js/**/*.js'
+	'src/js/**/*.js',
+	'src/gutenberg/**/*.js'
 ];
 
 var webpackCSSPaths = [
@@ -63,7 +65,6 @@ var phpPaths = [
 
 var jsPaths = [
 	'src/js/*.js',
-	'!src/js/*.js'
 ];
 
 var imgPaths = [
@@ -222,7 +223,7 @@ gulp.task('gutenberg', function () {
 				webpack: 'webpack',
 			},
             entry: {
-				admin: ['idempotent-babel-polyfill', JS_SOURCE_DIR + '/gutenberg/main.js']
+				admin: ['idempotent-babel-polyfill', GUTENBERG_SOURCE_DIR + '/main.js']
             },
             output: {
                 path: JS_BUILD_DIR,
@@ -233,7 +234,7 @@ gulp.task('gutenberg', function () {
                 loaders: [
                     {
                         test: /\.jsx?/,
-						include: JS_SOURCE_DIR,
+						include: GUTENBERG_SOURCE_DIR,
 						exclude: [/\.global/, /bootstrap/, /node_modules/],
                         loader: 'babel-loader',
                         query: {
@@ -268,7 +269,7 @@ gulp.task('gutenbergmin', function () {
 				webpack: 'webpack'
 			},
 			entry: {
-				admin: ['idempotent-babel-polyfill', JS_SOURCE_DIR + '/gutenberg/main.js'],
+				admin: ['idempotent-babel-polyfill', GUTENBERG_SOURCE_DIR + '/main.js'],
 			},
 			output: {
 				path: JS_BUILD_DIR,
@@ -279,7 +280,7 @@ gulp.task('gutenbergmin', function () {
 					{
 						test: /\.jsx?/,
 						exclude: [/\.global/, /bootstrap/, /node_modules/],
-						include: JS_SOURCE_DIR,
+						include: GUTENBERG_SOURCE_DIR,
 						exclude: /node_modules/,
 						loader: 'babel-loader',
 						query: {
