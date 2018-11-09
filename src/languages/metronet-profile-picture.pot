@@ -17,6 +17,10 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: src/js/gutenberg/main.js:36
+msgid "User Profile"
+msgstr ""
+
 #: src/metronet-profile-picture.php:97, src/metronet-profile-picture.php:142, src/metronet-profile-picture.php:158, src/metronet-profile-picture.php:188, src/metronet-profile-picture.php:477, src/metronet-profile-picture.php:483
 msgid "Upload or Change Profile Picture"
 msgstr ""

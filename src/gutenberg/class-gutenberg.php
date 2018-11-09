@@ -28,7 +28,7 @@ class Metronet_Profile_Picture_Gutenberg {
 	}
 
 	public function register_block() {
-		register_block_type( 'mpp/profile', array(
+		register_block_type( 'mpp/user-profile', array(
 			'attributes' => array()
 		) );
 	}
@@ -38,7 +38,7 @@ class Metronet_Profile_Picture_Gutenberg {
 		// Ensure script debug allows non-minified scripts
 		$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
 
-		wp_enqueue_script('mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url('js/gutenberg'.$min_or_not.'.js'), array('wp-blocks', 'wp-element'), METRONET_TAG_MANAGER_VERISON, true);
+		wp_enqueue_script('mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url('js/gutenberg'.$min_or_not.'.js'), array('wp-blocks', 'wp-element'), '20181109', true);
 
 		/* For the Gutenberg plugin */
 		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {

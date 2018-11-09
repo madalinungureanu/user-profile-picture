@@ -35,11 +35,11 @@ var CSS_SOURCE_DIR = path.resolve(__dirname, 'src/css');
 var CSS_BUILD_DIR = path.resolve(__dirname, 'dist/css');
 var JS_SOURCE_DIR = path.resolve(__dirname, 'src/js');
 var JS_BUILD_DIR = path.resolve(__dirname, 'dist/js');
-var GUTENBERG_SOURCE_DIR = path.resolve(__dirname, 'src/gutenberg');
+var GUTENBERG_SOURCE_DIR = path.resolve(__dirname, 'src/js/gutenberg');
 
 var webpackJSPaths = [
 	'src/js/**/*.js',
-	'src/gutenberg/**/*.js'
+	'src/js/gutenberg/**/*.js'
 ];
 
 var webpackCSSPaths = [
