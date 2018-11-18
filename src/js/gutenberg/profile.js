@@ -39,9 +39,10 @@ class MPP_Gutenberg extends Component {
 	render() {
 		return(
 			<Fragment>
-				<PanelBody>
-					Hello World
-				</PanelBody>
+				<Placeholder>
+					{__('Loading...', 'metronet-profile-picture')}
+					<Spinner />
+				</Placeholder>
 			</Fragment>
 		);
 	}
