@@ -57,7 +57,8 @@ class Metronet_Profile_Picture_Gutenberg {
 			'mpp_gutenberg',
 			'mpp_gutenberg',
 			array(
-				'rest_url' => esc_url(rest_url()),
+				'rest_url' => esc_url( rest_url( 'mpp/v2' ) ),
+				'nonce' => wp_create_nonce( 'wp_rest' ),
 			)
 		);
 	}

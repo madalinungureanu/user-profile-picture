@@ -621,7 +621,7 @@ class Metronet_Profile_Picture	{
 			'user',
 			'mpp_avatar',
 			array(
-				'get_callback' =>  array( $this, 'rest_api_add_profile_to_user' )
+				'get_callback' =>  array( $this, 'rest_api_get_profile_for_user' )
 			)
 		);
 		register_rest_route( 
@@ -630,6 +630,17 @@ class Metronet_Profile_Picture	{
 			array(
 				'methods' => 'POST',
 				'callback' =>  array( $this, 'rest_api_put_profile' )
+			)
+		);
+		register_rest_route( 
+			'mpp/v2', 
+			'/get_users',
+			array(
+				'methods' => 'POST',
+				'callback' =>  array( $this, 'rest_api_get_users' ),
+				'permission_callback' => function () {
+					return current_user_can( 'upload_files' );
+				}
 			)
 		);
 		// keep it for backward compatibility
@@ -648,7 +659,57 @@ class Metronet_Profile_Picture	{
 			)
 		);
 	}
+
+	/**
+	 * rest_api_get_users()
+	 *
+	 * Gets users for the Gutenberg block
+	 * 
+	 * @param array $request WP REST API array
+	 **/
+	public function rest_api_get_users( $request ) {
+		$user_query = new WP_User_Query( array( 'who' => 'authors', 'orderby' => 'display_name' ) );
+		$user_results = $user_query->get_results();
+		$return = array();
+		foreach( $user_results as $result ) {
+			//Get attachment ID
+			$profile_post_id = absint( get_user_option( 'metronet_post_id', $result->data->ID ) );
+			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+			if ( ! $post_thumbnail_id ) {
+				$result->data->has_profile_picture = false;
+				$result->data->profile_pictures = array();
+				$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
+				$result->data->description = get_user_meta( $result->data->ID, 'description', true );
+				$return[] = $result->data;
+				continue;
+			}
+			$result->data->has_profile_picture = true;
+			$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
+			$result->data->description = get_user_meta( $result->data->ID, 'description', true );
+			
+			//Get attachment URL
+			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+			
+			$result->data->profile_pictures = array(
+				'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+				'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+				'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'full'=> $attachment_url
+			);
+			$return[] = $result->data;
+		}
+		return $return;
+	}
 	
+	/**
+	 * rest_api_put_profile()
+	 *
+	 * Adds a profile picture to a user
+	 * 
+	 * @param array $request WP REST API array
+	 * 
+	 * @return json image URLs matched to sizes
+	 **/
 	public function rest_api_put_profile( $request ) {
 		
 		$user_id = get_current_user_id();
@@ -681,60 +742,69 @@ class Metronet_Profile_Picture	{
 			'full'=> $attachment_url
 		);
 	}
-		/**
-		* rest_api_get_profile()
-		*
-		* Returns an attachment image ID and profile image if available
-		**/
-		public function rest_api_add_profile_to_user( $object, $field_name, $request ) {
-			$user_id = $object[ 'id' ];
-			$user = get_user_by( 'id', $user_id );
-			if ( ! $user ) {
-				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-			}
+	/**
+	* rest_api_get_profile()
+	*
+	* Returns an attachment image ID and profile image if available
+	**/
+	public function rest_api_get_profile_for_user( $object, $field_name, $request ) {
+		$user_id = $object[ 'id' ];
+		$user = get_user_by( 'id', $user_id );
+		if ( ! $user ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		}
 
-			// No capability check here because we're just returning user profile data
-			
-			//Get attachment ID
-			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-			if ( ! $post_thumbnail_id ) {
-				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-			}
-			
-			//Get attachment URL
-			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-			
-			return array(
-				'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
-				'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
-				'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
-				'full'=> $attachment_url
-			);
+		// No capability check here because we're just returning user profile data
+		
+		//Get attachment ID
+		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+		if ( ! $post_thumbnail_id ) {
+			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 		}
+		
+		//Get attachment URL
+		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+		
+		return array(
+			'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+			'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+			'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+			'full'=> $attachment_url
+		);
+	}
 	
-		public function rest_api_get_profile( $data ) {
-			$user_id = $data[ 'id' ];
-			$user = get_user_by( 'id', $user_id );
-			if ( ! $user ) {
-				return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-			}
-			
-			//Get attachment ID
-			$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-			if ( ! $post_thumbnail_id ) {
-				return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
-			}
-			
-			//Get attachment URL
-			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-			
-			return array(
-				'attachment_id'  => $post_thumbnail_id,
-				'attachment_url' => $attachment_url
-			);
+	/**
+	 * rest_api_get_profile()
+	 *
+	 * Returns a profile for the user
+	 * 
+	 * @param array $data WP REST API array
+	 * 
+	 * @return json image URLs matched to sizes
+	 **/
+	public function rest_api_get_profile( $data ) {
+		$user_id = $data[ 'id' ];
+		$user = get_user_by( 'id', $user_id );
+		if ( ! $user ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 		}
+		
+		//Get attachment ID
+		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
+		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
+		if ( ! $post_thumbnail_id ) {
+			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		}
+		
+		//Get attachment URL
+		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
+		
+		return array(
+			'attachment_id'  => $post_thumbnail_id,
+			'attachment_url' => $attachment_url
+		);
+	}
 	
 	/**
 	* rest_api_validate()
