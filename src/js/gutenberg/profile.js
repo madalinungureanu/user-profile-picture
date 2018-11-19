@@ -18,16 +18,17 @@ const {
 	Toolbar,
 	withAPIData,
 	ColorPalette,
+	Button,
 } = wp.components;
 
 const {
 	InspectorControls,
-	BlockAlignmentToolbar,
 	BlockControls,
+	MediaUpload,
+	RichText,
+	AlignmentToolbar,
 } = wp.editor;
 
-
-const MAX_POSTS_COLUMNS = 4;
 
 class MPP_Gutenberg extends Component {
 	constructor() {
@@ -38,6 +39,7 @@ class MPP_Gutenberg extends Component {
 			users: false,
 			user_list: false,
 			profile_picture: false,
+			profile_picture_id: 0,
 			active_user: false,
 		};
 	}
@@ -47,6 +49,7 @@ class MPP_Gutenberg extends Component {
 			let user_list = Array();
 			let active_user = 0;
 			let profile_picture = '';
+			let profile_picture_id = 0;
 			$.each( response.data, function( key, value ) {
 				users[value.ID] = {
 					profile_pictures: value.profile_pictures,
@@ -56,11 +59,17 @@ class MPP_Gutenberg extends Component {
 					is_user_logged_in: value.is_user_logged_in
 				};
 				if( value.is_user_logged_in ) {
-					active_user = value.ID
+					active_user = value.ID;
+					if( value.has_profile_picture ) {
+						profile_picture = value.profile_pictures[96];
+						profile_picture_id = value.profile_picture_id;
+					} else {
+						profile_picture = value.default_image;
+						console.log(profile_picture);
+						profile_picture_id = 0;
+					}
 				}
-				if( value.has_profile_picture ) {
-					profile_picture = value.profile_pictures[0];
-				}
+				
 				user_list.push( { value: value.ID, label: value.display_name });
 			} );
 			this.setState(
@@ -69,6 +78,7 @@ class MPP_Gutenberg extends Component {
 					users: users,
 					user_list: user_list,
 					profile_picture: profile_picture,
+					profile_picture_id: profile_picture_id,
 					active_user: active_user
 				}
 			);
@@ -78,6 +88,39 @@ class MPP_Gutenberg extends Component {
 		this.get_users();
 	}
 	render() {
+		// Setup the attributes
+		let {
+			attributes: {
+				profileName,
+				profileTitle,
+				profileContent,
+				profileAlignment,
+				profileImgURL,
+				profileImgID,
+				profileFontSize,
+				profileBackgroundColor,
+				profileTextColor,
+				profileLinkColor,
+				twitter,
+				facebook,
+				instagram,
+				pinterest,
+				google,
+				youtube,
+				github,
+				email,
+				website,
+				profileAvatarShape
+			},
+			attributes,
+			isSelected,
+			editable,
+			className,
+			setAttributes
+		} = this.props;
+		let profile_pictures = this.state.profile_pictures;
+		profileImgID = this.state.profile_picture_id;
+		profileImgURL = this.state.profile_picture;
 		return(
 			<Fragment>
 				{this.state.loading && 
@@ -100,7 +143,33 @@ class MPP_Gutenberg extends Component {
 								/>
 							</PanelBody>
 						</InspectorControls>
-						<div>Hello World</div>
+						<div className="mpp-profile-image-wrapper">
+							<div className="mpp-profile-image-square">
+								<MediaUpload
+									buttonProps={ {
+										className: 'change-image'
+									} }
+									onSelect={ ( img ) => setAttributes(
+										{
+											profileImgID: profileImgID,
+											profileImgURL: profileImgURL,
+										}
+									) }
+									type="image"
+									value={ profileImgID }
+									render={ ( { open } ) => (
+										<Button onClick={ open }>
+											{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+												class="profile-avatar"
+												src={ profileImgURL }
+												alt="avatar"
+											/>  }
+										</Button>
+									) }
+								>
+							</MediaUpload>
+						</div>
+					</div>
 					</Fragment>
 				}
 			</Fragment>

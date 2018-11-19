@@ -20,6 +20,83 @@ const { Component, Fragment } = wp.element;
 
 export const name = 'mpp/user-profile';
 
+const blockAttributes = {
+	profileName: {
+		type: 'array',
+		source: 'children',
+		selector: '.ab-profile-name',
+	},
+	profileTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ab-profile-title',
+	},
+	profileContent: {
+		type: 'array',
+		selector: '.ab-profile-text',
+		source: 'children',
+	},
+	profileAlignment: {
+		type: 'string',
+	},
+	profileImgURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: 'img',
+	},
+	profileImgID: {
+		type: 'number',
+	},
+	profileBackgroundColor: {
+		type: 'string',
+		default: '#f2f2f2'
+	},
+	profileTextColor: {
+		type: 'string',
+		default: '#32373c'
+	},
+	profileLinkColor: {
+		type: 'string',
+		default: '#392f43'
+	},
+	profileFontSize: {
+		type: 'number',
+		default: 18
+	},
+	profileAvatarShape: {
+		type: 'string',
+		default: 'square',
+	},
+	twitter: {
+		type: 'url',
+	},
+	facebook: {
+		type: 'url',
+	},
+	instagram: {
+		type: 'url',
+	},
+	pinterest: {
+		type: 'url',
+	},
+	google: {
+		type: 'url',
+	},
+	youtube: {
+		type: 'url',
+	},
+	github: {
+		type: 'url',
+	},
+	email: {
+		type: 'url',
+	},
+	website: {
+		type: 'url',
+	},
+};
+
 /**
  * Register Basic Block.
  *
@@ -36,7 +113,9 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 	title: __( 'User Profile', 'metronet-profile-picture' ), // Block title.
 	icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"/><path d="M0 0h24v24H0z" fill="none"/></svg>,
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-
+	// Setup the block attributes
+	attributes: blockAttributes,
+	
 	edit: edit,
 
 	// Render via PHP

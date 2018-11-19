@@ -677,6 +677,8 @@ class Metronet_Profile_Picture	{
 			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 			if ( ! $post_thumbnail_id ) {
 				$result->data->has_profile_picture = false;
+				$result->data->profile_picture_id = 0;
+				$result->data->default_image = self::get_plugin_url( 'img/mystery.png' );
 				$result->data->profile_pictures = array();
 				$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
 				$result->data->description = get_user_meta( $result->data->ID, 'description', true );
@@ -690,11 +692,13 @@ class Metronet_Profile_Picture	{
 			//Get attachment URL
 			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
 			
+			$result->data->profile_picture_id = $post_thumbnail_id;
+			$result->data->default_image = self::get_plugin_url( 'img/mystery.png' );
 			$result->data->profile_pictures = array(
-				'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
-				'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
-				'96'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
-				'full'=> $attachment_url
+				'24'      => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+				'48'      => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+				'96'      => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'full'    => $attachment_url,
 			);
 			$return[] = $result->data;
 		}
