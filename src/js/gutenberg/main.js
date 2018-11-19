@@ -51,6 +51,10 @@ const blockAttributes = {
 		type: 'number',
 		default: '',
 	},
+	profileURL: {
+		type: 'string',
+		default: '',
+	},
 	profileBackgroundColor: {
 		type: 'string',
 		default: '#f2f2f2'
@@ -70,6 +74,18 @@ const blockAttributes = {
 	profileAvatarShape: {
 		type: 'string',
 		default: 'square',
+	},
+	showName: {
+		type: 'bool',
+		default: true,
+	},
+	showTitle: {
+		type: 'bool',
+		default: true,
+	},
+	showDescription: {
+		type: 'bool',
+		default: true,
 	},
 	user_id: {
 		type: 'number',

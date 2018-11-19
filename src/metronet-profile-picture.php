@@ -707,6 +707,7 @@ class Metronet_Profile_Picture	{
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
 			);
+			$result->data->permalink = get_author_posts_url( $result->data->ID );
 			$return[$result->data->ID] = $result->data;
 		}
 		return $return;

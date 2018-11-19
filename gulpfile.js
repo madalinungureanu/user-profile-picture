@@ -146,8 +146,10 @@ gulp.task('scss_compile', function(){
 	return gulp.src(scssPaths)
 	.pipe(plumber(reportError))
 	.pipe(sourcemaps.init())
-	.pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
-  	.pipe(sass())
+	.pipe(postcss([
+		require('postcss-nested')
+	  ], {syntax: require('postcss-scss')}))  	
+	.pipe(sass())
 	.pipe(plumber(reportError))
 	.pipe(gulp.dest('dist/css'))
 	.pipe(uglifycss({'maxLineLen': 0, 'uglyComments': true}))
