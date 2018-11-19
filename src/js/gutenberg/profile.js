@@ -50,6 +50,8 @@ class MPP_Gutenberg extends Component {
 			let active_user = 0;
 			let profile_picture = '';
 			let profile_picture_id = 0;
+			let profile_title = '';
+			let profile_description = '';
 			$.each( response.data, function( key, value ) {
 				users[value.ID] = {
 					profile_pictures: value.profile_pictures,
@@ -63,8 +65,11 @@ class MPP_Gutenberg extends Component {
 				if( value.is_user_logged_in ) {
 					active_user = value.ID;
 					if( value.has_profile_picture ) {
+						console.log(value);
 						profile_picture = value.profile_pictures['thumbnail'];
 						profile_picture_id = value.profile_picture_id;
+						profile_title = value.display_name;
+						profile_description = value.description;
 					} else {
 						profile_picture = value.default_image;
 						profile_picture_id = 0;
@@ -80,7 +85,9 @@ class MPP_Gutenberg extends Component {
 					user_list: user_list,
 					profile_picture: profile_picture,
 					profile_picture_id: profile_picture_id,
-					active_user: active_user
+					active_user: active_user,
+					profile_title: profile_title,
+					profile_description: profile_description
 				}
 			);
 		});
@@ -98,6 +105,8 @@ class MPP_Gutenberg extends Component {
 		}
 		this.setState(
 			{
+				profile_title: this.state.users[user_id].nicename,
+				profile_description: this.state.users[user_id].description,
 				profile_picture: profile_picture,
 				profile_picture_id: profile_picture_id,
 				active_user: user_id
@@ -122,15 +131,6 @@ class MPP_Gutenberg extends Component {
 				profileBackgroundColor,
 				profileTextColor,
 				profileLinkColor,
-				twitter,
-				facebook,
-				instagram,
-				pinterest,
-				google,
-				youtube,
-				github,
-				email,
-				website,
 				profileAvatarShape
 			},
 			attributes,
@@ -142,6 +142,8 @@ class MPP_Gutenberg extends Component {
 		let profile_pictures = this.state.profile_pictures;
 		profileImgID = this.state.profile_picture_id;
 		profileImgURL = this.state.profile_picture;
+		profileName = this.state.profile_title;
+		profileContent = '<p>' + this.state.profile_description + '</p>';
 		return(
 			<Fragment>
 				{this.state.loading && 
@@ -169,34 +171,72 @@ class MPP_Gutenberg extends Component {
 								value={ profileAlignment }
 								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
 							/>
-						</BlockControls>,
-						<div className="mpp-profile-image-wrapper">
-							<div className="mpp-profile-image-square">
-								<MediaUpload
-									buttonProps={ {
-										className: 'change-image'
+						</BlockControls>
+						<div className="mpp-profile-gutenberg-wrap">
+							<div className="mpp-profile-image-wrapper">
+								<div className="mpp-profile-image-square">
+									<MediaUpload
+										buttonProps={ {
+											className: 'change-image'
+										} }
+										onSelect={ ( img ) => setAttributes(
+											{
+												profileImgID: profileImgID,
+												profileImgURL: profileImgURL,
+											}
+										) }
+										type="image"
+										value={ profileImgID }
+										render={ ( { open } ) => (
+											<Button onClick={ open }>
+												{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+													class="profile-avatar"
+													src={ profileImgURL }
+													alt="avatar"
+												/>  }
+											</Button>
+										) }
+									>
+									</MediaUpload>
+								</div>
+							</div>
+							<div className="mpp-content-wrap">
+								<RichText
+									tagName="h2"
+									placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
+									keepPlaceholderOnFocus
+									value={ profileName }
+									className='mpp-profile-name'
+									style={ {
+										color: profileTextColor
 									} }
-									onSelect={ ( img ) => setAttributes(
-										{
-											profileImgID: profileImgID,
-											profileImgURL: profileImgURL,
-										}
-									) }
-									type="image"
-									value={ profileImgID }
-									render={ ( { open } ) => (
-										<Button onClick={ open }>
-											{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-												class="profile-avatar"
-												src={ profileImgURL }
-												alt="avatar"
-											/>  }
-										</Button>
-									) }
-								>
-							</MediaUpload>
+									onChange={ ( value ) => setAttributes( { profileName: value } ) }
+								/>
+
+								<RichText
+									tagName="p"
+									placeholder={ __( 'Add title', 'atomic-blocks' ) }
+									keepPlaceholderOnFocus
+									value={ profileTitle }
+									className='mpp-profile-title'
+									style={ {
+										color: profileTextColor
+									} }
+									onChange={ ( value ) => setAttributes( { profileTitle: value } ) }
+								/>
+
+								<RichText
+									tagName="div"
+									className='mpp-profile-text'
+									multiline="p"
+									placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
+									keepPlaceholderOnFocus
+									value={ profileContent }
+									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+									onChange={ ( value ) => setAttributes( { profileContent: value } ) }
+								/>
+							</div>
 						</div>
-					</div>
 					</Fragment>
 				}
 			</Fragment>

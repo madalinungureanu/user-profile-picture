@@ -1,0 +1,42 @@
+.mpp-profile-gutenberg-wrap {
+	background: #f2f2f2;
+	color: #293038;
+	margin: 0 auto;
+	padding: 3%;
+	border-radius: 5px;
+	margin-bottom: 1.2em;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+	width: 100%;
+	margin-bottom: 20px;
+}
+.mpp-profile-image-wrapper {
+	position: relative;
+	z-index: 0;
+	-ms-flex: 1 0 0px;
+	flex: 1 0 0;
+}
+.mpp-content-wrap {
+	display: block;
+	padding: 15px;
+	-ms-flex: 3 0 0px;
+	flex: 3 0 0;
+}
+.mpp-profile-name {
+	font: 1.4em;
+	line-height: 1.2;
+}
+.editor-styles-wrapper p.mpp-profile-title {
+	font-size: 18px;
+}
+.editor-styles-wrapper .mpp-profile-text {
+	font-size: 18px;
+	padding-top: 1em;
+	p {
+		font-size: 18px;
+	}
+}

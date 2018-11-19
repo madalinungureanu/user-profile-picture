@@ -4,14 +4,14 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 1.5.5
+Version: 2.0.0
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */ 
-
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.0.0' );
 class Metronet_Profile_Picture	{	
 	
 	//private
@@ -670,8 +670,10 @@ class Metronet_Profile_Picture	{
 	public function rest_api_get_users( $request ) {
 		$user_query = new WP_User_Query( array( 'who' => 'authors', 'orderby' => 'display_name' ) );
 		$user_results = $user_query->get_results();
+		error_log( print_r( $user_results, true ) );
 		$return = array();
 		foreach( $user_results as $result ) {
+			error_log(print_r($result, true ) );
 			//Get attachment ID
 			$profile_post_id = absint( get_user_option( 'metronet_post_id', $result->data->ID ) );
 			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
@@ -683,10 +685,11 @@ class Metronet_Profile_Picture	{
 					'avatar' => get_avatar( $result->data->ID ),
 				);
 				$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
-				$result->data->description = get_user_meta( $result->data->ID, 'description', true );
 				$return[$result->data->ID] = $result->data;
 				continue;
 			}
+			$result->data->description = get_user_meta( $result->data->ID, 'description', true );
+			$result->data->display_name = $result->data->display_name;
 			$result->data->has_profile_picture = true;
 			$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
 			$result->data->description = get_user_meta( $result->data->ID, 'description', true );
