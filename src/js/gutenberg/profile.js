@@ -62,26 +62,34 @@ class MPP_Gutenberg extends Component {
 					profile_picture_id: value.profile_picture_id,
 					default_image: value.default_image
 				};
-				if( value.is_user_logged_in ) {
+				if ( value.is_user_logged_in ) {
 					active_user = value.ID;
-					if( value.has_profile_picture ) {
-						console.log(value);
-						profile_picture = value.profile_pictures['thumbnail'];
-						profile_picture_id = value.profile_picture_id;
-						profile_title = value.display_name;
-						profile_description = value.description;
-					} else {
-						profile_picture = value.default_image;
-						profile_picture_id = 0;
-					}
 				}
-				
 				user_list.push( { value: value.ID, label: value.display_name });
 			} );
+			if( this.props.attributes.user_id !== 0 ) {
+				active_user = this.props.attributes.user_id;
+			}
+			let active_user_profile = users[active_user];
+			if( active_user_profile.has_profile_picture ) {
+				profile_picture = active_user_profile.profile_pictures['thumbnail'];
+				profile_picture_id = active_user_profile.profile_picture_id;
+				profile_title = active_user_profile.display_name;
+				profile_description = active_user_profile.description;
+			} else {
+				profile_title = active_user_profile.display_name;
+				profile_description = active_user_profile.description;
+				profile_picture = active_user_profile.default_image;
+				profile_picture_id = 0;
+			}
+			if( undefined == profile_description ) {
+				profile_description = '';
+			}
 			this.setState(
 				{
 					loading: false,
 					users: users,
+					active_user: active_user,
 					user_list: user_list,
 					profile_picture: profile_picture,
 					profile_picture_id: profile_picture_id,
@@ -131,7 +139,8 @@ class MPP_Gutenberg extends Component {
 				profileBackgroundColor,
 				profileTextColor,
 				profileLinkColor,
-				profileAvatarShape
+				profileAvatarShape,
+				user_id,
 			},
 			attributes,
 			isSelected,

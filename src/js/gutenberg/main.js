@@ -68,33 +68,10 @@ const blockAttributes = {
 		type: 'string',
 		default: 'square',
 	},
-	twitter: {
-		type: 'url',
-	},
-	facebook: {
-		type: 'url',
-	},
-	instagram: {
-		type: 'url',
-	},
-	pinterest: {
-		type: 'url',
-	},
-	google: {
-		type: 'url',
-	},
-	youtube: {
-		type: 'url',
-	},
-	github: {
-		type: 'url',
-	},
-	email: {
-		type: 'url',
-	},
-	website: {
-		type: 'url',
-	},
+	user_id: {
+		type: 'number',
+		default: 0
+	}
 };
 
 /**
@@ -118,8 +95,52 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 	
 	edit: edit,
 
-	// Render via PHP
-	save() {
-		return null;
+	save( props ) {
+		const { profileName, profileTitle, profileContent, profileAlignment, profileImgURL, profileImgID, profileFontSize, profileBackgroundColor, profileTextColor, profileLinkColor, profileAvatarShape, user_id } = props.attributes;
+
+		return(
+			<div className="mpp-profile-gutenberg-wrap">
+				<div className="mpp-profile-image-wrapper">
+					<div className="mpp-profile-image-square">
+						<img 
+							className="mpp-profile-avatar"
+							src={profileImgURL}
+							alt="avatar"
+						/>
+					</div>
+				</div>
+				<div className="mpp-content-wrap">
+					{ profileName && !! profileName.length && (
+						<RichText.Content
+							tagName="h2"
+							className="mpp-profile-name"
+							style={ {
+								color: profileTextColor
+							} }
+							value={ profileName }
+						/>
+					) }
+
+					{ profileTitle && !! profileTitle.length && (
+						<RichText.Content
+							tagName="p"
+							className="mpp-profile-title"
+							style={ {
+								color: profileTextColor
+							} }
+							value={ profileTitle }
+						/>
+					) }
+
+					{ profileContent && !! profileContent.length && (
+						<RichText.Content
+							tagName="div"
+							className="mpp-profile-text"
+							value={ profileContent }
+						/>
+					) }
+				</div>
+			</div>
+		)
 	},
 } );
