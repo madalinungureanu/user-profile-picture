@@ -71,17 +71,16 @@ class MPP_Gutenberg extends Component {
 				active_user = this.props.attributes.user_id;
 			}
 			let active_user_profile = users[active_user];
-			console.log(this.props);
 			if( active_user_profile.has_profile_picture ) {
-				profile_picture = active_user_profile.profile_pictures['thumbnail'];
-				profile_picture_id = active_user_profile.profile_picture_id;
+				profile_picture = this.props.attributes.profileImgURL.length > 0 ? this.props.attributes.profileImgURL : active_user_profile.profile_pictures['thumbnail'];
+				profile_picture_id = this.props.attributes.profileImgID.length > 0 ? this.props.attributes.profileImgID : active_user_profile.profile_picture_id;
 				profile_title = this.props.attributes.profileName.length > 0 ? this.props.attributes.profileName :  active_user_profile.display_name;
 				profile_description = this.props.attributes.profileContent.length > 0 ? this.props.attributes.profileContent : active_user_profile.description;
 			} else {
 				profile_title = this.props.attributes.profileName.length > 0 ? this.props.attributes.profileName :  active_user_profile.display_name;
 				profile_description = this.props.attributes.profileContent.length > 0 ? this.props.attributes.profileContent : active_user_profile.description;
-				profile_picture = active_user_profile.default_image;
-				profile_picture_id = 0;
+				profile_picture = this.props.attributes.profileImgURL.length > 0 ? this.props.attributes.profileImgURL : active_user_profile.default_image;
+				profile_picture_id = this.props.attributes.profileImgID.length > 0 ? this.props.attributes.profileImgID : 0;
 			}
 			if( undefined == profile_description ) {
 				profile_description = '';
@@ -129,6 +128,12 @@ class MPP_Gutenberg extends Component {
 	componentDidMount = () => {
 		this.get_users();
 	}
+	handleImageChange = ( image_id, image_url ) => {
+		this.setState( {
+			profile_picture: image_url,
+			profile_picture_id: image_id,
+		} );
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -154,8 +159,8 @@ class MPP_Gutenberg extends Component {
 			setAttributes
 		} = this.props;
 		let profile_pictures = this.state.profile_pictures;
-		profileImgID = profileImgID.length > 0 ? profileImgID : this.state.profile_picture_id;
-		profileImgURL = profileImgURL.length > 0 ? profileImgURL : this.state.profile_picture;
+		profileImgID = this.state.profile_picture_id;
+		profileImgURL = this.state.profile_picture;
 		profileName = this.state.profile_title;
 		profileContent = this.state.profile_description;
 		return(
@@ -193,12 +198,7 @@ class MPP_Gutenberg extends Component {
 										buttonProps={ {
 											className: 'change-image'
 										} }
-										onSelect={ ( img ) => setAttributes(
-											{
-												profileImgID: profileImgID,
-												profileImgURL: profileImgURL,
-											}
-										) }
+										onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
 										type="image"
 										value={ profileImgID }
 										render={ ( { open } ) => (
