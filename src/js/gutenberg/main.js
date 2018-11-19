@@ -201,6 +201,7 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 							) }
 						</div>
 					</div>
+					{profileURL && !! profileURL.length &&
 					<div className="mpp-gutenberg-view-posts">
 					{showViewPosts &&
 						<div 
@@ -220,6 +221,7 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 						</div>
 						}
 					</div>
+					}
 				</div>
 			</Fragment>
 		)

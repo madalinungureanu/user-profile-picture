@@ -394,6 +394,7 @@ class MPP_Gutenberg extends Component {
 									}
 								</div>
 							</div>
+							{profileURL && !! profileURL.length &&
 							<div className="mpp-gutenberg-view-posts">
 							{showViewPosts &&
 								<div 
@@ -413,6 +414,7 @@ class MPP_Gutenberg extends Component {
 								</div>
 								}
 							</div>
+							}
 						</div>
 					</Fragment>
 				}

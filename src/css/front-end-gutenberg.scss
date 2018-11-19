@@ -25,6 +25,10 @@
 	-ms-flex-pack: distribute;
 	justify-content: space-around;
 	width: 100%;
+
+	@media only screen and (max-width: 600px) {
+		flex: auto;
+	}
 }
 .editor-styles-wrapper .mpp-profile-gutenberg-wrap {
 	h2, 
@@ -80,6 +84,10 @@ $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 		width: 100%;
 		position: relative;
 		z-index: 5;
+	}
+
+	@media only screen and (max-width: 600px) {
+		flex: auto;
 	}
 }
 .mpp-profile-view-posts {
