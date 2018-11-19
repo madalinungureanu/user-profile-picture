@@ -20,21 +20,22 @@ const { Component, Fragment } = wp.element;
 
 export const name = 'mpp/user-profile';
 
+const {
+	RichText,
+} = wp.editor;
+
 const blockAttributes = {
 	profileName: {
-		type: 'array',
-		source: 'children',
-		selector: '.ab-profile-name',
+		type: 'string',
+		default: ''
 	},
 	profileTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ab-profile-title',
+		type: 'string',
+		default: ''
 	},
 	profileContent: {
-		type: 'array',
-		selector: '.ab-profile-text',
-		source: 'children',
+		type: 'string',
+		default: ''
 	},
 	profileAlignment: {
 		type: 'string',
@@ -44,9 +45,11 @@ const blockAttributes = {
 		source: 'attribute',
 		attribute: 'src',
 		selector: 'img',
+		default: '',
 	},
 	profileImgID: {
 		type: 'number',
+		default: '',
 	},
 	profileBackgroundColor: {
 		type: 'string',
