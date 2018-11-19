@@ -87,6 +87,10 @@ const blockAttributes = {
 		type: 'bool',
 		default: true,
 	},
+	showViewPosts: {
+		type: 'bool',
+		default: true,
+	},
 	user_id: {
 		type: 'number',
 		default: 0

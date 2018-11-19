@@ -174,6 +174,7 @@ class MPP_Gutenberg extends Component {
 				showTitle,
 				showName,
 				showDescription,
+				showViewPosts,
 				user_id,
 			},
 			attributes,
@@ -223,6 +224,11 @@ class MPP_Gutenberg extends Component {
 									label={ __( 'Show Description', 'metronet-profile-picture' ) }
 									checked={ showDescription }
 									onChange={ () => this.props.setAttributes( { showDescription: ! showDescription } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
+									checked={ showViewPosts }
+									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
 								/>
 								<RangeControl
 									label={ __( 'Font Size', 'metronet-profile-picture' ) }
@@ -307,9 +313,11 @@ class MPP_Gutenberg extends Component {
 								/>
 								}
 							</div>
+							{showViewPosts &&
 							<div class="mpp-profile-view-posts">
 								<a href={profileURL}>{__('View Posts', 'metronet-profile-picture')}</a>
 							</div>
+							}
 						</div>
 					</Fragment>
 				}
