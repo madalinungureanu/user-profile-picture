@@ -22,7 +22,7 @@
 }
 .mpp-content-wrap {
 	display: block;
-	padding: 15px;
+	padding: 0 15px 0 15px;
 	-ms-flex: 3 0 0px;
 	flex: 3 0 0;
 }
@@ -35,7 +35,6 @@
 }
 .editor-styles-wrapper .mpp-profile-text {
 	font-size: 18px;
-	padding-top: 1em;
 	p {
 		font-size: 18px;
 	}
