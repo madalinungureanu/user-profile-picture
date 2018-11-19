@@ -56,16 +56,17 @@ class MPP_Gutenberg extends Component {
 					has_profile_picture: value.has_profile_picture,
 					display_name: value.display_name,
 					description: value.description,
-					is_user_logged_in: value.is_user_logged_in
+					is_user_logged_in: value.is_user_logged_in,
+					profile_picture_id: value.profile_picture_id,
+					default_image: value.default_image
 				};
 				if( value.is_user_logged_in ) {
 					active_user = value.ID;
 					if( value.has_profile_picture ) {
-						profile_picture = value.profile_pictures[96];
+						profile_picture = value.profile_pictures['thumbnail'];
 						profile_picture_id = value.profile_picture_id;
 					} else {
 						profile_picture = value.default_image;
-						console.log(profile_picture);
 						profile_picture_id = 0;
 					}
 				}
@@ -84,6 +85,25 @@ class MPP_Gutenberg extends Component {
 			);
 		});
 	}
+	on_user_change = ( user_id ) => {
+		let user = this.state.users[user_id];
+		let profile_picture = '';
+		let profile_picture_id = 0;
+		if( !user.has_profile_picture ) {
+			profile_picture = mpp_gutenberg.mystery_man;
+			profile_picture_id = 0;
+		} else {
+			profile_picture = this.state.users[user_id]['profile_pictures']['thumbnail']
+			profile_picture_id = this.state.users[user_id]['profile_picture_id'];
+		}
+		this.setState(
+			{
+				profile_picture: profile_picture,
+				profile_picture_id: profile_picture_id,
+				active_user: user_id
+			}
+		);
+	}
 	componentDidMount = () => {
 		this.get_users();
 	}
@@ -91,6 +111,7 @@ class MPP_Gutenberg extends Component {
 		// Setup the attributes
 		let {
 			attributes: {
+				profileId,
 				profileName,
 				profileTitle,
 				profileContent,
@@ -143,6 +164,12 @@ class MPP_Gutenberg extends Component {
 								/>
 							</PanelBody>
 						</InspectorControls>
+						<BlockControls key="controls">
+							<AlignmentToolbar
+								value={ profileAlignment }
+								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
+							/>
+						</BlockControls>,
 						<div className="mpp-profile-image-wrapper">
 							<div className="mpp-profile-image-square">
 								<MediaUpload
