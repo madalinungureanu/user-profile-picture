@@ -1,10 +1,23 @@
-.mpp-profile-gutenberg-wrap {
-	background: #f2f2f2;
-	color: #293038;
+.mpp-profile-wrap {
 	margin: 0 auto;
 	padding: 3%;
 	border-radius: 5px;
 	margin-bottom: 1.2em;
+	margin-bottom: 20px;
+
+	&.round .mpp-profile-image-wrapper {
+		border-radius: 500px;
+		overflow: hidden;
+	}
+	&.round .mpp-profile-image-wrapper img {
+		border-radius: 500px;
+	}
+	&.right .mpp-profile-image-wrapper {
+		text-align: right;
+		order: 2;
+	}
+}
+.mpp-profile-gutenberg-wrap {
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-flow: row wrap;
@@ -12,7 +25,6 @@
 	-ms-flex-pack: distribute;
 	justify-content: space-around;
 	width: 100%;
-	margin-bottom: 20px;
 }
 .editor-styles-wrapper .mpp-profile-gutenberg-wrap {
 	h2, 

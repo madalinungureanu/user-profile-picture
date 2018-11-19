@@ -20,6 +20,9 @@ const { Component, Fragment } = wp.element;
 
 export const name = 'mpp/user-profile';
 
+// Import block dependencies and components
+import classnames from 'classnames';
+
 const {
 	RichText,
 } = wp.editor;
@@ -63,9 +66,17 @@ const blockAttributes = {
 		type: 'string',
 		default: '#32373c'
 	},
-	profileLinkColor: {
+	profileViewPostsBackgroundColor: {
 		type: 'string',
-		default: '#392f43'
+		default: '#cf6d38'
+	},
+	profileViewPostsTextColor: {
+		type: 'string',
+		default: '#FFFFFF'
+	},
+	profileViewPostsWidth: {
+		type: 'number',
+		default: 100
 	},
 	profileFontSize: {
 		type: 'number',
@@ -119,51 +130,98 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 	edit: edit,
 
 	save( props ) {
-		const { profileName, profileTitle, profileContent, profileAlignment, profileImgURL, profileImgID, profileFontSize, profileBackgroundColor, profileTextColor, profileLinkColor, profileAvatarShape, user_id } = props.attributes;
+		const { profileName, profileTitle, profileContent, profileAlignment, profileImgURL, profileImgID, profileFontSize, profileBackgroundColor, profileTextColor, profileLinkColor, profileAvatarShape, profileViewPostsBackgroundColor, profileViewPostsTextColor, profileURL, showTitle, showName, showDescription, showViewPosts } = props.attributes;
 
 		return(
-			<div className="mpp-profile-gutenberg-wrap">
-				<div className="mpp-profile-image-wrapper">
-					<div className="mpp-profile-image-square">
-						<img 
-							className="mpp-profile-avatar"
-							src={profileImgURL}
-							alt="avatar"
-						/>
+			<Fragment>
+				<div 
+					className={
+						classnames(
+							'mpp-profile-wrap',
+							profileAlignment,
+							profileAvatarShape,
+							'mt-font-size-' + profileFontSize,
+							'mpp-block-profile'
+						)
+					}
+					style={ {
+						backgroundColor: profileBackgroundColor,
+						color: profileTextColor,
+					} }
+				>
+					<div className={
+								classnames(
+									'mpp-profile-gutenberg-wrap',
+									'mpp-block-profile'
+								)
+							}
+							style={ {
+								backgroundColor: profileBackgroundColor,
+								color: profileTextColor,
+							} }
+						>
+						<div className="mpp-profile-image-wrapper">
+							<div className="mpp-profile-image-square">
+								<img 
+									className="mpp-profile-avatar"
+									src={profileImgURL}
+									alt="avatar"
+								/>
+							</div>
+						</div>
+						<div className="mpp-content-wrap">
+							{ profileName && !! profileName.length && showName && (
+								<RichText.Content
+									tagName="h2"
+									className="mpp-profile-name"
+									style={ {
+										color: profileTextColor
+									} }
+									value={ profileName }
+								/>
+							) }
+
+							{ profileTitle && !! profileTitle.length && showTitle && (
+								<RichText.Content
+									tagName="p"
+									className="mpp-profile-title"
+									style={ {
+										color: profileTextColor
+									} }
+									value={ profileTitle }
+								/>
+							) }
+
+							{ profileContent && !! profileContent.length && showDescription && (
+								<RichText.Content
+									tagName="div"
+									className="mpp-profile-text"
+									value={ profileContent }
+								/>
+							) }
+						</div>
+					</div>
+					<div className="mpp-gutenberg-view-posts">
+					{showViewPosts &&
+						<div 
+							className="mpp-profile-view-posts"
+							style={ {
+								backgroundColor: profileViewPostsBackgroundColor,
+								color: profileViewPostsTextColor,
+							} }
+						>
+							<a 
+								href={profileURL}
+								style={ {
+									backgroundColor: profileViewPostsBackgroundColor,
+									color: profileViewPostsTextColor,
+								} }
+							>{__('View Posts', 'metronet-profile-picture')}</a>
+						</div>
+						}
 					</div>
 				</div>
-				<div className="mpp-content-wrap">
-					{ profileName && !! profileName.length && (
-						<RichText.Content
-							tagName="h2"
-							className="mpp-profile-name"
-							style={ {
-								color: profileTextColor
-							} }
-							value={ profileName }
-						/>
-					) }
-
-					{ profileTitle && !! profileTitle.length && (
-						<RichText.Content
-							tagName="p"
-							className="mpp-profile-title"
-							style={ {
-								color: profileTextColor
-							} }
-							value={ profileTitle }
-						/>
-					) }
-
-					{ profileContent && !! profileContent.length && (
-						<RichText.Content
-							tagName="div"
-							className="mpp-profile-text"
-							value={ profileContent }
-						/>
-					) }
-				</div>
-			</div>
+			</Fragment>
 		)
 	},
 } );

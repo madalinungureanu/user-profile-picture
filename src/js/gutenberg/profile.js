@@ -27,6 +27,7 @@ const {
 	MediaUpload,
 	RichText,
 	AlignmentToolbar,
+	PanelColorSettings,
 } = wp.editor;
 
 // Import block dependencies and components
@@ -44,6 +45,9 @@ class MPP_Gutenberg extends Component {
 			profile_picture: false,
 			profile_picture_id: 0,
 			active_user: false,
+			profile_description: '',
+			profile_name: '',
+			profile_title: '',
 		};
 	}
 	get_users = () => {
@@ -110,6 +114,12 @@ class MPP_Gutenberg extends Component {
 					profile_url: profile_url,
 				}
 			);
+			this.props.setAttributes( {
+				profileContent: profile_description,
+				profileName: profile_name,
+				profileTitle: profile_title,
+				profileURL: profile_url
+			});
 		});
 	}
 	on_user_change = ( user_id ) => {
@@ -158,7 +168,6 @@ class MPP_Gutenberg extends Component {
 		// Setup the attributes
 		let {
 			attributes: {
-				profileId,
 				profileName,
 				profileTitle,
 				profileContent,
@@ -169,13 +178,13 @@ class MPP_Gutenberg extends Component {
 				profileFontSize,
 				profileBackgroundColor,
 				profileTextColor,
-				profileLinkColor,
 				profileAvatarShape,
+				profileViewPostsBackgroundColor,
+				profileViewPostsTextColor,
 				showTitle,
 				showName,
 				showDescription,
 				showViewPosts,
-				user_id,
 			},
 			attributes,
 			isSelected,
@@ -190,6 +199,17 @@ class MPP_Gutenberg extends Component {
 		profileContent = this.state.profile_description;
 		profileTitle = this.state.profile_title;
 		profileURL = this.state.profile_url;
+
+		const onChangeBackgroundColor = value => setAttributes( { profileBackgroundColor: value } );
+		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
+		const onChangeViewPostsBackgroundColor = value => setAttributes( { profileViewPostsBackgroundColor: value } );
+		const onChangeViewPostsTextColor = value => setAttributes( { profileViewPostsTextColor: value } );
+
+		// Avatar shape options
+		const profileAvatarShapeOptions = [
+			{ value: 'square', label: __( 'Square', 'metronet-profile-picture' ) },
+			{ value: 'round', label: __( 'Round', 'metronet-profile-picture' ) },
+		];
 		return(
 			<Fragment>
 				{this.state.loading && 
@@ -210,6 +230,62 @@ class MPP_Gutenberg extends Component {
 										options={ this.state.user_list }
 										onChange={ ( value ) => { this.on_user_change(value); setAttributes({user_id: Number(value)}); } }
 								/>
+								<RangeControl
+									label={ __( 'Font Size', 'metronet-profile-picture' ) }
+									value={ profileFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { profileFontSize: value } ) }
+									min={ 14 }
+									max={ 24 }
+									step={ 1 }
+								/>
+								<SelectControl
+									label={ __( 'Avatar Shape', 'metronet-profile-picture' ) }
+									description={ __( 'Choose between a round or square avatar shape.', 'metronet-profile-picture' ) }
+									options={ profileAvatarShapeOptions }
+									value={ profileAvatarShape }
+									onChange={ ( value ) => this.props.setAttributes( { profileAvatarShape: value } ) }
+								/>
+								<PanelColorSettings
+								title={ __( 'Background Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileBackgroundColor,
+									onChange: onChangeBackgroundColor,
+									label: __( 'Background Color', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
+								<PanelColorSettings
+								title={ __( 'Text Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileTextColor,
+									onChange: onChangeProfileTextColor,
+									label: __( 'Text Color', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
+								<PanelColorSettings
+								title={ __( 'View Posts Background Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileViewPostsBackgroundColor,
+									onChange: onChangeViewPostsBackgroundColor,
+									label: __( 'View Posts Background', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
+								<PanelColorSettings
+								title={ __( 'View Posts Text Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileViewPostsTextColor,
+									onChange: onChangeViewPostsTextColor,
+									label: __( 'View Posts Text Color', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
+
 								<ToggleControl
 									label={ __( 'Show Name', 'metronet-profile-picture' ) }
 									checked={ showName }
@@ -230,14 +306,6 @@ class MPP_Gutenberg extends Component {
 									checked={ showViewPosts }
 									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
 								/>
-								<RangeControl
-									label={ __( 'Font Size', 'metronet-profile-picture' ) }
-									value={ profileFontSize }
-									onChange={ ( value ) => this.props.setAttributes( { profileFontSize: value } ) }
-									min={ 14 }
-									max={ 24 }
-									step={ 1 }
-								/>
 							</PanelBody>
 						</InspectorControls>
 						<BlockControls key="controls">
@@ -246,78 +314,105 @@ class MPP_Gutenberg extends Component {
 								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
 							/>
 						</BlockControls>
-						<div className={
-							classnames(
-								'mpp-profile-gutenberg-wrap',
-								profileAlignment,
-								profileAvatarShape,
-								'mt-font-size-' + profileFontSize,
-								'mpp-block-profile'
-							)
-						}>
-							<div className="mpp-profile-image-wrapper">
-								<div className="mpp-profile-image-square">
-									<MediaUpload
-										buttonProps={ {
-											className: 'change-image'
+						<div 
+							className={
+								classnames(
+									'mpp-profile-wrap',
+									profileAlignment,
+									profileAvatarShape,
+									'mt-font-size-' + profileFontSize,
+									'mpp-block-profile'
+								)
+							}
+							style={ {
+								backgroundColor: profileBackgroundColor,
+								color: profileTextColor,
+							} }
+						>
+							<div className={
+								classnames(
+									'mpp-profile-gutenberg-wrap',
+								)
+							}
+							>
+								<div className="mpp-profile-image-wrapper">
+									<div className="mpp-profile-image-square">
+										<MediaUpload
+											buttonProps={ {
+												className: 'change-image'
+											} }
+											onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
+											type="image"
+											value={ profileImgID }
+											render={ ( { open } ) => (
+												<Button onClick={ open }>
+													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+														class="profile-avatar"
+														src={ profileImgURL }
+														alt="avatar"
+													/>  }
+												</Button>
+											) }
+										>
+										</MediaUpload>
+									</div>
+								</div>
+								<div className="mpp-content-wrap">
+									{showName && 
+									<RichText
+										tagName="h2"
+										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
+										value={ profileName }
+										className='mpp-profile-name'
+										style={ {
+											color: profileTextColor
 										} }
-										onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
-										type="image"
-										value={ profileImgID }
-										render={ ( { open } ) => (
-											<Button onClick={ open }>
-												{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-													class="profile-avatar"
-													src={ profileImgURL }
-													alt="avatar"
-												/>  }
-											</Button>
-										) }
-									>
-									</MediaUpload>
+										onChange={ ( value ) => setAttributes( { profileName: value } ) }
+									/>
+									}
+									{showTitle &&
+									<RichText
+										tagName="p"
+										placeholder={ __( 'Add title', 'atomic-blocks' ) }
+										value={ profileTitle }
+										className='mpp-profile-title'
+										style={ {
+											color: profileTextColor
+										} }
+										onChange={ ( value ) => setAttributes( { profileTitle: value } ) }
+									/>
+									}
+									{showDescription &&
+									<RichText
+										tagName="div"
+										className='mpp-profile-text'
+										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
+										value={ profileContent }
+										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+										onChange={ ( value ) => setAttributes( { profileContent: value } ) }
+									/>
+									}
 								</div>
 							</div>
-							<div className="mpp-content-wrap">
-								{showName && 
-								<RichText
-									tagName="h2"
-									placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
-									value={ profileName }
-									className='mpp-profile-name'
-									style={ {
-										color: profileTextColor
-									} }
-									onChange={ ( value ) => setAttributes( { profileName: value } ) }
-								/>
-								}
-								{showTitle &&
-								<RichText
-									tagName="p"
-									placeholder={ __( 'Add title', 'atomic-blocks' ) }
-									value={ profileTitle }
-									className='mpp-profile-title'
-									style={ {
-										color: profileTextColor
-									} }
-									onChange={ ( value ) => setAttributes( { profileTitle: value } ) }
-								/>
-								}
-								{showDescription &&
-								<RichText
-									tagName="div"
-									className='mpp-profile-text'
-									placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
-									value={ profileContent }
-									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-									onChange={ ( value ) => setAttributes( { profileContent: value } ) }
-								/>
-								}
-							</div>
+							<div className="mpp-gutenberg-view-posts">
 							{showViewPosts &&
-							<div class="mpp-profile-view-posts">
-								<a href={profileURL}>{__('View Posts', 'metronet-profile-picture')}</a>
+								<div 
+									className="mpp-profile-view-posts"
+									style={ {
+										backgroundColor: profileViewPostsBackgroundColor,
+										color: profileViewPostsTextColor,
+									} }
+								>
+									<a 
+										href={profileURL}
+										style={ {
+											backgroundColor: profileViewPostsBackgroundColor,
+											color: profileViewPostsTextColor,
+										} }
+									>{__('View Posts', 'metronet-profile-picture')}</a>
+								</div>
+								}
 							</div>
-							}
 						</div>
 					</Fragment>
 				}
