@@ -115,6 +115,10 @@ class MPP_Gutenberg extends Component {
 		if( undefined === description ) {
 			description = '';
 		}
+		this.props.setAttributes( {
+			profileName: this.state.users[user_id].display_name,
+			profileContent: description
+		} );
 		this.setState(
 			{
 				profile_title: this.state.users[user_id].display_name,
