@@ -38,7 +38,7 @@
 /* Icon Sizes */ 
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 @each $size in $sizes {
-	.editor-styles-wrapper .mpp-profile-gutenberg-wrap.mt-font-size-#{$size} {
+	.editor-styles-wrapper .mpp-profile-wrap.mt-font-size-#{$size} {
 		h2, 
 		p,
 		div {

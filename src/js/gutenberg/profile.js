@@ -118,7 +118,9 @@ class MPP_Gutenberg extends Component {
 				profileContent: profile_description,
 				profileName: profile_name,
 				profileTitle: profile_title,
-				profileURL: profile_url
+				profileURL: profile_url,
+				profileImgID: profile_picture_id,
+				profileImgURL: profile_picture,
 			});
 		});
 	}
