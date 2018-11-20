@@ -14,3 +14,5 @@ wp-content/wp-cache-config.php
 node_modules
 dist
 .DS_Store
+
+metronet-profile-picture\.zip
