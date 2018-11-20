@@ -143,7 +143,8 @@ class MPP_Gutenberg extends Component {
 			profileName: this.state.users[user_id].display_name,
 			profileContent: description,
 			profileTitle: '',
-			profileURL: this.state.users[user_id].permalink
+			profileURL: this.state.users[user_id].permalink,
+			profileImgURL: profile_picture
 		} );
 		this.setState(
 			{
