@@ -537,7 +537,7 @@ class Metronet_Profile_Picture	{
 		$post_id = $this->get_post_id( $this->get_user_id() );
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
-		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, '20180819', true );
+		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, METRONET_PROFILE_PICTURE_VERSION, true );
 		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
 			array( 
 				'set_profile_text'    => __( 'Set Profile Image', 'metronet-profile-picture' ),
