@@ -17,8 +17,88 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/gutenberg/main.js:36
+#: src/js/gutenberg/main.js:124
 msgid "User Profile"
+msgstr ""
+
+#: src/js/gutenberg/main.js:220, src/js/gutenberg/profile.js:415
+msgid "View Posts"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:212
+msgid "Square"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:213
+msgid "Round"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:220
+msgid "Loading..."
+msgstr ""
+
+#: src/js/gutenberg/profile.js:228
+msgid "User Profile Settings"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:230
+msgid "Select a user"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:236
+msgid "Font Size"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:244
+msgid "Avatar Shape"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:245
+msgid "Choose between a round or square avatar shape."
+msgstr ""
+
+#: src/js/gutenberg/profile.js:251, src/js/gutenberg/profile.js:256
+msgid "Background Color"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:261, src/js/gutenberg/profile.js:266
+msgid "Text Color"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:271
+msgid "View Posts Background Color"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:276
+msgid "View Posts Background"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:281, src/js/gutenberg/profile.js:286
+msgid "View Posts Text Color"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:292
+msgid "Show Name"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:297
+msgid "Show Title"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:302
+msgid "Show Description"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:307
+msgid "Show View Posts"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:366
+msgid "Add name"
+msgstr ""
+
+#: src/js/gutenberg/profile.js:391
+msgid "Add profile text..."
 msgstr ""
 
 #: src/metronet-profile-picture.php:97, src/metronet-profile-picture.php:142, src/metronet-profile-picture.php:158, src/metronet-profile-picture.php:188, src/metronet-profile-picture.php:477, src/metronet-profile-picture.php:483
@@ -53,18 +133,18 @@ msgstr ""
 msgid "Remove Profile Image"
 msgstr ""
 
-#: src/metronet-profile-picture.php:657
+#: src/metronet-profile-picture.php:730
 msgid "You must be able to upload files."
 msgstr ""
 
-#: src/metronet-profile-picture.php:661, src/metronet-profile-picture.php:693, src/metronet-profile-picture.php:720
+#: src/metronet-profile-picture.php:734, src/metronet-profile-picture.php:766, src/metronet-profile-picture.php:802
 msgid "User not found."
 msgstr ""
 
-#: src/metronet-profile-picture.php:665
+#: src/metronet-profile-picture.php:738
 msgid "User not owner."
 msgstr ""
 
-#: src/metronet-profile-picture.php:702, src/metronet-profile-picture.php:727
+#: src/metronet-profile-picture.php:775, src/metronet-profile-picture.php:809
 msgid "Profile picture not found."
 msgstr ""
