@@ -21,83 +21,83 @@ msgstr ""
 msgid "User Profile"
 msgstr ""
 
-#: src/js/gutenberg/main.js:220, src/js/gutenberg/profile.js:416
+#: src/js/gutenberg/main.js:220, src/js/gutenberg/profile.js:437
 msgid "View Posts"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:213
+#: src/js/gutenberg/profile.js:234
 msgid "Square"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:214
+#: src/js/gutenberg/profile.js:235
 msgid "Round"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:221
+#: src/js/gutenberg/profile.js:242
 msgid "Loading..."
 msgstr ""
 
-#: src/js/gutenberg/profile.js:229
+#: src/js/gutenberg/profile.js:250
 msgid "User Profile Settings"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:231
+#: src/js/gutenberg/profile.js:252
 msgid "Select a user"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:237
+#: src/js/gutenberg/profile.js:258
 msgid "Font Size"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:245
+#: src/js/gutenberg/profile.js:266
 msgid "Avatar Shape"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:246
+#: src/js/gutenberg/profile.js:267
 msgid "Choose between a round or square avatar shape."
 msgstr ""
 
-#: src/js/gutenberg/profile.js:252, src/js/gutenberg/profile.js:257
+#: src/js/gutenberg/profile.js:273, src/js/gutenberg/profile.js:278
 msgid "Background Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:262, src/js/gutenberg/profile.js:267
+#: src/js/gutenberg/profile.js:283, src/js/gutenberg/profile.js:288
 msgid "Text Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:272
+#: src/js/gutenberg/profile.js:293
 msgid "View Posts Background Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:277
+#: src/js/gutenberg/profile.js:298
 msgid "View Posts Background"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:282, src/js/gutenberg/profile.js:287
+#: src/js/gutenberg/profile.js:303, src/js/gutenberg/profile.js:308
 msgid "View Posts Text Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:293
+#: src/js/gutenberg/profile.js:314
 msgid "Show Name"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:298
+#: src/js/gutenberg/profile.js:319
 msgid "Show Title"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:303
+#: src/js/gutenberg/profile.js:324
 msgid "Show Description"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:308
+#: src/js/gutenberg/profile.js:329
 msgid "Show View Posts"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:367
+#: src/js/gutenberg/profile.js:388
 msgid "Add name"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:392
+#: src/js/gutenberg/profile.js:413
 msgid "Add profile text..."
 msgstr ""
 

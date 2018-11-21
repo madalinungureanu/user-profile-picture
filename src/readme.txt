@@ -20,13 +20,13 @@ Users must have the ability to upload images (typically author role or greater).
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
-<h2>Gutenberg Compatibility</h2>
+== Gutenberg Compatibility ==
 
 As of version 2.0.0, there is a Gutenberg block for outputting to a post. See the video below for a 5 minute overview.
 
 https://www.youtube.com/watch?v=FP1n0HCfW00&rel=0
 
-<h2>Documentation and Feedback</h2>
+== Documentation and Feedback ==
 
 See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
