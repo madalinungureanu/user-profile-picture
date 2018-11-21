@@ -21,83 +21,83 @@ msgstr ""
 msgid "User Profile"
 msgstr ""
 
-#: src/js/gutenberg/main.js:220, src/js/gutenberg/profile.js:415
+#: src/js/gutenberg/main.js:220, src/js/gutenberg/profile.js:437
 msgid "View Posts"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:212
+#: src/js/gutenberg/profile.js:234
 msgid "Square"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:213
+#: src/js/gutenberg/profile.js:235
 msgid "Round"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:220
+#: src/js/gutenberg/profile.js:242
 msgid "Loading..."
 msgstr ""
 
-#: src/js/gutenberg/profile.js:228
+#: src/js/gutenberg/profile.js:250
 msgid "User Profile Settings"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:230
+#: src/js/gutenberg/profile.js:252
 msgid "Select a user"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:236
+#: src/js/gutenberg/profile.js:258
 msgid "Font Size"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:244
+#: src/js/gutenberg/profile.js:266
 msgid "Avatar Shape"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:245
+#: src/js/gutenberg/profile.js:267
 msgid "Choose between a round or square avatar shape."
 msgstr ""
 
-#: src/js/gutenberg/profile.js:251, src/js/gutenberg/profile.js:256
+#: src/js/gutenberg/profile.js:273, src/js/gutenberg/profile.js:278
 msgid "Background Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:261, src/js/gutenberg/profile.js:266
+#: src/js/gutenberg/profile.js:283, src/js/gutenberg/profile.js:288
 msgid "Text Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:271
+#: src/js/gutenberg/profile.js:293
 msgid "View Posts Background Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:276
+#: src/js/gutenberg/profile.js:298
 msgid "View Posts Background"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:281, src/js/gutenberg/profile.js:286
+#: src/js/gutenberg/profile.js:303, src/js/gutenberg/profile.js:308
 msgid "View Posts Text Color"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:292
+#: src/js/gutenberg/profile.js:314
 msgid "Show Name"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:297
+#: src/js/gutenberg/profile.js:319
 msgid "Show Title"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:302
+#: src/js/gutenberg/profile.js:324
 msgid "Show Description"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:307
+#: src/js/gutenberg/profile.js:329
 msgid "Show View Posts"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:366
+#: src/js/gutenberg/profile.js:388
 msgid "Add name"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:391
+#: src/js/gutenberg/profile.js:413
 msgid "Add profile text..."
 msgstr ""
 
@@ -133,18 +133,18 @@ msgstr ""
 msgid "Remove Profile Image"
 msgstr ""
 
-#: src/metronet-profile-picture.php:730
+#: src/metronet-profile-picture.php:739
 msgid "You must be able to upload files."
 msgstr ""
 
-#: src/metronet-profile-picture.php:734, src/metronet-profile-picture.php:766, src/metronet-profile-picture.php:802
+#: src/metronet-profile-picture.php:743, src/metronet-profile-picture.php:775, src/metronet-profile-picture.php:811
 msgid "User not found."
 msgstr ""
 
-#: src/metronet-profile-picture.php:738
+#: src/metronet-profile-picture.php:747
 msgid "User not owner."
 msgstr ""
 
-#: src/metronet-profile-picture.php:775, src/metronet-profile-picture.php:809
+#: src/metronet-profile-picture.php:784, src/metronet-profile-picture.php:818
 msgid "Profile picture not found."
 msgstr ""

@@ -4,14 +4,14 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.0.0
+Version: 2.0.2
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */ 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.0.0' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.0.2' );
 class Metronet_Profile_Picture	{	
 	
 	//private
@@ -612,6 +612,17 @@ class Metronet_Profile_Picture	{
 	} //end print_media_styles
 	
 	/**
+	 * rest_get_users_permissions_callback()
+	 *
+	 * Gets permissions for the get users rest api endpoint.
+	 * 
+	 * @return bool true if the user has permission, false if not
+	 **/
+	public function rest_get_users_permissions_callback() {
+		return current_user_can( 'upload_files' );
+	}
+
+	/**
 	* rest_api_register()
 	*
 	* Registers REST API endpoint
@@ -638,9 +649,7 @@ class Metronet_Profile_Picture	{
 			array(
 				'methods' => 'POST',
 				'callback' =>  array( $this, 'rest_api_get_users' ),
-				'permission_callback' => function () {
-					return current_user_can( 'upload_files' );
-				}
+				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
 			)
 		);
 		// keep it for backward compatibility
