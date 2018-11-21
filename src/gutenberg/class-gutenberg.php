@@ -38,7 +38,7 @@ class Metronet_Profile_Picture_Gutenberg {
 		// Ensure script debug allows non-minified scripts
 		$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
 
-		wp_enqueue_script('mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url('js/gutenberg'.$min_or_not.'.js'), array('wp-blocks', 'wp-element'), '20181109', true);
+		wp_enqueue_script('mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url('js/gutenberg'.$min_or_not.'.js'), array('wp-blocks', 'wp-element'), METRONET_PROFILE_PICTURE_VERSION, true);
 
 		/* For the Gutenberg plugin */
 		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
