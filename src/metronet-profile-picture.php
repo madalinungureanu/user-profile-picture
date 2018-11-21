@@ -612,6 +612,17 @@ class Metronet_Profile_Picture	{
 	} //end print_media_styles
 	
 	/**
+	 * rest_get_users_permissions_callback()
+	 *
+	 * Gets permissions for the get users rest api endpoint.
+	 * 
+	 * @return bool true if the user has permission, false if not
+	 **/
+	public function rest_get_users_permissions_callback() {
+		return current_user_can( 'upload_files' );
+	}
+
+	/**
 	* rest_api_register()
 	*
 	* Registers REST API endpoint
@@ -638,9 +649,7 @@ class Metronet_Profile_Picture	{
 			array(
 				'methods' => 'POST',
 				'callback' =>  array( $this, 'rest_api_get_users' ),
-				'permission_callback' => function () {
-					return current_user_can( 'upload_files' );
-				}
+				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
 			)
 		);
 		// keep it for backward compatibility
