@@ -167,6 +167,27 @@ class MPP_Gutenberg extends Component {
 			profile_picture_id: image_id,
 		} );
 	}
+	onChangeName = (value) => {
+		this.setState(
+			{
+				profile_name: value
+			}
+		);
+	}
+	onChangeTitle = (value) => {
+		this.setState(
+			{
+				profile_title: value
+			}
+		);
+	}
+	onChangeProfileText = (value) => {
+		this.setState(
+			{
+				profile_description: value
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -370,7 +391,7 @@ class MPP_Gutenberg extends Component {
 										style={ {
 											color: profileTextColor
 										} }
-										onChange={ ( value ) => setAttributes( { profileName: value } ) }
+										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
 									/>
 									}
 									{showTitle &&
@@ -382,7 +403,7 @@ class MPP_Gutenberg extends Component {
 										style={ {
 											color: profileTextColor
 										} }
-										onChange={ ( value ) => setAttributes( { profileTitle: value } ) }
+										onChange={ ( value ) => {this.onChangeTitle(value); setAttributes( { profileTitle: value } ) } }
 									/>
 									}
 									{showDescription &&
@@ -392,7 +413,7 @@ class MPP_Gutenberg extends Component {
 										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
 										value={ profileContent }
 										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-										onChange={ ( value ) => setAttributes( { profileContent: value } ) }
+										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
 									/>
 									}
 								</div>
