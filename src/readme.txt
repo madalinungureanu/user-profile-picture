@@ -1,9 +1,9 @@
 === User Profile Picture ===
 Contributors: ronalfy
-Tags: users, user, user profile
+Tags: users, user, user profile, gravatar, avatar
 Requires at least: 3.5
 Tested up to: 5.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,19 @@ Set a custom profile image (avatar) for a user using the standard WordPress medi
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
 
-https://www.youtube.com/watch?v=9icnOWWZUpA
+https://www.youtube.com/watch?v=9icnOWWZUpA&rel=0
 
 Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/members/">Members</a> to allow other roles (e.g. subscribers) the ability to upload images.
 
-A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available. As of version 2.0.0, there is a Gutenberg block for outputting to a post.
+A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
+
+<h2>Gutenberg Compatibility</h2>
+
+As of version 2.0.0, there is a Gutenberg block for outputting to a post. See the video below for a 5 minute overview.
+
+https://www.youtube.com/watch?v=FP1n0HCfW00&rel=0
+
+<h2>Documentation and Feedback</h2>
 
 See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
@@ -90,8 +98,15 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 1. Profile page options.
 2. Media upload dialog.
+3. Gutenberg settings back-end
+4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.0.2 =
+* Released 2018-11-20
+* Gutenberg fixes with alignment (center, right) on the front end. 
+* Gutenberg fixes with the toggle boxes defaulting back to nothing.
 
 = 2.0.1 =
 * Released 2018-11-20
@@ -233,6 +248,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+Gutenberg fixes with alignment on the front end. Gutenberg fixes with the toggle boxes defaulting back to nothing.
 
 = 2.0.1 =
 Fixing PHP 5.2 incompatibility. Fixing Gutenberg front-end when there is no profile picture.
