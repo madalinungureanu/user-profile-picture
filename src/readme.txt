@@ -3,7 +3,8 @@ Contributors: ronalfy
 Tags: users, user, user profile
 Requires at least: 3.5
 Tested up to: 5.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
+Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -91,6 +92,12 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 2. Media upload dialog.
 
 == Changelog ==
+
+= 2.0.1 =
+* Released 2018-11-20
+* Fixing PHP 5.2 incompatibility
+* Fixing Gutenberg block when there is no profile picture present on the front-end
+* Updating translations file
 
 = 2.0.0 =
 * Released 2018-11-19
@@ -226,6 +233,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Fixing PHP 5.2 incompatibility. Fixing Gutenberg front-end when there is no profile picture.
 
 = 2.0.0 =
 Added Gutenberg block for easy outputting to posts. Tested with WordPress 5.0 successfully.
