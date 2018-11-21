@@ -136,7 +136,13 @@ $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 		div {
 			text-align: center;
 		}
-		
+	}
+	&.right .mpp-content-wrap {
+		h2,
+		p,
+		div {
+			text-align: right;
+		}
 	}
 }
 .post-content .mpp-content-wrap {
