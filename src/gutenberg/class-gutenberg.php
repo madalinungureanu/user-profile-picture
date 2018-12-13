@@ -22,15 +22,42 @@ class Metronet_Profile_Picture_Gutenberg {
 			return;
 		}
 
-		add_action('init', array($this, 'register_block'));
-		add_action('enqueue_block_assets', array($this, 'add_gutenberg_styles'));
-		add_action('enqueue_block_editor_assets', array($this,'add_gutenberg_scripts'));
+		add_action( 'init', array($this, 'register_block' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'add_gutenberg_styles' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this,'add_gutenberg_scripts') );
+		add_action( 'admin_footer', array( $this, 'load_gutenblock_svgs' ) );
 	}
 
 	public function register_block() {
 		register_block_type( 'mpp/user-profile', array(
 			'attributes' => array()
 		) );
+	}
+
+	public function load_gutenblock_svgs() {
+		if ( '' != get_post_type() ) {
+			// Define SVG sprite file.
+			$path = '/img/social-logos.svg';
+			$svg_icons = rtrim( dirname( plugin_dir_path(__FILE__), 1 ), '/' );
+			if ( ! empty( $path ) && is_string( $path) ) {
+				$svg_icons .= '/' . ltrim( $path, '/' );
+			}
+
+			/**
+			 * Filter Social Icons Sprite.
+			 *
+			 * @since 2.1.0
+			 *
+			 * @param string Absolute directory path to SVG sprite
+			 */
+			$svg_icons = apply_filters( 'mpp_icons_sprite', $svg_icons );
+			// If it exists, include it.
+			if ( file_exists( $svg_icons ) ) {
+				echo '<div style="position: absolute; height: 0; width: 0; overflow: hidden;">';
+				require_once( $svg_icons );
+				echo '</div>';
+			}
+		}
 	}
 
 	public function add_gutenberg_scripts() {
