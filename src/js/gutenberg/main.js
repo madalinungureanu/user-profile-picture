@@ -105,6 +105,42 @@ const blockAttributes = {
 	user_id: {
 		type: 'number',
 		default: 0
+	},
+	socialFacebook: {
+		type: 'string',
+		default: ''
+	},
+	socialTwitter: {
+		type: 'string',
+		default: ''
+	},
+	socialYouTube: {
+		type: 'string',
+		default: ''
+	},
+	socialLinkedIn: {
+		type: 'string',
+		default: ''
+	},
+	socialWordPress: {
+		type: 'string',
+		default: ''
+	},
+	socialGitHub: {
+		type: 'string',
+		default: ''
+	},
+	socialPinterest: {
+		type: 'string',
+		default: ''
+	},
+	socialInstagram: {
+		type: 'string',
+		default: ''
+	},
+	website: {
+		type: 'string',
+		default: ''
 	}
 };
 
@@ -126,7 +162,7 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	// Setup the block attributes
 	attributes: blockAttributes,
-	
+
 	edit: edit,
 
 	save( props ) {
@@ -134,7 +170,7 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 
 		return(
 			<Fragment>
-				<div 
+				<div
 					className={
 						classnames(
 							'mpp-profile-wrap',
@@ -162,7 +198,7 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 						>
 						<div className="mpp-profile-image-wrapper">
 							<div className="mpp-profile-image-square">
-								<img 
+								<img
 									className="mpp-profile-avatar"
 									src={profileImgURL}
 									alt="avatar"
@@ -204,14 +240,14 @@ registerBlockType( 'mpp/user-profile', { // Block name. Block names must be stri
 					{profileURL && !! profileURL.length &&
 					<div className="mpp-gutenberg-view-posts">
 					{showViewPosts &&
-						<div 
+						<div
 							className="mpp-profile-view-posts"
 							style={ {
 								backgroundColor: profileViewPostsBackgroundColor,
 								color: profileViewPostsTextColor,
 							} }
 						>
-							<a 
+							<a
 								href={profileURL}
 								style={ {
 									backgroundColor: profileViewPostsBackgroundColor,

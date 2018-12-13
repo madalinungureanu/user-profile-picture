@@ -38,7 +38,7 @@
 	}
 }
 .editor-styles-wrapper .mpp-profile-gutenberg-wrap {
-	h2, 
+	h2,
 	p,
 	div {
 		font-size: 18px;
@@ -46,18 +46,17 @@
 		margin-bottom: 20px;
 	}
 }
-/* Icon Sizes */ 
+/* Icon Sizes */
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 @each $size in $sizes {
 	.mpp-profile-wrap.mt-font-size-#{$size},
 	.post-content .mpp-profile-wrap.mt-font-size-#{$size} .mpp-content-wrap {
-		h2, 
+		h2,
 		p,
 		div {
 			font-size: #{$size}px;
-			margin-bottom: 20px;
 		}
-		
+
 	}
 }
 .mpp-profile-image-wrapper {

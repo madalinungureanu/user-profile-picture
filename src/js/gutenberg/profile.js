@@ -55,14 +55,16 @@ class MPP_Gutenberg extends Component {
 			profile_title: '',
 			theme: 'regular',
 			themes: theme_list,
-			socialFacebook: '',
-			socialGitHub: '',
-			socialLinkedIn: '',
-			socialPinterest: '',
-			socialTwitter: '',
-			socialWordPress: '',
-			socialYouTube: '',
-			website: '',
+			socialFacebook: this.props.attributes.socialFacebook,
+			socialGitHub: this.props.attributes.socialGitHub,
+			socialLinkedIn: this.props.attributes.socialLinkedIn,
+			socialPinterest: this.props.attributes.socialPinterest,
+			socialTwitter: this.props.attributes.socialTwitter,
+			socialWordPress: this.props.attributes.socialWordPress,
+			socialYouTube: this.props.attributes.socialYouTube,
+			socialInstagram: this.props.attributes.socialInstagram,
+			website: this.props.attributes.website,
+			showSocialMedia: true,
 		};
 	}
 	get_users = () => {
@@ -259,6 +261,27 @@ class MPP_Gutenberg extends Component {
 			}
 		);
 	}
+	handleInstagramChange = ( value ) => {
+		this.setState(
+			{
+				socialInstagram: value
+			}
+		);
+	}
+	handlePinterestChange = ( value ) => {
+		this.setState(
+			{
+				socialPinterest: value
+			}
+		);
+	}
+	handleSocialMediaChange = ( value ) => {
+		this.setState(
+			{
+				showSocialMedia: value
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -282,6 +305,13 @@ class MPP_Gutenberg extends Component {
 				showViewPosts,
 				theme,
 				theme_list,
+				socialFacebook,
+				socialGitHub,
+				socialLinkedIn,
+				socialPinterest,
+				socialTwitter,
+				socialWordPress,
+				socialYouTube,
 			},
 			attributes,
 			isSelected,
@@ -409,6 +439,11 @@ class MPP_Gutenberg extends Component {
 									checked={ showViewPosts }
 									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
 								/>
+								<ToggleControl
+									label={ __( 'Show Social Media', 'metronet-profile-picture' ) }
+									checked={ this.state.showSocialMedia }
+									onChange={ ( value ) => {this.props.setAttributes( { showSocialMedia: value } ); this.handleSocialMediaChange( value );  } }
+								/>
 							</PanelBody>
 							<PanelBody title={ __( 'Social Media Settings', 'metronet-profile-picture' ) } initialOpen={false}>
 								<TextControl
@@ -427,9 +462,9 @@ class MPP_Gutenberg extends Component {
 									onChange={ ( value ) => { this.props.setAttributes( { socialTwitter: value }); this.handleTwitterChange(value); } }
 								/>
 								<TextControl
-									label={__('Twitter', 'metronet-profile-picture')}
-									value={this.state.socialTwitter}
-									onChange={ ( value ) => { this.props.setAttributes( { socialTwitter: value }); this.handleTwitterChange(value); } }
+									label={__('Instagram', 'metronet-profile-picture')}
+									value={this.state.socialInstagram}
+									onChange={ ( value ) => { this.props.setAttributes( { socialInstagram: value }); this.handleInstagramChange(value); } }
 								/>
 								<TextControl
 									label={__('LinkedIn', 'metronet-profile-picture')}
@@ -565,10 +600,79 @@ class MPP_Gutenberg extends Component {
 										} }
 									>{__('View Posts', 'metronet-profile-picture')}</a>
 								</div>
-								}
+							}
+							{ this.state.website != '' && this.state.showSocialMedia &&
+								<div
+								className="mpp-profile-view-website"
+								>
+								<a
+									href={this.state.website}
+								>{__('View Website', 'metronet-profile-picture')}</a>
+							</div>
+							}
 							</div>
 							}
 						</Fragment>
+						}
+						{ this.state.showSocialMedia == true &&
+							<div className="mpp-social">
+								{ this.state.socialFacebook != '' &&
+									<a href={this.state.socialFacebook}>
+										<svg className="icon icon-facebook" role="img">
+											<use href="#facebook"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialTwitter != '' &&
+									<a href={this.state.socialTwitter}>
+										<svg className="icon icon-twitter" role="img">
+											<use href="#twitter"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialInstagram != '' &&
+									<a href={this.state.socialInstagram}>
+										<svg className="icon icon-instagram" role="img">
+											<use href="#instagram"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialPinterest != '' &&
+									<a href={this.state.socialPinterest}>
+										<svg className="icon icon-pinterest" role="img">
+											<use href="#pinterest"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialLinkedIn != '' &&
+									<a href={this.state.socialLinkedIn}>
+										<svg className="icon icon-linkedin" role="img">
+											<use href="#linkedin"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialYouTube != '' &&
+									<a href={this.state.socialYouTube}>
+										<svg className="icon icon-youtube" role="img">
+											<use href="#youtube"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialGitHub != '' &&
+									<a href={this.state.socialGitHub}>
+										<svg className="icon icon-github" role="img">
+											<use href="#github"></use>
+										</svg>
+									</a>
+								}
+								{ this.state.socialWordPress != '' &&
+									<a href={this.state.socialWordPress}>
+										<svg className="icon icon-wordpress" role="img">
+											<use href="#wordpress"></use>
+										</svg>
+									</a>
+								}
+							</div>
 						}
 						</div>
 					</Fragment>
