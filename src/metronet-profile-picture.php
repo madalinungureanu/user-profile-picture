@@ -10,64 +10,64 @@ Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
-*/ 
+*/
 define( 'METRONET_PROFILE_PICTURE_VERSION', '2.0.2' );
-class Metronet_Profile_Picture	{	
-	
+class Metronet_Profile_Picture	{
+
 	//private
 	private $plugin_url = '';
 	private $plugin_dir = '';
 	private $plugin_path = '';
-	
+
 	/**
 	* __construct()
-	* 
+	*
 	* Class constructor
 	*
 	*/
 	function __construct(){
-			
+
 		//* Localization Code */
 		load_plugin_textdomain( 'metronet-profile-picture', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		
+
 		$this->plugin_path = plugin_basename( __FILE__ );
 		$this->plugin_url = rtrim( plugin_dir_url(__FILE__), '/' );
 		$this->plugin_dir = rtrim( plugin_dir_path(__FILE__), '/' );
-		
+
 		add_action( 'init', array( &$this, 'init' ) );
 		add_action( 'personal_options', array( &$this, 'insert_upload_form' ) );
-		
+
 		//Scripts
 		add_action( 'admin_print_scripts-user-edit.php', array( &$this, 'print_media_scripts' ) );
 		add_action( 'admin_print_scripts-profile.php', array( &$this, 'print_media_scripts' ) );
-		
+
 		add_action( 'wp_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 );
-		add_action( 'acf/input/admin_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 ); //Advanced Custom Field compatibility 
-		
+		add_action( 'acf/input/admin_enqueue_scripts', array( &$this, 'profile_print_media_scripts' ), 9 ); //Advanced Custom Field compatibility
+
 		//Styles
 		add_action( 'admin_print_styles-user-edit.php', array( &$this, 'print_media_styles' ) );
 		add_action( 'admin_print_styles-profile.php', array( &$this, 'print_media_styles' ) );
-		
+
 		//Ajax
 		add_action( 'wp_ajax_metronet_add_thumbnail', array( &$this, 'ajax_add_thumbnail' ) );
 		add_action( 'wp_ajax_metronet_get_thumbnail', array( &$this, 'ajax_get_thumbnail' ) );
 		add_action( 'wp_ajax_metronet_remove_thumbnail', array( &$this, 'ajax_remove_thumbnail' ) );
-		
+
 		//User update action
 		add_action( 'edit_user_profile_update', array( &$this, 'save_user_profile' ) );
 		add_action( 'personal_options_update', array( &$this, 'save_user_profile' ) );
-		
-		
+
+
 		//User Avatar override
 		add_filter( 'get_avatar', array( &$this, 'avatar_override' ), 10, 6 );
 		add_filter( 'pre_get_avatar_data', array( $this, 'pre_avatar_override' ), 10, 2 );
-		
+
 		//Rest API
 		add_action( 'rest_api_init', array( $this, 'rest_api_register' ) );
-		
+
 		//Avatar check overridden - Can be overridden using a higher priority
 		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
-		
+
 		// Include Gutenberg
 		include_once self::get_plugin_dir('/gutenberg/class-gutenberg.php');
 		new Metronet_Profile_Picture_Gutenberg();
@@ -86,7 +86,7 @@ class Metronet_Profile_Picture	{
 		$thumbnail_id = isset( $_POST[ 'thumbnail_id' ] ) ? absint( $_POST[ 'thumbnail_id' ] ) : 0;
 		if ( $post_id == 0 || $user_id == 0 || $thumbnail_id == 0 || 'mt_pp' !== get_post_type( $post_id ) ) die( '' );
 		check_ajax_referer( "mt-update-post_$post_id" );
-		
+
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
 		update_user_option( $user_id, 'metronet_image_id', $thumbnail_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
@@ -109,10 +109,10 @@ class Metronet_Profile_Picture	{
 				'logged_in_user_id'   => get_current_user_id(),
 			) );
 		}
-		wp_send_json( array( 
-				'thumb_html'          => '', 
-				'crop_html'           => '', 
-				'has_thumb'           => false, 
+		wp_send_json( array(
+				'thumb_html'          => '',
+				'crop_html'           => '',
+				'has_thumb'           => false,
 				'avatar'              => get_avatar( $user_id, 96 ),
 				'avatar_admin_small'  => get_avatar( $user_id, 26 ),
 				'avatar_admin_medium' => get_avatar( $user_id, 64 ),
@@ -120,7 +120,7 @@ class Metronet_Profile_Picture	{
 				'logged_in_user_id'   => get_current_user_id(),
 		) );
 	} //end ajax_add_thumbnail
-	
+
 	/**
 	* ajax_get_thumbnail()
 	*
@@ -157,20 +157,20 @@ class Metronet_Profile_Picture	{
 			$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 			$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 			$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
-			$thumb_html .= '</a>';	
+			$thumb_html .= '</a>';
 		}
-		wp_send_json( array( 
-			'thumb_html'          => $thumb_html, 
-			'crop_html'           => '', 
+		wp_send_json( array(
+			'thumb_html'          => $thumb_html,
+			'crop_html'           => '',
 			'has_thumb'           => false,
 			'avatar'              => get_avatar( $user_id, 96 ),
 			'avatar_admin_small'  => get_avatar( $user_id, 26 ),
 			'avatar_admin_medium' => get_avatar( $user_id, 64 ),
 			'user_id'             => $user_id,
-			'logged_in_user_id'   => get_current_user_id(), 
+			'logged_in_user_id'   => get_current_user_id(),
 		) );
 	} //end ajax_get_thumbnail
-	
+
 	/**
 	* ajax_remove_thumbnail()
 	*
@@ -183,17 +183,17 @@ class Metronet_Profile_Picture	{
 		$user_id = isset( $_POST[ 'user_id' ] ) ? absint( $_POST[ 'user_id' ] ) : 0;
 		if ( $post_id == 0 || $user_id == 0 ) die( '' );
 		check_ajax_referer( "mt-update-post_$post_id" );
-		
+
 		$thumb_html = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 		$thumb_html.= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( "Upload or Change Profile Picture", 'metronet-profile-picture' ) );
 		$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 		$thumb_html .= '</a>';
 
 		//Save user meta and update thumbnail
-		update_user_option( $user_id, 'metronet_image_id', 0 ); 
+		update_user_option( $user_id, 'metronet_image_id', 0 );
 		delete_post_meta( $post_id, '_thumbnail_id' );
-		wp_send_json( array( 
-			'thumb_html'          => $thumb_html, 
+		wp_send_json( array(
+			'thumb_html'          => $thumb_html,
 			'crop_html'           => '',
 			'has_thumb'           => false,
 			'avatar'              => get_avatar( $user_id, 96 ),
@@ -203,14 +203,14 @@ class Metronet_Profile_Picture	{
 			'logged_in_user_id'   => get_current_user_id(),
 		) );
 	}
-	
+
 	/**
 	* avatar_override()
 	*
 	* Overrides an avatar with a profile image
 	*
 	* @param string $avatar SRC to the avatar
-	* @param mixed $id_or_email 
+	* @param mixed $id_or_email
 	* @param int $size Size of the image
 	* @param string $default URL to the default image
 	* @param string $alt Alternative text
@@ -218,7 +218,7 @@ class Metronet_Profile_Picture	{
 	public function avatar_override( $avatar, $id_or_email, $size, $default, $alt, $args = array() ) {
 		global $pagenow;
 		if ( 'options-discussion.php' == $pagenow ) return $avatar; //Stop overriding gravatars on options-discussion page
-		
+
 		//Get user data
 		if ( is_numeric( $id_or_email ) ) {
 			$user = get_user_by( 'id', ( int )$id_or_email );
@@ -237,17 +237,17 @@ class Metronet_Profile_Picture	{
 		}
 		if ( !$user ) return $avatar;
 		$user_id = $user->ID;
-				
+
 		//Determine if user has an avatar override
 		$avatar_override = get_user_option( 'metronet_avatar_override', $user_id );
 		if ( !$avatar_override || $avatar_override != 'on' ) return $avatar;
-		
+
 		//Build classes array based on passed in args, else set defaults - see get_avatar in /wp-includes/pluggable.php
 		$classes = array(
 			'avatar',
 			sprintf( 'avatar-%s', esc_attr( $size ) ),
 			'photo'
-		);	
+		);
 		if ( isset( $args[ 'class' ] ) ) {
 			if ( is_array( $args['class'] ) ) {
 				$classes = array_merge( $classes, $args['class'] );
@@ -255,29 +255,29 @@ class Metronet_Profile_Picture	{
 				$args[ 'class' ] = explode( ' ', $args[ 'class' ] );
 				$classes = array_merge( $classes, $args[ 'class' ] );
 			}
-		} 
-		
+		}
+
 		//Get custom filter classes
 		$classes = (array)apply_filters( 'mpp_avatar_classes', $classes );
 
 		//Determine if the user has a profile image
-		$custom_avatar = mt_profile_img( $user_id, array( 
-			'size' => array( $size, $size ), 
-			'attr' => array( 'alt' => $alt, 'class' => implode( ' ', $classes ) ), 
+		$custom_avatar = mt_profile_img( $user_id, array(
+			'size' => array( $size, $size ),
+			'attr' => array( 'alt' => $alt, 'class' => implode( ' ', $classes ) ),
 			'echo' => false )
 		);
-		
-		if ( ! $custom_avatar ) return $avatar; 
-		return $custom_avatar;	
+
+		if ( ! $custom_avatar ) return $avatar;
+		return $custom_avatar;
 	} //end avatar_override
-	
+
 	/**
 	 * pre_avatar_override()
 	 *
 	 * Overrides an avatar with a profile image
 	 *
 	 * @param array $args Arguments to determine the avatar dimensions
-	 * @param mixed $id_or_email 
+	 * @param mixed $id_or_email
 	 * @return array $args Overridden URL or default if none can be found
 	 **/
 	public function pre_avatar_override( $args, $id_or_email ) {
@@ -318,10 +318,10 @@ class Metronet_Profile_Picture	{
 		$args[ 'url' ] = $avatar_image;
 		return $args;
 	}
-	
+
 	/**
 	* get_plugin_dir()
-	* 
+	*
 	* Returns an absolute path to a plugin item
 	*
 	* @param		string    $path	Relative path to make absolute (e.g., /css/image.png)
@@ -331,13 +331,13 @@ class Metronet_Profile_Picture	{
 		$dir = rtrim( plugin_dir_path(__FILE__), '/' );
 		if ( !empty( $path ) && is_string( $path) )
 			$dir .= '/' . ltrim( $path, '/' );
-		return $dir;		
+		return $dir;
 	}
-	
-	
+
+
 	/**
 	* get_plugin_url()
-	* 
+	*
 	* Returns an absolute url to a plugin item
 	*
 	* @param		string    $path	Relative path to plugin (e.g., /css/image.png)
@@ -347,14 +347,14 @@ class Metronet_Profile_Picture	{
 		$dir = rtrim( plugin_dir_url(__FILE__), '/' );
 		if ( !empty( $path ) && is_string( $path) )
 			$dir .= '/' . ltrim( $path, '/' );
-		return $dir;	
+		return $dir;
 	}
-	
+
 	/**
 	* get_post_id
 	*
 	* Gets a post id for the user - Creates a post if a post doesn't exist
-	* 
+	*
 	@param int user_id User ID of the user
 	@return int post_id
 	*/
@@ -362,7 +362,7 @@ class Metronet_Profile_Picture	{
 		//Get/Create Profile Picture Post
 		$post_args = array(
 			'post_type' => 'mt_pp',
-			'author' => $user_id, 
+			'author' => $user_id,
 			'post_status' => 'publish'
 		);
 		$posts = get_posts( $post_args );
@@ -378,12 +378,12 @@ class Metronet_Profile_Picture	{
 		}
 		return $post_id;
 	} //end get_post_id
-	
+
 	/**
 	* get_post_thumbnail_editor_link
 	*
 	* Retrieve a crop-image link (HTML) based on the passed post_id
-	* 
+	*
 	@param int post_id Post ID to find the featured image for
 	@return string html
 	*/
@@ -396,18 +396,18 @@ class Metronet_Profile_Picture	{
 				'page' => 'pte-edit',
 				'pte-id' => $post_thumbnail_id
 			), admin_url('upload.php') );
-			printf( ' - <a href="%s">%s</a>', $pte_url, __( 'Crop Thumbnail', 'metronet-profile-picture' ) );							
+			printf( ' - <a href="%s">%s</a>', $pte_url, __( 'Crop Thumbnail', 'metronet-profile-picture' ) );
 		} //end post thumbnail editor
 		return ob_get_clean();
 	} //end get_post_thumbnail_editor_link
-	
+
 	/**
 	* get_user_id
 	*
 	* Gets a user ID for the user
-	* 
+	*
 	*@return int user_id
-	* 
+	*
 	@return int post_id
 	*/
 	private function get_user_id() {
@@ -419,15 +419,15 @@ class Metronet_Profile_Picture	{
 		}
 		return $user_id;
 	} //end get_user_id
-		
+
 	/**
 	* init()
-	* 
+	*
 	* Initializes plugin localization, post types, updaters, plugin info, and adds actions/filters
 	*
 	*/
-	public function init() {		
-		
+	public function init() {
+
 		add_theme_support( 'post-thumbnails' ); //This should be part of the theme, but the plugin registers it just in case.
 		//Register post types
 		$post_type_args = array(
@@ -445,11 +445,11 @@ class Metronet_Profile_Picture	{
 		add_image_size( 'profile_24', 24, 24, true );
 		add_image_size( 'profile_48', 48, 48, true );
 		add_image_size( 'profile_96', 96, 96, true );
-		
+
 	}//end function init
-	
-	
-	
+
+
+
 	/**
 	* insert_upload_form
 	*
@@ -457,10 +457,10 @@ class Metronet_Profile_Picture	{
 	*/
 	public function insert_upload_form() {
 		if ( !current_user_can( 'upload_files' ) ) return; //Users must be author or greater
-		
+
 		$user_id = $this->get_user_id();
 		$post_id = $this->get_post_id( $user_id );
-		
+
 		?>
 		<tr valign="top">
 			<th scope="row"><?php esc_html_e( "Profile Image", "metronet-profile-picture" ); ?></th>
@@ -487,7 +487,7 @@ class Metronet_Profile_Picture	{
 					}
 					$remove_classes = array( 'dashicons', 'dashicons-trash' );
 					if ( !$has_profile_image ) {
-						$remove_classes[] = 'mpp-no-profile-image';	
+						$remove_classes[] = 'mpp-no-profile-image';
 					}
 				?>
 					<a id="metronet-remove" class="<?php echo implode( ' ', $remove_classes ); ?>" href="#" title="<?php esc_attr_e( 'Remove profile image', 'metronet-profile-picture' ); ?>"><?php esc_html_e( "Remove profile image", "metronet-profile-picture" );?></a>
@@ -496,7 +496,7 @@ class Metronet_Profile_Picture	{
 					</div>
 				</div><!-- #metronet-profile-image -->
 				<div id="metronet-override-avatar">
-					<input type="hidden" name="metronet-user-avatar" value="off" /> 
+					<input type="hidden" name="metronet-user-avatar" value="off" />
 					<?php
 					//Get the user avatar override option - If not set, see if there's a filter override.
 					$user_avatar_override = get_user_option( 'metronet_avatar_override', $user_id );
@@ -506,7 +506,7 @@ class Metronet_Profile_Picture	{
 					} else {
 						$checked = checked( true, apply_filters( 'mpp_avatar_override', false ), false );
 					}
-					
+
 					//Filter for hiding the override interface.  If this option is set to true, the mpp_avatar_override filter is ignored and override is enabled by default
 					$hide_override = apply_filters( 'mpp_hide_avatar_override', false );
 					if ( $hide_override ):
@@ -522,11 +522,11 @@ class Metronet_Profile_Picture	{
 		</tr>
 		<?php
 	} //end insert_upload_form
-	
+
 	function profile_print_media_scripts() {
 		if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE == true ) {
 			$this->print_media_scripts();
-		}	
+		}
 	}
 	/**
 	* print_media_scripts
@@ -538,8 +538,8 @@ class Metronet_Profile_Picture	{
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
 		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, METRONET_PROFILE_PICTURE_VERSION, true );
-		wp_localize_script( 'mt-pp', 'metronet_profile_image', 
-			array( 
+		wp_localize_script( 'mt-pp', 'metronet_profile_image',
+			array(
 				'set_profile_text'    => __( 'Set Profile Image', 'metronet-profile-picture' ),
 				'remove_profile_text' => __( 'Remove Profile Image', 'metronet-profile-picture' ),
 				'crop'                => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
@@ -547,14 +547,14 @@ class Metronet_Profile_Picture	{
 				'user_post_id'        => absint( $post_id ),
 				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) ),
 				'loading_gif'         => esc_url( self::get_plugin_url( '/img/loading.gif' ) )
-			) 
+			)
 		);
 		?>
 		<style>
 		/* Metronet Profile Picture */
 		#metronet-profile-image {
 			position: relative;
-			float: left;	
+			float: left;
 		}
 		#metronet-profile-image a.mpp_add_media #metronet-click-edit,
 		#metronet-profile-image a.mpp_add_media:hover #metronet-click-edit,
@@ -599,23 +599,23 @@ class Metronet_Profile_Picture	{
 			color: #ff3e3e;
 		}
 		#metronet-remove.mpp-no-profile-image {
-			display: none;	
+			display: none;
 		}
 		#metronet-override-avatar {
-			clear: left;	
+			clear: left;
 		}
 		</style>
 		<?php
 	} //end print_media_scripts
-	
+
 	public function print_media_styles() {
 	} //end print_media_styles
-	
+
 	/**
 	 * rest_get_users_permissions_callback()
 	 *
 	 * Gets permissions for the get users rest api endpoint.
-	 * 
+	 *
 	 * @return bool true if the user has permission, false if not
 	 **/
 	public function rest_get_users_permissions_callback() {
@@ -635,16 +635,25 @@ class Metronet_Profile_Picture	{
 				'get_callback' =>  array( $this, 'rest_api_get_profile_for_user' )
 			)
 		);
-		register_rest_route( 
-			'mpp/v2', 
+		register_rest_route(
+			'mpp/v2',
+			'get_posts',
+			array(
+				'methods' => 'POST',
+				'callback' =>  array( $this, 'rest_api_get_posts_for_user' ),
+				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
+			)
+		);
+		register_rest_route(
+			'mpp/v2',
 			'/profile-image/me',
 			array(
 				'methods' => 'POST',
 				'callback' =>  array( $this, 'rest_api_put_profile' )
 			)
 		);
-		register_rest_route( 
-			'mpp/v2', 
+		register_rest_route(
+			'mpp/v2',
 			'/get_users',
 			array(
 				'methods' => 'POST',
@@ -653,8 +662,8 @@ class Metronet_Profile_Picture	{
 			)
 		);
 		// keep it for backward compatibility
-		register_rest_route( 
-			'mpp/v1', 
+		register_rest_route(
+			'mpp/v1',
 			'/user/(?P<id>\d+)',
 			array(
 				'methods' => 'GET',
@@ -673,16 +682,14 @@ class Metronet_Profile_Picture	{
 	 * rest_api_get_users()
 	 *
 	 * Gets users for the Gutenberg block
-	 * 
+	 *
 	 * @param array $request WP REST API array
 	 **/
 	public function rest_api_get_users( $request ) {
 		$user_query = new WP_User_Query( array( 'who' => 'authors', 'orderby' => 'display_name' ) );
 		$user_results = $user_query->get_results();
-		error_log( print_r( $user_results, true ) );
 		$return = array();
 		foreach( $user_results as $result ) {
-			error_log(print_r($result, true ) );
 			//Get attachment ID
 			$profile_post_id = absint( get_user_option( 'metronet_post_id', $result->data->ID ) );
 			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
@@ -702,17 +709,13 @@ class Metronet_Profile_Picture	{
 			$result->data->has_profile_picture = true;
 			$result->data->is_user_logged_in = ( $result->data->ID == get_current_user_id() ) ? true : false;
 			$result->data->description = get_user_meta( $result->data->ID, 'description', true );
-			
+
 			//Get attachment URL
 			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-			
+
 			$result->data->profile_picture_id = $post_thumbnail_id;
 			$result->data->default_image = self::get_plugin_url( 'img/mystery.png' );
 			$result->data->profile_pictures = array(
-				'24'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
-				'48'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
-				'96'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
-				'thumbnail' => wp_get_attachment_image_url( $post_thumbnail_id, 'thumbnail', false, '' ),
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
 			);
@@ -721,24 +724,24 @@ class Metronet_Profile_Picture	{
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * rest_api_put_profile()
 	 *
 	 * Adds a profile picture to a user
-	 * 
+	 *
 	 * @param array $request WP REST API array
-	 * 
+	 *
 	 * @return json image URLs matched to sizes
 	 **/
 	public function rest_api_put_profile( $request ) {
-		
+
 		$user_id = get_current_user_id();
 		$media_id = (int) $request['media_id'];
 		if ( ! current_user_can( 'upload_files' ) ) {
 			return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
-		
+
 		if ( ! $user_id ) {
 			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
@@ -746,22 +749,47 @@ class Metronet_Profile_Picture	{
 		if ( ! $is_post_owner ) {
 			return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
-		
+
 		$post_id = $this->get_post_id( $user_id );
 		//Save user meta
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
 		update_user_option( $user_id, 'metronet_image_id', $media_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
-		
+
 		set_post_thumbnail( $post_id, $media_id );
-		
+
 		$attachment_url = wp_get_attachment_url( $media_id );
-		
+
 		return array(
 			'24'  => wp_get_attachment_image_url( $media_id, 'profile_24', false, '' ),
 			'48'  => wp_get_attachment_image_url( $media_id, 'profile_48', false, '' ),
 			'96'  => wp_get_attachment_image_url( $media_id, 'profile_96', false, '' ),
 			'full'=> $attachment_url
 		);
+	}
+
+	/**
+	* rest_api_get_posts_for_user()
+	*
+	* Returns the 5 most recent posts for the user
+	**/
+	public function rest_api_get_posts_for_user( $request ) {
+		$user_id = absint( $request[ 'user_id' ] );
+		$user = get_user_by( 'id', $user_id );
+		if ( ! $user ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
+		}
+
+		$args = array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'offset'         => 1,
+			'author'         => $user_id,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'posts_per_page' => 5
+		);
+		$posts = get_posts( $args );
+		wp_send_json( $posts );
 	}
 	/**
 	* rest_api_get_profile()
@@ -776,17 +804,17 @@ class Metronet_Profile_Picture	{
 		}
 
 		// No capability check here because we're just returning user profile data
-		
+
 		//Get attachment ID
 		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
 		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 		if ( ! $post_thumbnail_id ) {
 			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 		}
-		
+
 		//Get attachment URL
 		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-		
+
 		return array(
 			'24'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
 			'48'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
@@ -794,14 +822,14 @@ class Metronet_Profile_Picture	{
 			'full'=> $attachment_url
 		);
 	}
-	
+
 	/**
 	 * rest_api_get_profile()
 	 *
 	 * Returns a profile for the user
-	 * 
+	 *
 	 * @param array $data WP REST API array
-	 * 
+	 *
 	 * @return json image URLs matched to sizes
 	 **/
 	public function rest_api_get_profile( $data ) {
@@ -810,23 +838,23 @@ class Metronet_Profile_Picture	{
 		if ( ! $user ) {
 			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 		}
-		
+
 		//Get attachment ID
 		$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
 		$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 		if ( ! $post_thumbnail_id ) {
 			return new WP_Error( 'mpp_no_profile_picture', __( 'Profile picture not found.', 'metronet-profile-picture' ), array( 'status' => 404 ) );
 		}
-		
+
 		//Get attachment URL
 		$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
-		
+
 		return array(
 			'attachment_id'  => $post_thumbnail_id,
 			'attachment_url' => $attachment_url
 		);
 	}
-	
+
 	/**
 	* rest_api_validate()
 	*
@@ -835,7 +863,7 @@ class Metronet_Profile_Picture	{
 	public function rest_api_validate( $param, $request, $key ) {
 		return is_numeric( $param );
 	}
-	
+
 	/**
 	* rest_api_validate()
 	*
@@ -844,17 +872,17 @@ class Metronet_Profile_Picture	{
 	public function rest_api_sanitize( $param, $request, $key ) {
 		return absint( $param );
 	}
-	
+
 	/**
 	* save_user_profile()
 	*
 	* Saves user profile fields
-	* @param int $user_id 
+	* @param int $user_id
 	**/
 	public function save_user_profile( $user_id ) {
 		if ( !isset( $_POST[ 'metronet-user-avatar' ] ) ) return;
 		check_admin_referer( 'update-user_' . $user_id );
-		
+
 		$user_avatar = $_POST[ 'metronet-user-avatar' ];
 		if ( $user_avatar == 'on' ) {
 			update_user_option( $user_id, 'metronet_avatar_override', 'on' );
@@ -862,7 +890,7 @@ class Metronet_Profile_Picture	{
 			update_user_option( $user_id, 'metronet_avatar_override', 'off' );
 		}
 	} //end save_user_profile
-	
+
 } //end class
 //instantiate the class
 global $mt_pp;
@@ -877,7 +905,7 @@ function mt_mpp_instantiate() {
 }
 /**
  * mt_profile_img
- * 
+ *
  * Adds a profile image
  *
  * @param $user_id INT - The user ID for the user to retrieve the image for
@@ -888,11 +916,11 @@ function mt_mpp_instantiate() {
 */
 function mt_profile_img( $user_id, $args = array() ) {
 	$profile_post_id = absint( get_user_option( 'metronet_post_id', $user_id ) );
-	
+
 	if ( 0 === $profile_post_id || 'mt_pp' !== get_post_type( $profile_post_id ) ) {
 		return false;
 	}
-	
+
 	$defaults = array(
 		'size' => 'thumbnail',
 		'attr' => '',
@@ -900,35 +928,35 @@ function mt_profile_img( $user_id, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args ); //todo - get rid of evil extract
-	
+
 	$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
-	
+
 	//Return false or echo nothing if there is no post thumbnail
 	if( !$post_thumbnail_id ) {
 		if ( $echo ) echo '';
 		else return false;
 		return;
 	}
-	
+
 	//Implode Classes if set and array - dev note: edge case
 	if ( is_array( $attr ) && isset( $attr[ 'class' ] ) ) {
 		if ( is_array( $attr[ 'class' ] ) ) {
-			$attr[ 'class' ] = implode( ' ', $attr[ 'class' ] );	
-		}	
+			$attr[ 'class' ] = implode( ' ', $attr[ 'class' ] );
+		}
 	}
-	
+
 	$post_thumbnail =  wp_get_attachment_image( $post_thumbnail_id, $size, false, $attr );
 
 	/**
 	 * Filter outputted HTML.
 	 *
 	 * Filter outputted HTML.
-	 * 
+	 *
 	 * @param string $post_thumbnail       img tag with formed HTML
-	 * @param int	 $profile_post_id      The profile in which the image is attached 
-	 * @param int    $profile_thumbnail_id The thumbnail ID for the attached image 
+	 * @param int	 $profile_post_id      The profile in which the image is attached
+	 * @param int    $profile_thumbnail_id The thumbnail ID for the attached image
 	 * @param int    $user_id              The user id for which the image is attached
-	 * 
+	 *
 	 */
 	$post_thumbnail = apply_filters( 'mpp_thumbnail_html', $post_thumbnail, $profile_post_id, $post_thumbnail_id, $user_id );
 	if ( $echo ) {
