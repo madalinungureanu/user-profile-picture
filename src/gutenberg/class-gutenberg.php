@@ -67,9 +67,10 @@ class Metronet_Profile_Picture_Gutenberg {
 	}
 
 	public function add_gutenberg_styles() {
+		if( is_admin() ) return;
 		// Ensure script debug allows non-minified scripts
 		$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
 		wp_enqueue_style( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( '/css/front-end-gutenberg.css' ), array(), METRONET_PROFILE_PICTURE_VERSION, 'all' );
-		
+
 	}
 }

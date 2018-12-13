@@ -38,6 +38,11 @@ class MPP_Gutenberg extends Component {
 	constructor() {
 		super( ...arguments );
 
+		let theme_list = Array();
+		theme_list.push( { value: 'regular', label: __( 'Regular', 'metronet-profile-picture' )});
+		theme_list.push( { value: 'profile', label: __( 'Profile', 'metronet-profile-picture' )});
+		theme_list.push( { value: 'tabbed', label: __( 'Tabbed', 'metronet-profile-picture' )});
+		theme_list.push( { value: 'compact', label: __( 'Compact', 'metronet-profile-picture' )});
 		this.state = {
 			loading: true,
 			users: false,
@@ -48,6 +53,16 @@ class MPP_Gutenberg extends Component {
 			profile_description: '',
 			profile_name: '',
 			profile_title: '',
+			theme: 'regular',
+			themes: theme_list,
+			socialFacebook: '',
+			socialGitHub: '',
+			socialLinkedIn: '',
+			socialPinterest: '',
+			socialTwitter: '',
+			socialWordPress: '',
+			socialYouTube: '',
+			website: '',
 		};
 	}
 	get_users = () => {
@@ -188,6 +203,62 @@ class MPP_Gutenberg extends Component {
 			}
 		);
 	}
+	onThemeChange = ( value ) => {
+		this.setState(
+			{
+				theme: value
+			}
+		);
+	}
+	handleFacebookChange = ( value ) => {
+		this.setState(
+			{
+				socialFacebook: value
+			}
+		);
+	}
+	handleYouTubeChange = ( value ) => {
+		this.setState(
+			{
+				socialYouTube: value
+			}
+		);
+	}
+	handleGitHubChange = ( value ) => {
+		this.setState(
+			{
+				socialGitHub: value
+			}
+		);
+	}
+	handleLinkedInChange = ( value ) => {
+		this.setState(
+			{
+				socialLinkedIn: value
+			}
+		);
+	}
+	handleTwitterChange = ( value ) => {
+		this.setState(
+			{
+				socialTwitter: value
+			}
+		);
+	}
+	handleWordPressChange = ( value ) => {
+		this.setState(
+			{
+				socialWordPress: value
+			}
+		);
+	}
+	handleWebsiteChange = ( value ) => {
+		this.setState(
+			{
+				website: value
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -209,6 +280,8 @@ class MPP_Gutenberg extends Component {
 				showName,
 				showDescription,
 				showViewPosts,
+				theme,
+				theme_list,
 			},
 			attributes,
 			isSelected,
@@ -236,7 +309,7 @@ class MPP_Gutenberg extends Component {
 		];
 		return(
 			<Fragment>
-				{this.state.loading && 
+				{this.state.loading &&
 				<Fragment>
 					<Placeholder>
 						{__('Loading...', 'metronet-profile-picture')}
@@ -253,6 +326,12 @@ class MPP_Gutenberg extends Component {
 										value={this.state.active_user}
 										options={ this.state.user_list }
 										onChange={ ( value ) => { this.on_user_change(value); setAttributes({user_id: Number(value)}); } }
+								/>
+								<SelectControl
+										label={ __( 'Select a theme', 'metronet-profile-picture' ) }
+										value={this.state.theme}
+										options={ this.state.themes }
+										onChange={ ( value ) => { this.onThemeChange(value); setAttributes({theme: value}); } }
 								/>
 								<RangeControl
 									label={ __( 'Font Size', 'metronet-profile-picture' ) }
@@ -331,6 +410,53 @@ class MPP_Gutenberg extends Component {
 									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
 								/>
 							</PanelBody>
+							<PanelBody title={ __( 'Social Media Settings', 'metronet-profile-picture' ) } initialOpen={false}>
+								<TextControl
+									label={__('Website', 'metronet-profile-picture')}
+									value={this.state.website}
+									onChange={ ( value ) => { this.props.setAttributes( { website: value }); this.handleWebsiteChange(value); } }
+								/>
+								<TextControl
+									label={__('Facebook', 'metronet-profile-picture')}
+									value={this.state.socialFacebook}
+									onChange={ ( value ) => { this.props.setAttributes( { socialFacebook: value }); this.handleFacebookChange(value); } }
+								/>
+								<TextControl
+									label={__('Twitter', 'metronet-profile-picture')}
+									value={this.state.socialTwitter}
+									onChange={ ( value ) => { this.props.setAttributes( { socialTwitter: value }); this.handleTwitterChange(value); } }
+								/>
+								<TextControl
+									label={__('Twitter', 'metronet-profile-picture')}
+									value={this.state.socialTwitter}
+									onChange={ ( value ) => { this.props.setAttributes( { socialTwitter: value }); this.handleTwitterChange(value); } }
+								/>
+								<TextControl
+									label={__('LinkedIn', 'metronet-profile-picture')}
+									value={this.state.socialLinkedIn}
+									onChange={ ( value ) => { this.props.setAttributes( { socialLinkedIn: value }); this.handleLinkedInChange(value); } }
+								/>
+								<TextControl
+									label={__('YouTube', 'metronet-profile-picture')}
+									value={this.state.socialYouTube}
+									onChange={ ( value ) => { this.props.setAttributes( { socialYouTube: value }); this.handleYouTubeChange(value); } }
+								/>
+								<TextControl
+									label={__('GitHub', 'metronet-profile-picture')}
+									value={this.state.socialGitHub}
+									onChange={ ( value ) => { this.props.setAttributes( { socialGitHub: value }); this.handleGitHubChange(value); } }
+								/>
+								<TextControl
+									label={__('Pinterest', 'metronet-profile-picture')}
+									value={this.state.socialPinterest}
+									onChange={ ( value ) => { this.props.setAttributes( { socialPinterest: value }); this.handlePinterestChange(value); } }
+								/>
+								<TextControl
+									label={__('WordPress', 'metronet-profile-picture')}
+									value={this.state.socialWordPress}
+									onChange={ ( value ) => { this.props.setAttributes( { socialWordPress: value }); this.handleWordPressChange(value); } }
+								/>
+							</PanelBody>
 						</InspectorControls>
 						<BlockControls key="controls">
 							<AlignmentToolbar
@@ -338,10 +464,11 @@ class MPP_Gutenberg extends Component {
 								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
 							/>
 						</BlockControls>
-						<div 
+						<div
 							className={
 								classnames(
 									'mpp-profile-wrap',
+									this.state.theme,
 									profileAlignment,
 									profileAvatarShape,
 									'mt-font-size-' + profileFontSize,
@@ -353,6 +480,8 @@ class MPP_Gutenberg extends Component {
 								color: profileTextColor,
 							} }
 						>
+						{ this.state.theme === 'regular' &&
+							<Fragment>
 							<div className={
 								classnames(
 									'mpp-profile-gutenberg-wrap',
@@ -382,7 +511,7 @@ class MPP_Gutenberg extends Component {
 									</div>
 								</div>
 								<div className="mpp-content-wrap">
-									{showName && 
+									{showName &&
 									<RichText
 										tagName="h2"
 										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
@@ -421,14 +550,14 @@ class MPP_Gutenberg extends Component {
 							{profileURL && !! profileURL.length &&
 							<div className="mpp-gutenberg-view-posts">
 							{showViewPosts &&
-								<div 
+								<div
 									className="mpp-profile-view-posts"
 									style={ {
 										backgroundColor: profileViewPostsBackgroundColor,
 										color: profileViewPostsTextColor,
 									} }
 								>
-									<a 
+									<a
 										href={profileURL}
 										style={ {
 											backgroundColor: profileViewPostsBackgroundColor,
@@ -439,6 +568,8 @@ class MPP_Gutenberg extends Component {
 								}
 							</div>
 							}
+						</Fragment>
+						}
 						</div>
 					</Fragment>
 				}
