@@ -86,6 +86,14 @@ const blockAttributes = {
 		type: 'number',
 		default: 100
 	},
+	headerFontSize: {
+		type: 'number',
+		default: 24
+	},
+	buttonFontSize: {
+		type: 'number',
+		default: 16
+	},
 	profileFontSize: {
 		type: 'number',
 		default: 18

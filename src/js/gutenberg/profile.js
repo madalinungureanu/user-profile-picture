@@ -53,7 +53,6 @@ class MPP_Gutenberg extends Component {
 			profile_description: '',
 			profile_name: '',
 			profile_name_unfiltered: '',
-			blank_profile_name: this.props.attributes.blankProfileName,
 			profile_title: '',
 			show_website: this.props.attributes.showWebsite,
 			theme: this.props.attributes.theme,
@@ -122,9 +121,6 @@ class MPP_Gutenberg extends Component {
 			if( undefined == profile_description ) {
 				profile_description = '';
 			}
-			if ( this.state.theme === 'profile' && false !== this.props.attributes.blankProfileName ) {
-				profile_name = __( 'About', 'metronet-profile-picture' ) + ' ' + profile_name;
-			}
 			this.setState(
 				{
 					loading: false,
@@ -136,7 +132,6 @@ class MPP_Gutenberg extends Component {
 					active_user: active_user,
 					profile_name: profile_name,
 					profile_name_unfiltered: active_user_profile.display_name,
-					blank_profile_name: false,
 					profile_title: profile_title,
 					profile_description: profile_description,
 					profile_url: profile_url,
@@ -146,7 +141,6 @@ class MPP_Gutenberg extends Component {
 			this.props.setAttributes( {
 				profileContent: profile_description,
 				profileName: profile_name,
-				blankProfileName: false,
 				profileTitle: profile_title,
 				profileURL: profile_url,
 				profileImgID: profile_picture_id,
@@ -171,11 +165,7 @@ class MPP_Gutenberg extends Component {
 		if( undefined === description ) {
 			description = '';
 		}
-		if ( this.state.theme === 'profile' && false !== this.props.attributes.blankProfileName ) {
-			profile_name = __( 'About', 'metronet-profile-picture' ) + ' ' + this.state.users[user_id].display_name;
-		} else {
-			profile_name = this.state.users[user_id].display_name;
-		}
+		profile_name = this.state.users[user_id].display_name;
 		this.props.setAttributes( {
 			profileName: profile_name,
 			profileContent: description,
@@ -315,6 +305,8 @@ class MPP_Gutenberg extends Component {
 				profileImgID,
 				profileURL,
 				profileFontSize,
+				buttonFontSize,
+				headerFontSize,
 				profileBackgroundColor,
 				profileTextColor,
 				profileAvatarShape,
@@ -348,10 +340,7 @@ class MPP_Gutenberg extends Component {
 		profileContent = this.state.profile_description;
 		profileTitle = this.state.profile_title;
 		profileURL = this.state.profile_url;
-		if ( 'profile' === this.state.theme && false !== this.props.attributes.blankProfileName ) {
-			profileName = __( 'About', 'metronet-profile-picture' ) + ' ' + profileName
-		}
-		let showPostsWidth = this.state.website != '' && !this.props.attributes.showWebsite ? '100%' : '';
+		let showPostsWidth = this.state.website === '' || !this.props.attributes.showWebsite ? '100%' : '';
 
 		const onChangeBackgroundColor = value => setAttributes( { profileBackgroundColor: value } );
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
@@ -390,10 +379,26 @@ class MPP_Gutenberg extends Component {
 										onChange={ ( value ) => { this.onThemeChange(value); setAttributes({theme: value}); } }
 								/>
 								<RangeControl
+									label={ __( 'Header Font Size', 'metronet-profile-picture' ) }
+									value={ headerFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { headerFontSize: value } ) }
+									min={ 14 }
+									max={ 32 }
+									step={ 1 }
+								/>
+								<RangeControl
 									label={ __( 'Font Size', 'metronet-profile-picture' ) }
 									value={ profileFontSize }
 									onChange={ ( value ) => this.props.setAttributes( { profileFontSize: value } ) }
 									min={ 14 }
+									max={ 24 }
+									step={ 1 }
+								/>
+								<RangeControl
+									label={ __( 'Button Size', 'metronet-profile-picture' ) }
+									value={ buttonFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { buttonFontSize: value } ) }
+									min={ 10 }
 									max={ 24 }
 									step={ 1 }
 								/>
@@ -403,6 +408,11 @@ class MPP_Gutenberg extends Component {
 									options={ profileAvatarShapeOptions }
 									value={ profileAvatarShape }
 									onChange={ ( value ) => this.props.setAttributes( { profileAvatarShape: value } ) }
+								/>
+								<TextControl
+									label={__('Website', 'metronet-profile-picture')}
+									value={this.state.website}
+									onChange={ ( value ) => { this.props.setAttributes( { website: value }); this.handleWebsiteChange(value); } }
 								/>
 								<PanelColorSettings
 								title={ __( 'Background Color', 'metronet-profile-picture' ) }
@@ -478,11 +488,6 @@ class MPP_Gutenberg extends Component {
 							</PanelBody>
 							<PanelBody title={ __( 'Social Media Settings', 'metronet-profile-picture' ) } initialOpen={false}>
 								<TextControl
-									label={__('Website', 'metronet-profile-picture')}
-									value={this.state.website}
-									onChange={ ( value ) => { this.props.setAttributes( { website: value }); this.handleWebsiteChange(value); } }
-								/>
-								<TextControl
 									label={__('Facebook', 'metronet-profile-picture')}
 									value={this.state.socialFacebook}
 									onChange={ ( value ) => { this.props.setAttributes( { socialFacebook: value }); this.handleFacebookChange(value); } }
@@ -524,12 +529,14 @@ class MPP_Gutenberg extends Component {
 								/>
 							</PanelBody>
 						</InspectorControls>
-						<BlockControls key="controls">
-							<AlignmentToolbar
-								value={ profileAlignment }
-								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
-							/>
-						</BlockControls>
+						{ this.state.theme === 'regular' &&
+							<BlockControls key="controls">
+								<AlignmentToolbar
+									value={ profileAlignment }
+									onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
+								/>
+							</BlockControls>
+						}
 						<div
 							className={
 								classnames(
@@ -537,7 +544,6 @@ class MPP_Gutenberg extends Component {
 									this.state.theme,
 									profileAlignment,
 									profileAvatarShape,
-									'mt-font-size-' + profileFontSize,
 									'mpp-block-profile'
 								)
 							}
@@ -551,6 +557,7 @@ class MPP_Gutenberg extends Component {
 							<div className={
 								classnames(
 									'mpp-profile-gutenberg-wrap',
+									'mt-font-size-' + profileFontSize,
 								)
 							}
 							>
@@ -584,9 +591,10 @@ class MPP_Gutenberg extends Component {
 										value={ profileName }
 										className='mpp-profile-name'
 										style={ {
-											color: profileTextColor
+											color: profileTextColor,
+											fontSize: headerFontSize + 'px'
 										} }
-										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value, blankProfileName: false } ) } }
+										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
 									/>
 									}
 									{showTitle &&
@@ -621,7 +629,8 @@ class MPP_Gutenberg extends Component {
 									style={ {
 										backgroundColor: profileViewPostsBackgroundColor,
 										color: profileViewPostsTextColor,
-										width: showPostsWidth
+										width: showPostsWidth,
+										fontSize: buttonFontSize + 'px'
 									} }
 								>
 									<a
@@ -636,6 +645,7 @@ class MPP_Gutenberg extends Component {
 							{ this.state.website != '' && showWebsite &&
 								<div
 								className="mpp-profile-view-website"
+								style={{fontSize: buttonFontSize + 'px'}}
 								>
 								<a
 									href={this.state.website}
@@ -655,7 +665,8 @@ class MPP_Gutenberg extends Component {
 										value={ profileName }
 										className='mpp-profile-name'
 										style={ {
-											color: profileTextColor
+											color: profileTextColor,
+											fontSize: headerFontSize + 'px'
 										} }
 										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
 									/>
@@ -692,7 +703,7 @@ class MPP_Gutenberg extends Component {
 										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
 									/>
 								}
-								<div className="mpp-profile-meta">
+								<div className="mpp-profile-meta" style={{fontSize: buttonFontSize + 'px'}}>
 									<div className="mpp-profile-link alignleft">
 										<a href={this.state.profile_url}>{__( 'View all posts by', 'metronet-profile-picture' )} {this.state.profile_name_unfiltered}</a>
 									</div>
