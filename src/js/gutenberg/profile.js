@@ -67,6 +67,8 @@ class MPP_Gutenberg extends Component {
 			socialInstagram: this.props.attributes.socialInstagram,
 			website: this.props.attributes.website,
 			showSocialMedia: true,
+			socialMediaOptions: this.props.attributes.socialMediaOptions,
+			socialMediaColors: this.props.attributes.socialMediaColors,
 		};
 	}
 	get_users = () => {
@@ -293,6 +295,13 @@ class MPP_Gutenberg extends Component {
 			}
 		);
 	}
+	handleSocialMediaOptionChange = ( value ) => {
+		this.setState(
+			{
+				socialMediaOptions: value
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -326,6 +335,7 @@ class MPP_Gutenberg extends Component {
 				socialTwitter,
 				socialWordPress,
 				socialYouTube,
+				socialMediaColors
 			},
 			attributes,
 			isSelected,
@@ -346,12 +356,20 @@ class MPP_Gutenberg extends Component {
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
 		const onChangeViewPostsBackgroundColor = value => setAttributes( { profileViewPostsBackgroundColor: value } );
 		const onChangeViewPostsTextColor = value => setAttributes( { profileViewPostsTextColor: value } );
+		const onChangeSocialMediaColor = value => setAttributes( { socialMediaColors: value } );
 
 		// Avatar shape options
 		const profileAvatarShapeOptions = [
 			{ value: 'square', label: __( 'Square', 'metronet-profile-picture' ) },
 			{ value: 'round', label: __( 'Round', 'metronet-profile-picture' ) },
 		];
+
+		// Social Media Options
+		const profileSocialMediaOptions = [
+			{ value: 'colors', label: __( 'Brand Colors', 'metronet-profile-picture' ) },
+			{ value: 'custom', label: __( 'Custom', 'metronet-profile-picture' ) },
+		];
+
 		return(
 			<Fragment>
 				{this.state.loading &&
@@ -527,6 +545,24 @@ class MPP_Gutenberg extends Component {
 									value={this.state.socialWordPress}
 									onChange={ ( value ) => { this.props.setAttributes( { socialWordPress: value }); this.handleWordPressChange(value); } }
 								/>
+								<SelectControl
+										label={ __( 'Social Media Colors', 'metronet-profile-picture' ) }
+										value={this.state.socialMediaOptions}
+										options={ profileSocialMediaOptions }
+										onChange={ ( value ) => { setAttributes({socialMediaOptions: value}); this.handleSocialMediaOptionChange(value); } }
+								/>
+								{ this.state.socialMediaOptions === 'custom' &&
+									<PanelColorSettings
+										title={ __( 'Social Media Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: socialMediaColors,
+											onChange: onChangeSocialMediaColor,
+											label: __( 'Social Media Color', 'metronet-profile-picture' ),
+										} ] }
+									>
+									</PanelColorSettings>
+								}
 							</PanelBody>
 						</InspectorControls>
 						{ this.state.theme === 'regular' &&
@@ -719,56 +755,56 @@ class MPP_Gutenberg extends Component {
 							<div className="mpp-social">
 								{ this.state.socialFacebook != '' &&
 									<a href={this.state.socialFacebook}>
-										<svg className="icon icon-facebook" role="img">
+										<svg className="icon icon-facebook" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#facebook"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialTwitter != '' &&
 									<a href={this.state.socialTwitter}>
-										<svg className="icon icon-twitter" role="img">
+										<svg className="icon icon-twitter" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#twitter"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialInstagram != '' &&
 									<a href={this.state.socialInstagram}>
-										<svg className="icon icon-instagram" role="img">
+										<svg className="icon icon-instagram" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#instagram"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialPinterest != '' &&
 									<a href={this.state.socialPinterest}>
-										<svg className="icon icon-pinterest" role="img">
+										<svg className="icon icon-pinterest" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#pinterest"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialLinkedIn != '' &&
 									<a href={this.state.socialLinkedIn}>
-										<svg className="icon icon-linkedin" role="img">
+										<svg className="icon icon-linkedin" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#linkedin"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialYouTube != '' &&
 									<a href={this.state.socialYouTube}>
-										<svg className="icon icon-youtube" role="img">
+										<svg className="icon icon-youtube" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#youtube"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialGitHub != '' &&
 									<a href={this.state.socialGitHub}>
-										<svg className="icon icon-github" role="img">
+										<svg className="icon icon-github" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#github"></use>
 										</svg>
 									</a>
 								}
 								{ this.state.socialWordPress != '' &&
 									<a href={this.state.socialWordPress}>
-										<svg className="icon icon-wordpress" role="img">
+										<svg className="icon icon-wordpress" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
 											<use href="#wordpress"></use>
 										</svg>
 									</a>

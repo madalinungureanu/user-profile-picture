@@ -161,7 +161,15 @@ const blockAttributes = {
 	website: {
 		type: 'string',
 		default: ''
-	}
+	},
+	socialMediaOptions: {
+		type: 'string',
+		default: 'colors'
+	},
+	socialMediaColors: {
+		type: 'string',
+		default: '#000000'
+	},
 };
 
 /**
