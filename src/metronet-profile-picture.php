@@ -716,6 +716,10 @@ class Metronet_Profile_Picture	{
 			$result->data->profile_picture_id = $post_thumbnail_id;
 			$result->data->default_image = self::get_plugin_url( 'img/mystery.png' );
 			$result->data->profile_pictures = array(
+				'24'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
+				'48'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
+				'96'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'thumbnail' => wp_get_attachment_image_url( $post_thumbnail_id, 'thumbnail', false, '' ),
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
 			);
