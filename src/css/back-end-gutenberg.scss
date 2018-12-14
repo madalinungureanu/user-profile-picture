@@ -33,37 +33,25 @@
 	justify-content: space-around;
 	width: 100%;
 }
-.editor-styles-wrapper .mpp-profile-gutenberg-wrap.regular {
-	h2,
-	p,
-	div {
-		font-size: 18px;
-		line-height: 1.1;
-		margin-bottom: 20px;
-	}
-}
-/* For Profile Theme */
-.editor-styles-wrapper .mpp-profile-wrap.profile {
-	padding: 10px;
-}
-.editor-styles-wrapper .mpp-profile-wrap.profile {
+.editor-styles-wrapper .regular .mpp-profile-gutenberg-wrap {
 	h2 {
-		font-size: 0.8em;
-		font-weight: normal;
-		margin-bottom: 5px;
+		font-size: 20px;
+		margin-bottom: 10px;
 		&:before {
 			display: none;
 		}
 	}
-}
-.editor-styles-wrapper .mpp-profile-wrap.profile .mpp-profile-image-wrapper {
-	position: relative;
-	float: left;
-	line-height: 1.0;
-	z-index: 1000;
-}
-.editor-styles-wrapper .mpp-profile-wrap.profile.round .profile-avatar {
-	border-radius: 50%;
+	p {
+		font-size: 18px;
+		line-height: 1.2;
+		margin-bottom: 10px;
+	}
+	div {
+		font-size: 18px;
+		line-height: 1.4;
+		margin-bottom: 10px;
+
+	}
 }
 /* Icon Sizes */
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
@@ -128,6 +116,7 @@ $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 	text-align: center;
 	padding: 10px 20px;
 	margin-top: 20px;
+	margin-right: 20px;
 	background-color: #cf6d38;
 	color: #FFF;
 	a,
@@ -142,7 +131,7 @@ $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 }
 .regular .mpp-profile-view-website {
 	display: block;
-	float: right;
+	float: left;
 	text-align: center;
 	padding: 10px 20px;
 	margin-top: 20px;
@@ -157,6 +146,22 @@ $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 		color: #FFF;
 		text-decoration: none;
 	}
+}
+.regular.right .mpp-profile-view-posts {
+	float: right;
+	margin-left: 20px;
+}
+.regular.right .mpp-profile-view-website {
+	float: right;
+}
+.regular.center .mpp-profile-view-posts {
+	display: inline-block;
+	float: none;
+	margin-left: 20px;
+}
+.regular.center .mpp-profile-view-website {
+	float: none;
+	display: inline-block;
 }
 .regular .mpp-content-wrap {
 	display: block;
@@ -219,6 +224,36 @@ $colors: twitter #00aced,
 	@each $color in $colors {
 		&.icon-#{nth($color,1)} {
 			fill: #{nth($color,2)};
+		}
+	}
+}
+
+/* For Profile Theme */
+.editor-styles-wrapper .mpp-profile-wrap.profile {
+	padding: 10px;
+	h2 {
+		font-size: 0.8em;
+		font-weight: normal;
+		margin-bottom: 5px;
+		&:before {
+			display: none;
+		}
+	}
+	&.round .profile-avatar {
+		border-radius: 50%;
+	}
+	.mpp-profile-image-wrapper {
+		position: relative;
+		float: left;
+		line-height: 1.0;
+		z-index: 1000;
+	}
+	.mpp-profile-meta {
+		margin: 10px 0;
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
 		}
 	}
 }

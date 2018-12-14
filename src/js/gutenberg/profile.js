@@ -55,6 +55,7 @@ class MPP_Gutenberg extends Component {
 			profile_name_unfiltered: '',
 			blank_profile_name: this.props.attributes.blankProfileName,
 			profile_title: '',
+			show_website: this.props.attributes.showWebsite,
 			theme: this.props.attributes.theme,
 			themes: theme_list,
 			socialFacebook: this.props.attributes.socialFacebook,
@@ -80,6 +81,7 @@ class MPP_Gutenberg extends Component {
 			let profile_description = '';
 			let profile_title = '';
 			let profile_url = '';
+			let show_website = '';
 			$.each( response.data, function( key, value ) {
 				users[value.ID] = {
 					profile_pictures: value.profile_pictures,
@@ -107,6 +109,7 @@ class MPP_Gutenberg extends Component {
 				profile_title = this.props.attributes.profileTitle.length > 0 ? this.props.attributes.profileTitle :  '';
 				profile_url = active_user_profile.permalink;
 				profile_description = this.props.attributes.profileContent.length > 0 ? this.props.attributes.profileContent : active_user_profile.description;
+				show_website = this.props.attributes.showWebsite;
 			} else {
 				profile_name = this.props.attributes.profileName.length > 0 ? this.props.attributes.profileName :  active_user_profile.display_name;
 				profile_title = this.props.attributes.profileTitle.length > 0 ? this.props.attributes.profileTitle :  '';
@@ -114,6 +117,7 @@ class MPP_Gutenberg extends Component {
 				profile_picture = this.props.attributes.profileImgURL.length > 0 ? this.props.attributes.profileImgURL : active_user_profile.default_image;
 				profile_picture_id = this.props.attributes.profileImgID.length > 0 ? this.props.attributes.profileImgID : 0;
 				profile_url = active_user_profile.permalink;
+				show_website = this.props.attributes.showWebsite;
 			}
 			if( undefined == profile_description ) {
 				profile_description = '';
@@ -136,6 +140,7 @@ class MPP_Gutenberg extends Component {
 					profile_title: profile_title,
 					profile_description: profile_description,
 					profile_url: profile_url,
+					show_website: show_website,
 				}
 			);
 			this.props.setAttributes( {
@@ -146,6 +151,7 @@ class MPP_Gutenberg extends Component {
 				profileURL: profile_url,
 				profileImgID: profile_picture_id,
 				profileImgURL: profile_picture,
+				showWebsite: show_website
 			});
 		});
 	}
@@ -318,6 +324,7 @@ class MPP_Gutenberg extends Component {
 				showName,
 				showDescription,
 				showViewPosts,
+				showWebsite,
 				theme,
 				theme_list,
 				socialFacebook,
@@ -344,6 +351,7 @@ class MPP_Gutenberg extends Component {
 		if ( 'profile' === this.state.theme && false !== this.props.attributes.blankProfileName ) {
 			profileName = __( 'About', 'metronet-profile-picture' ) + ' ' + profileName
 		}
+		let showPostsWidth = this.state.website != '' && !this.props.attributes.showWebsite ? '100%' : '';
 
 		const onChangeBackgroundColor = value => setAttributes( { profileBackgroundColor: value } );
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
@@ -456,6 +464,11 @@ class MPP_Gutenberg extends Component {
 									label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
 									checked={ showViewPosts }
 									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show Website', 'metronet-profile-picture' ) }
+									checked={ this.state.show_website }
+									onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
 								/>
 								<ToggleControl
 									label={ __( 'Show Social Media', 'metronet-profile-picture' ) }
@@ -601,13 +614,14 @@ class MPP_Gutenberg extends Component {
 								</div>
 							</div>
 							{profileURL && !! profileURL.length &&
-							<div className="mpp-gutenberg-view-posts">
+							<div className="mpp-gutenberg-view-posts" style={{width: showPostsWidth}}>
 							{showViewPosts &&
 								<div
 									className="mpp-profile-view-posts"
 									style={ {
 										backgroundColor: profileViewPostsBackgroundColor,
 										color: profileViewPostsTextColor,
+										width: showPostsWidth
 									} }
 								>
 									<a
@@ -619,7 +633,7 @@ class MPP_Gutenberg extends Component {
 									>{__('View Posts', 'metronet-profile-picture')}</a>
 								</div>
 							}
-							{ this.state.website != '' && this.state.showSocialMedia &&
+							{ this.state.website != '' && showWebsite &&
 								<div
 								className="mpp-profile-view-website"
 								>
