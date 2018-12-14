@@ -42,6 +42,29 @@
 		margin-bottom: 20px;
 	}
 }
+/* For Profile Theme */
+.editor-styles-wrapper .mpp-profile-wrap.profile {
+	padding: 10px;
+}
+.editor-styles-wrapper .mpp-profile-wrap.profile {
+	h2 {
+		font-size: 0.8em;
+		font-weight: normal;
+		margin-bottom: 5px;
+		&:before {
+			display: none;
+		}
+	}
+}
+.editor-styles-wrapper .mpp-profile-wrap.profile .mpp-profile-image-wrapper {
+	position: relative;
+	float: left;
+	line-height: 1.0;
+	z-index: 1000;
+}
+.editor-styles-wrapper .mpp-profile-wrap.profile.round .profile-avatar {
+	border-radius: 50%;
+}
 /* Icon Sizes */
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 @each $size in $sizes {
@@ -173,7 +196,7 @@ $colors: twitter #00aced,
 	feed #f26522,
 	medium #000000,
 	path #000000,
-	pinterest-alt #CC2127,
+	pinterest #CC2127,
 	pocket #000000,
 	polldaddy #bc0b0b,
 	reddit #000000,
@@ -189,6 +212,9 @@ $colors: twitter #00aced,
 	wordpress #21759b,
 	youtube #bb0000
 ;
+.mpp-social {
+	clear: both;
+}
 .mpp-social svg {
 	@each $color in $colors {
 		&.icon-#{nth($color,1)} {

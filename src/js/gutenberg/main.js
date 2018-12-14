@@ -32,6 +32,14 @@ const blockAttributes = {
 		type: 'string',
 		default: ''
 	},
+	blankProfileName: {
+		type: 'bool',
+		default: true
+	},
+	theme: {
+		type: 'string',
+		default: 'regular'
+	},
 	profileTitle: {
 		type: 'string',
 		default: ''

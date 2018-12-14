@@ -52,8 +52,10 @@ class MPP_Gutenberg extends Component {
 			active_user: false,
 			profile_description: '',
 			profile_name: '',
+			profile_name_unfiltered: '',
+			blank_profile_name: this.props.attributes.blankProfileName,
 			profile_title: '',
-			theme: 'regular',
+			theme: this.props.attributes.theme,
 			themes: theme_list,
 			socialFacebook: this.props.attributes.socialFacebook,
 			socialGitHub: this.props.attributes.socialGitHub,
@@ -116,6 +118,9 @@ class MPP_Gutenberg extends Component {
 			if( undefined == profile_description ) {
 				profile_description = '';
 			}
+			if ( this.state.theme === 'profile' && false !== this.props.attributes.blankProfileName ) {
+				profile_name = __( 'About', 'metronet-profile-picture' ) + ' ' + profile_name;
+			}
 			this.setState(
 				{
 					loading: false,
@@ -126,6 +131,8 @@ class MPP_Gutenberg extends Component {
 					profile_picture_id: profile_picture_id,
 					active_user: active_user,
 					profile_name: profile_name,
+					profile_name_unfiltered: active_user_profile.display_name,
+					blank_profile_name: false,
 					profile_title: profile_title,
 					profile_description: profile_description,
 					profile_url: profile_url,
@@ -134,6 +141,7 @@ class MPP_Gutenberg extends Component {
 			this.props.setAttributes( {
 				profileContent: profile_description,
 				profileName: profile_name,
+				blankProfileName: false,
 				profileTitle: profile_title,
 				profileURL: profile_url,
 				profileImgID: profile_picture_id,
@@ -145,6 +153,7 @@ class MPP_Gutenberg extends Component {
 		let user = this.state.users[user_id];
 		let profile_picture = '';
 		let profile_picture_id = 0;
+		let profile_name = '';
 		if( !user.has_profile_picture ) {
 			profile_picture = mpp_gutenberg.mystery_man;
 			profile_picture_id = 0;
@@ -156,8 +165,13 @@ class MPP_Gutenberg extends Component {
 		if( undefined === description ) {
 			description = '';
 		}
+		if ( this.state.theme === 'profile' && false !== this.props.attributes.blankProfileName ) {
+			profile_name = __( 'About', 'metronet-profile-picture' ) + ' ' + this.state.users[user_id].display_name;
+		} else {
+			profile_name = this.state.users[user_id].display_name;
+		}
 		this.props.setAttributes( {
-			profileName: this.state.users[user_id].display_name,
+			profileName: profile_name,
 			profileContent: description,
 			profileTitle: '',
 			profileURL: this.state.users[user_id].permalink,
@@ -165,7 +179,8 @@ class MPP_Gutenberg extends Component {
 		} );
 		this.setState(
 			{
-				profile_name: this.state.users[user_id].display_name,
+				profile_name_unfiltered: this.state.users[user_id].display_name,
+				profile_name: profile_name,
 				profile_description: description,
 				profile_title: '',
 				profile_picture: profile_picture,
@@ -326,6 +341,9 @@ class MPP_Gutenberg extends Component {
 		profileContent = this.state.profile_description;
 		profileTitle = this.state.profile_title;
 		profileURL = this.state.profile_url;
+		if ( 'profile' === this.state.theme && false !== this.props.attributes.blankProfileName ) {
+			profileName = __( 'About', 'metronet-profile-picture' ) + ' ' + profileName
+		}
 
 		const onChangeBackgroundColor = value => setAttributes( { profileBackgroundColor: value } );
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
@@ -555,7 +573,7 @@ class MPP_Gutenberg extends Component {
 										style={ {
 											color: profileTextColor
 										} }
-										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
+										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value, blankProfileName: false } ) } }
 									/>
 									}
 									{showTitle &&
@@ -613,6 +631,64 @@ class MPP_Gutenberg extends Component {
 							</div>
 							}
 						</Fragment>
+						}
+						{ this.state.theme === 'profile' &&
+							<Fragment>
+								{showName &&
+									<RichText
+										tagName="h2"
+										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
+										value={ profileName }
+										className='mpp-profile-name'
+										style={ {
+											color: profileTextColor
+										} }
+										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
+									/>
+								}
+								<div className="mpp-profile-image-wrapper">
+									<div className="mpp-profile-image-square">
+										<MediaUpload
+											buttonProps={ {
+												className: 'change-image'
+											} }
+											onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
+											type="image"
+											value={ profileImgID }
+											render={ ( { open } ) => (
+												<Button onClick={ open }>
+													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+														class="profile-avatar"
+														src={ profileImgURL }
+														alt="avatar"
+													/>  }
+												</Button>
+											) }
+										>
+										</MediaUpload>
+									</div>
+								</div>
+								{showDescription &&
+									<RichText
+										tagName="div"
+										className='mpp-profile-text'
+										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
+										value={ profileContent }
+										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
+									/>
+								}
+								<div className="mpp-profile-meta">
+									<div className="mpp-profile-link alignleft">
+										<a href={this.state.profile_url}>{__( 'View all posts by', 'metronet-profile-picture' )} {this.state.profile_name_unfiltered}</a>
+									</div>
+									<div className="mpp-profile-link alignright">
+										<a href={this.state.website}>{__( 'Website', 'metronet-profile-picture' )}</a>
+									</div>
+
+								</div>
+
+							</Fragment>
 						}
 						{ this.state.showSocialMedia == true &&
 							<div className="mpp-social">
