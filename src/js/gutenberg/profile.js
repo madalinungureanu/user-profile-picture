@@ -335,7 +335,14 @@ class MPP_Gutenberg extends Component {
 				socialTwitter,
 				socialWordPress,
 				socialYouTube,
-				socialMediaColors
+				socialMediaColors,
+				profileWebsiteBackgroundColor,
+				profileWebsiteTextColor,
+				padding,
+				border,
+				borderRounded,
+				borderColor
+
 			},
 			attributes,
 			isSelected,
@@ -356,7 +363,10 @@ class MPP_Gutenberg extends Component {
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
 		const onChangeViewPostsBackgroundColor = value => setAttributes( { profileViewPostsBackgroundColor: value } );
 		const onChangeViewPostsTextColor = value => setAttributes( { profileViewPostsTextColor: value } );
+		const onChangeWebsitesBackgroundColor = value => setAttributes( { profileWebsiteBackgroundColor: value } );
+		const onChangeWebsiteTextColor = value => setAttributes( { profileWebsiteTextColor: value } );
 		const onChangeSocialMediaColor = value => setAttributes( { socialMediaColors: value } );
+		const onChangeBorderColor = value => setAttributes( { borderColor: value } );
 
 		// Avatar shape options
 		const profileAvatarShapeOptions = [
@@ -420,6 +430,39 @@ class MPP_Gutenberg extends Component {
 									max={ 24 }
 									step={ 1 }
 								/>
+								<RangeControl
+									label={ __( 'Padding', 'metronet-profile-picture' ) }
+									value={ padding }
+									onChange={ ( value ) => this.props.setAttributes( { padding: value } ) }
+									min={ 0 }
+									max={ 20 }
+									step={ 1 }
+								/>
+								<RangeControl
+									label={ __( 'Border', 'metronet-profile-picture' ) }
+									value={ border }
+									onChange={ ( value ) => this.props.setAttributes( { border: value } ) }
+									min={ 0 }
+									max={ 10 }
+									step={ 1 }
+								/>
+								<RangeControl
+									label={ __( 'Border Rounded', 'metronet-profile-picture' ) }
+									value={ borderRounded }
+									onChange={ ( value ) => this.props.setAttributes( { borderRounded: value } ) }
+									min={ 0 }
+									max={ 10 }
+									step={ 1 }
+								/>
+								<PanelColorSettings
+								title={ __( 'Border Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: borderColor,
+									onChange: onChangeBorderColor,
+									label: __( 'Border Color', 'metronet-profile-picture' ),
+								} ] }
+								></PanelColorSettings>
 								<SelectControl
 									label={ __( 'Avatar Shape', 'metronet-profile-picture' ) }
 									description={ __( 'Choose between a round or square avatar shape.', 'metronet-profile-picture' ) }
@@ -472,6 +515,26 @@ class MPP_Gutenberg extends Component {
 								} ] }
 								>
 								</PanelColorSettings>
+								<PanelColorSettings
+								title={ __( 'Website Background Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileWebsiteBackgroundColor,
+									onChange: onChangeWebsitesBackgroundColor,
+									label: __( 'View Website Background', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
+								<PanelColorSettings
+								title={ __( 'View Website Text Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: profileWebsiteTextColor,
+									onChange: onChangeWebsiteTextColor,
+									label: __( 'View Website Text Color', 'metronet-profile-picture' ),
+								} ] }
+								>
+								</PanelColorSettings>
 
 								<ToggleControl
 									label={ __( 'Show Name', 'metronet-profile-picture' ) }
@@ -505,6 +568,24 @@ class MPP_Gutenberg extends Component {
 								/>
 							</PanelBody>
 							<PanelBody title={ __( 'Social Media Settings', 'metronet-profile-picture' ) } initialOpen={false}>
+								<SelectControl
+										label={ __( 'Social Media Colors', 'metronet-profile-picture' ) }
+										value={this.state.socialMediaOptions}
+										options={ profileSocialMediaOptions }
+										onChange={ ( value ) => { setAttributes({socialMediaOptions: value}); this.handleSocialMediaOptionChange(value); } }
+								/>
+								{ this.state.socialMediaOptions === 'custom' &&
+									<PanelColorSettings
+										title={ __( 'Social Media Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: socialMediaColors,
+											onChange: onChangeSocialMediaColor,
+											label: __( 'Social Media Color', 'metronet-profile-picture' ),
+										} ] }
+									>
+									</PanelColorSettings>
+								}
 								<TextControl
 									label={__('Facebook', 'metronet-profile-picture')}
 									value={this.state.socialFacebook}
@@ -545,24 +626,6 @@ class MPP_Gutenberg extends Component {
 									value={this.state.socialWordPress}
 									onChange={ ( value ) => { this.props.setAttributes( { socialWordPress: value }); this.handleWordPressChange(value); } }
 								/>
-								<SelectControl
-										label={ __( 'Social Media Colors', 'metronet-profile-picture' ) }
-										value={this.state.socialMediaOptions}
-										options={ profileSocialMediaOptions }
-										onChange={ ( value ) => { setAttributes({socialMediaOptions: value}); this.handleSocialMediaOptionChange(value); } }
-								/>
-								{ this.state.socialMediaOptions === 'custom' &&
-									<PanelColorSettings
-										title={ __( 'Social Media Color', 'metronet-profile-picture' ) }
-										initialOpen={ false }
-										colorSettings={ [ {
-											value: socialMediaColors,
-											onChange: onChangeSocialMediaColor,
-											label: __( 'Social Media Color', 'metronet-profile-picture' ),
-										} ] }
-									>
-									</PanelColorSettings>
-								}
 							</PanelBody>
 						</InspectorControls>
 						{ this.state.theme === 'regular' &&
@@ -584,6 +647,9 @@ class MPP_Gutenberg extends Component {
 								)
 							}
 							style={ {
+								padding: padding + 'px',
+								border: border + 'px solid ' + borderColor,
+								borderRadius: borderRounded + 'px',
 								backgroundColor: profileBackgroundColor,
 								color: profileTextColor,
 							} }
@@ -681,10 +747,18 @@ class MPP_Gutenberg extends Component {
 							{ this.state.website != '' && showWebsite &&
 								<div
 								className="mpp-profile-view-website"
-								style={{fontSize: buttonFontSize + 'px'}}
+								style={ {
+									backgroundColor: profileWebsiteBackgroundColor,
+									color: profileWebsiteTextColor,
+									fontSize: buttonFontSize + 'px'
+								} }
 								>
 								<a
 									href={this.state.website}
+									style={ {
+										backgroundColor: profileWebsiteBackgroundColor,
+										color: profileWebsiteTextColor,
+									} }
 								>{__('View Website', 'metronet-profile-picture')}</a>
 							</div>
 							}

@@ -30,8 +30,176 @@ class Metronet_Profile_Picture_Gutenberg {
 
 	public function register_block() {
 		register_block_type( 'mpp/user-profile', array(
-			'attributes' => array()
+			'attributes' => array(
+				'profileName' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'theme' => array(
+					'string',
+					'default' => 'regular',
+				),
+				'profileTitle' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'profileContent' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'profileAlignment' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'profileImgURL' => array(
+					'type' => 'string',
+					'source' => 'attribute',
+					'attribute' => 'src',
+					'selector' => 'img',
+					'default' => '',
+				),
+				'profileImgID' => array(
+					'type' => 'number',
+					'default' => ''
+				),
+				'profileURL' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'padding' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'border' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'borderRounded' => array(
+					'type' => 'number',
+					'default' => 0
+				),
+				'borderColor' => array(
+					'type' => 'string',
+					'default' => '#f2f2f2',
+				),
+				'profileBackgroundColor' => array(
+					'type' => 'string',
+					'default' => '#f2f2f2'
+				),
+				'profileTextColor' => array(
+					'type' => 'string',
+					'default' => '#32373c'
+				),
+				'profileViewPostsBackgroundColor' => array(
+					'type' => 'string',
+					'default' => '#cf6d38',
+				),
+				'profileViewPostsTextColor' => array(
+					'type' => 'string',
+					'default' => '#FFFFFF',
+				),
+				'profileWebsiteBackgroundColor' => array(
+					'type' => 'string',
+					'default' => '#000000',
+				),
+				'profileWebsiteTextColor' => array(
+					'type' => 'string',
+					'default' => '#FFFFFF',
+				),
+				'headerFontSize' => array(
+					'type' => 'number',
+					'default' => 24,
+				),
+				'buttonFontSize' => array(
+					'type' => 'number',
+					'default' => 16
+				),
+				'profileFontSize' => array(
+					'type' => 'number',
+					'default' => 18
+				),
+				'profileAvatarShape' => array(
+					'type' => 'number',
+					'default' => 'square'
+				),
+				'showName' => array(
+					'type' => 'bool',
+					'default' => true,
+				),
+				'showTitle' => array(
+					'type' => 'bool',
+					'default' => true
+				),
+				'showDescription' => array(
+					'type' => 'bool',
+					'default' => true,
+				),
+				'showViewPosts' => array(
+					'type' => 'bool',
+					'default' => true,
+				),
+				'showWebsite' => array(
+					'type' => 'bool',
+					'default' => true,
+				),
+				'user_id' => array(
+					'type' => 'number',
+					'default' => 0
+				),
+				'socialFacebook' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialTwitter' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialYouTube' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'socialLinkedIn' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialWordPress' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialGitHub' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialPinterest' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'socialInstagram' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'website' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'socialMediaOptions' => array(
+					'type' => 'string',
+					'default' => 'colors',
+				),
+				'socialMediaColors' => array(
+					'type' => 'string',
+					'default' => '#000000'
+				)
+			),
+			'render_callback' => array($this, 'display_frontend'),
+            'editor_script'   => 'mpp_gutenberg'
 		) );
+	}
+
+	public function display_frontend() {
+		ob_start();
+		echo "hello world";
+		return ob_get_clean();
 	}
 
 	public function load_gutenblock_svgs() {
