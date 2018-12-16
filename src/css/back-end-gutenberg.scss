@@ -9,17 +9,6 @@
 	&.round .mpp-profile-image-wrapper img {
 		border-radius: 50%;
 	}
-	&.right .mpp-profile-image-wrapper {
-		text-align: right;
-		order: 2;
-	}
-	&.center .mpp-content-wrap {
-		h2,
-		p,
-		div {
-			text-align: center;
-		}
-	}
 	h2:before {
 		display: none;
 	}
@@ -73,6 +62,7 @@
 		}
 	}
 	.mpp-gutenberg-view-posts {
+		clear: both;
 		&:after {
 			content: "";
 			display: table;
@@ -81,6 +71,7 @@
 	}
 
 	.mpp-profile-view-posts {
+		clear: both;
 		display: block;
 		float: left;
 		text-align: center;

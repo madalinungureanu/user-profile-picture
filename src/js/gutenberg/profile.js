@@ -406,63 +406,6 @@ class MPP_Gutenberg extends Component {
 										options={ this.state.themes }
 										onChange={ ( value ) => { this.onThemeChange(value); setAttributes({theme: value}); } }
 								/>
-								<RangeControl
-									label={ __( 'Header Font Size', 'metronet-profile-picture' ) }
-									value={ headerFontSize }
-									onChange={ ( value ) => this.props.setAttributes( { headerFontSize: value } ) }
-									min={ 14 }
-									max={ 32 }
-									step={ 1 }
-								/>
-								<RangeControl
-									label={ __( 'Font Size', 'metronet-profile-picture' ) }
-									value={ profileFontSize }
-									onChange={ ( value ) => this.props.setAttributes( { profileFontSize: value } ) }
-									min={ 14 }
-									max={ 24 }
-									step={ 1 }
-								/>
-								<RangeControl
-									label={ __( 'Button Size', 'metronet-profile-picture' ) }
-									value={ buttonFontSize }
-									onChange={ ( value ) => this.props.setAttributes( { buttonFontSize: value } ) }
-									min={ 10 }
-									max={ 24 }
-									step={ 1 }
-								/>
-								<RangeControl
-									label={ __( 'Padding', 'metronet-profile-picture' ) }
-									value={ padding }
-									onChange={ ( value ) => this.props.setAttributes( { padding: value } ) }
-									min={ 0 }
-									max={ 20 }
-									step={ 1 }
-								/>
-								<RangeControl
-									label={ __( 'Border', 'metronet-profile-picture' ) }
-									value={ border }
-									onChange={ ( value ) => this.props.setAttributes( { border: value } ) }
-									min={ 0 }
-									max={ 10 }
-									step={ 1 }
-								/>
-								<RangeControl
-									label={ __( 'Border Rounded', 'metronet-profile-picture' ) }
-									value={ borderRounded }
-									onChange={ ( value ) => this.props.setAttributes( { borderRounded: value } ) }
-									min={ 0 }
-									max={ 10 }
-									step={ 1 }
-								/>
-								<PanelColorSettings
-								title={ __( 'Border Color', 'metronet-profile-picture' ) }
-								initialOpen={ false }
-								colorSettings={ [ {
-									value: borderColor,
-									onChange: onChangeBorderColor,
-									label: __( 'Border Color', 'metronet-profile-picture' ),
-								} ] }
-								></PanelColorSettings>
 								<SelectControl
 									label={ __( 'Avatar Shape', 'metronet-profile-picture' ) }
 									description={ __( 'Choose between a round or square avatar shape.', 'metronet-profile-picture' ) }
@@ -475,6 +418,38 @@ class MPP_Gutenberg extends Component {
 									value={this.state.website}
 									onChange={ ( value ) => { this.props.setAttributes( { website: value }); this.handleWebsiteChange(value); } }
 								/>
+								<ToggleControl
+									label={ __( 'Show Name', 'metronet-profile-picture' ) }
+									checked={ showName }
+									onChange={ () => this.props.setAttributes( { showName: ! showName } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show Title', 'metronet-profile-picture' ) }
+									checked={ showTitle }
+									onChange={ () => this.props.setAttributes( { showTitle: ! showTitle } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show Description', 'metronet-profile-picture' ) }
+									checked={ showDescription }
+									onChange={ () => this.props.setAttributes( { showDescription: ! showDescription } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
+									checked={ showViewPosts }
+									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
+								/>
+								<ToggleControl
+									label={ __( 'Show Website', 'metronet-profile-picture' ) }
+									checked={ this.state.show_website }
+									onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
+								/>
+								<ToggleControl
+									label={ __( 'Show Social Media', 'metronet-profile-picture' ) }
+									checked={ this.state.showSocialMedia }
+									onChange={ ( value ) => {this.props.setAttributes( { showSocialMedia: value } ); this.handleSocialMediaChange( value );  } }
+								/>
+							</PanelBody>
+							<PanelBody title={ __( 'Colors', 'metronet-profile-picture' ) } initialOpen={false}>
 								<PanelColorSettings
 								title={ __( 'Background Color', 'metronet-profile-picture' ) }
 								initialOpen={ false }
@@ -535,37 +510,65 @@ class MPP_Gutenberg extends Component {
 								} ] }
 								>
 								</PanelColorSettings>
-
-								<ToggleControl
-									label={ __( 'Show Name', 'metronet-profile-picture' ) }
-									checked={ showName }
-									onChange={ () => this.props.setAttributes( { showName: ! showName } ) }
+							</PanelBody>
+							<PanelBody title={ __( 'Spacing and Font Settings', 'metronet-profile-picture' ) } initialOpen={false}>
+							<RangeControl
+									label={ __( 'Header Font Size', 'metronet-profile-picture' ) }
+									value={ headerFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { headerFontSize: value } ) }
+									min={ 14 }
+									max={ 32 }
+									step={ 1 }
 								/>
-								<ToggleControl
-									label={ __( 'Show Title', 'metronet-profile-picture' ) }
-									checked={ showTitle }
-									onChange={ () => this.props.setAttributes( { showTitle: ! showTitle } ) }
+								<RangeControl
+									label={ __( 'Font Size', 'metronet-profile-picture' ) }
+									value={ profileFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { profileFontSize: value } ) }
+									min={ 14 }
+									max={ 24 }
+									step={ 1 }
 								/>
-								<ToggleControl
-									label={ __( 'Show Description', 'metronet-profile-picture' ) }
-									checked={ showDescription }
-									onChange={ () => this.props.setAttributes( { showDescription: ! showDescription } ) }
+								<RangeControl
+									label={ __( 'Button Size', 'metronet-profile-picture' ) }
+									value={ buttonFontSize }
+									onChange={ ( value ) => this.props.setAttributes( { buttonFontSize: value } ) }
+									min={ 10 }
+									max={ 24 }
+									step={ 1 }
 								/>
-								<ToggleControl
-									label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
-									checked={ showViewPosts }
-									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
+								<RangeControl
+									label={ __( 'Padding', 'metronet-profile-picture' ) }
+									value={ padding }
+									onChange={ ( value ) => this.props.setAttributes( { padding: value } ) }
+									min={ 0 }
+									max={ 20 }
+									step={ 1 }
 								/>
-								<ToggleControl
-									label={ __( 'Show Website', 'metronet-profile-picture' ) }
-									checked={ this.state.show_website }
-									onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
+								<RangeControl
+									label={ __( 'Border', 'metronet-profile-picture' ) }
+									value={ border }
+									onChange={ ( value ) => this.props.setAttributes( { border: value } ) }
+									min={ 0 }
+									max={ 10 }
+									step={ 1 }
 								/>
-								<ToggleControl
-									label={ __( 'Show Social Media', 'metronet-profile-picture' ) }
-									checked={ this.state.showSocialMedia }
-									onChange={ ( value ) => {this.props.setAttributes( { showSocialMedia: value } ); this.handleSocialMediaChange( value );  } }
+								<RangeControl
+									label={ __( 'Border Rounded', 'metronet-profile-picture' ) }
+									value={ borderRounded }
+									onChange={ ( value ) => this.props.setAttributes( { borderRounded: value } ) }
+									min={ 0 }
+									max={ 10 }
+									step={ 1 }
 								/>
+								<PanelColorSettings
+								title={ __( 'Border Color', 'metronet-profile-picture' ) }
+								initialOpen={ false }
+								colorSettings={ [ {
+									value: borderColor,
+									onChange: onChangeBorderColor,
+									label: __( 'Border Color', 'metronet-profile-picture' ),
+								} ] }
+								></PanelColorSettings>
 							</PanelBody>
 							<PanelBody title={ __( 'Social Media Settings', 'metronet-profile-picture' ) } initialOpen={false}>
 								<SelectControl
@@ -628,14 +631,6 @@ class MPP_Gutenberg extends Component {
 								/>
 							</PanelBody>
 						</InspectorControls>
-						{ this.state.theme === 'regular' &&
-							<BlockControls key="controls">
-								<AlignmentToolbar
-									value={ profileAlignment }
-									onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
-								/>
-							</BlockControls>
-						}
 						<div
 							className={
 								classnames(
