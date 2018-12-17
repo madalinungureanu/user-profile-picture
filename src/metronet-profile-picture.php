@@ -786,7 +786,6 @@ class Metronet_Profile_Picture	{
 		$args = array(
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
-			'offset'         => 1,
 			'author'         => $user_id,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
