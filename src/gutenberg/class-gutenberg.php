@@ -120,7 +120,7 @@ class Metronet_Profile_Picture_Gutenberg {
 					'default' => 18
 				),
 				'profileAvatarShape' => array(
-					'type' => 'number',
+					'type' => 'string',
 					'default' => 'square'
 				),
 				'showName' => array(

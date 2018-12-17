@@ -188,7 +188,17 @@ class MPP_Gutenberg extends Component {
 			profileContent: description,
 			profileTitle: '',
 			profileURL: this.state.users[user_id].permalink,
-			profileImgURL: profile_picture
+			profileImgURL: profile_picture,
+			tabbedAuthorSubHeading: '',
+			tabbedAuthorProfileTitle: '',
+			socialFacebook: '',
+			socialGitHub: '',
+			socialInstagram: '',
+			socialLinkedIn: '',
+			socialPinterest: '',
+			socialTwitter: '',
+			socialWordPress: '',
+			socialYouTube: ''
 		} );
 		this.setState(
 			{
@@ -199,7 +209,15 @@ class MPP_Gutenberg extends Component {
 				profile_picture: profile_picture,
 				profile_picture_id: profile_picture_id,
 				active_user: user_id,
-				profile_url: this.state.users[user_id].permalink
+				profile_url: this.state.users[user_id].permalink,
+				socialFacebook: '',
+				socialGitHub: '',
+				socialInstagram: '',
+				socialLinkedIn: '',
+				socialPinterest: '',
+				socialTwitter: '',
+				socialWordPress: '',
+				socialYouTube: ''
 			}
 		);
 		this.getLatestPosts();
@@ -311,6 +329,12 @@ class MPP_Gutenberg extends Component {
 				website: value
 			}
 		);
+		if( '' !== value ) {
+			this.props.setAttributes( {
+				showWebsite: true
+			});
+		}
+
 	}
 	handleInstagramChange = ( value ) => {
 		this.setState(
@@ -550,7 +574,6 @@ class MPP_Gutenberg extends Component {
 			profileFloat = 'right';
 			profileMargin = '0';
 		}
-
 		return(
 			<Fragment>
 				{this.state.loading &&
@@ -1440,15 +1463,16 @@ class MPP_Gutenberg extends Component {
 												) }
 											>
 											</MediaUpload>
+											<RichText
+												tagName="div"
+												className="mpp-author-profile-sub-heading"
+												placeholder={ __( 'Add profile description...', 'metronet-profile-picture' ) }
+												value={ this.state.tabbedAuthorSubHeading }
+												formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+												onChange={ ( value ) => {this.onChangeTabbedSubHeading(value); setAttributes( { tabbedAuthorSubHeading: value } ) } }
+											/>
 										</div>
-										<RichText
-											tagName="div"
-											className="mpp-author-profile-sub-heading"
-											placeholder={ __( 'Add profile description...', 'metronet-profile-picture' ) }
-											value={ this.state.tabbedAuthorSubHeading }
-											formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-											onChange={ ( value ) => {this.onChangeTabbedSubHeading(value); setAttributes( { tabbedAuthorSubHeading: value } ) } }
-										/>
+
 									</div>
 									<div class="mpp-tabbed-profile-information">
 										{ showTitle &&
