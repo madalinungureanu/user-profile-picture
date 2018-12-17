@@ -53,9 +53,6 @@ class Metronet_Profile_Picture_Gutenberg {
 				),
 				'profileImgURL' => array(
 					'type' => 'string',
-					'source' => 'attribute',
-					'attribute' => 'src',
-					'selector' => 'img',
 					'default' => '',
 				),
 				'profileImgID' => array(
@@ -239,8 +236,12 @@ class Metronet_Profile_Picture_Gutenberg {
 					'default' => '#FFFFFF',
 				),
 				'profileLatestPostsOptionsValue' => array(
-					'default' => 'string',
+					'type' => 'string',
 					'default' => 'light'
+				),
+				'profileCompactAlignment' => array(
+					'type' => 'string',
+					'default' => 'center'
 				)
 			),
 			'render_callback' => array($this, 'display_frontend'),

@@ -47,8 +47,8 @@ class MPP_Gutenberg extends Component {
 			loading: true,
 			users: false,
 			user_list: false,
-			profile_picture: false,
-			profile_picture_id: 0,
+			profile_picture: this.props.attributes.profileImgURL,
+			profile_picture_id: this.props.attributes.profileImgID,
 			active_user: false,
 			profile_description: '',
 			profile_name: '',
@@ -83,6 +83,7 @@ class MPP_Gutenberg extends Component {
 			profileTabTextColor: this.props.attributes.profileTabTextColor,
 			profileTabPostsTextColor: this.props.attributes.profileTabPostsTextColor,
 			profileLatestPostsOptionsValue: this.props.attributes.profileLatestPostsOptionsValue,
+			profileCompactAlignment: this.props.attributes.profileCompactAlignment,
 		};
 	}
 	get_users = () => {
@@ -428,6 +429,13 @@ class MPP_Gutenberg extends Component {
 			}
 		);
 	}
+	onCompactAlignmentChange = ( value ) => {
+		this.setState(
+			{
+				profileCompactAlignment: value,
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -522,6 +530,27 @@ class MPP_Gutenberg extends Component {
 			{ value: 'green', label: __( 'Green', 'metronet-profile-picture' ) },
 		];
 
+		// Profile Comptact Alignment Options
+		const profileCompactOptions = [
+			{ value: 'left', label: __( 'Left', 'metronet-profile-picture' ) },
+			{ value: 'center', label: __( 'Center', 'metronet-profile-picture' ) },
+			{ value: 'right', label: __( 'Right', 'metronet-profile-picture' ) },
+		];
+		let profileFloat = 'none';
+		let profileMargin = '';
+		if( this.state.profileCompactAlignment === 'center' ) {
+			profileFloat = 'none';
+			profileMargin = '0 auto';
+		}
+		if( this.state.profileCompactAlignment === 'left' ) {
+			profileFloat = 'left';
+			profileMargin = '0';
+		}
+		if( this.state.profileCompactAlignment === 'right' ) {
+			profileFloat = 'right';
+			profileMargin = '0';
+		}
+
 		return(
 			<Fragment>
 				{this.state.loading &&
@@ -548,6 +577,15 @@ class MPP_Gutenberg extends Component {
 										options={ this.state.themes }
 										onChange={ ( value ) => { this.onThemeChange(value); setAttributes({theme: value}); } }
 								/>
+								{ this.state.theme === 'compact' &&
+
+									<SelectControl
+										label={ __( 'Select an alignment', 'metronet-profile-picture' ) }
+										value={this.state.profileCompactAlignment}
+										options={ profileCompactOptions }
+										onChange={ ( value ) => { this.onCompactAlignmentChange(value); setAttributes({profileCompactAlignment: value}); } }
+								/>
+								}
 								<SelectControl
 									label={ __( 'Avatar Shape', 'metronet-profile-picture' ) }
 									description={ __( 'Choose between a round or square avatar shape.', 'metronet-profile-picture' ) }
@@ -895,6 +933,9 @@ class MPP_Gutenberg extends Component {
 									borderRadius: borderRounded + 'px',
 									backgroundColor: profileBackgroundColor,
 									color: profileTextColor,
+									float: profileFloat,
+									margin: profileMargin
+
 								} }
 							>
 						{ this.state.theme === 'regular' &&
@@ -1015,7 +1056,8 @@ class MPP_Gutenberg extends Component {
 									'mpp-profile-gutenberg-wrap',
 									'mt-font-size-' + profileFontSize,
 								)
-							}>
+							}
+							>
 								{showName &&
 									<RichText
 										tagName="h2"
@@ -1085,7 +1127,104 @@ class MPP_Gutenberg extends Component {
 
 							</div>
 						}
-						{ this.state.showSocialMedia == true && ( this.state.theme === 'regular' || this.state.theme === 'profile' ) &&
+						{ this.state.theme === 'compact' &&
+							<div className={
+								classnames(
+									'mpp-profile-gutenberg-wrap',
+									'mt-font-size-' + profileFontSize,
+								)
+							}
+							>
+								{showName &&
+									<RichText
+										tagName="h2"
+										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
+										value={ profileName }
+										className='mpp-profile-name'
+										style={ {
+											color: profileTextColor,
+											fontSize: headerFontSize + 'px'
+										} }
+										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
+									/>
+								}
+								<div className="mpp-profile-image-wrapper">
+									<div className="mpp-profile-image-square">
+										<MediaUpload
+											buttonProps={ {
+												className: 'change-image'
+											} }
+											onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
+											type="image"
+											value={ profileImgID }
+											render={ ( { open } ) => (
+												<Button onClick={ open }>
+													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+														class="profile-avatar"
+														src={ profileImgURL }
+														alt="avatar"
+													/>  }
+												</Button>
+											) }
+										>
+										</MediaUpload>
+									</div>
+								</div>
+								{showDescription &&
+									<RichText
+										tagName="div"
+										className='mpp-profile-text'
+										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
+										value={ profileContent }
+										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
+									/>
+								}
+								<div class="mpp-compact-meta">
+									{showViewPosts &&
+									<div
+										className="mpp-profile-view-posts"
+										style={ {
+											backgroundColor: profileViewPostsBackgroundColor,
+											color: profileViewPostsTextColor,
+											width: '90%',
+											margin: '0 auto 10px auto',
+											fontSize: buttonFontSize + 'px'
+										} }
+									>
+										<a
+											href={profileURL}
+											style={ {
+												backgroundColor: profileViewPostsBackgroundColor,
+												color: profileViewPostsTextColor,
+											} }
+										>{__('View Posts', 'metronet-profile-picture')}</a>
+									</div>
+								}
+								{ this.state.website != '' && showWebsite &&
+									<div
+									className="mpp-profile-view-website"
+									style={ {
+										backgroundColor: profileWebsiteBackgroundColor,
+										color: profileWebsiteTextColor,
+										fontSize: buttonFontSize + 'px',
+										width: '90%',
+										margin: '0 auto',
+									} }
+									>
+									<a
+										href={this.state.website}
+										style={ {
+											backgroundColor: profileWebsiteBackgroundColor,
+											color: profileWebsiteTextColor,
+										} }
+									>{__('View Website', 'metronet-profile-picture')}</a>
+								</div>
+								}
+							</div>
+						</div>
+						}
+						{ this.state.showSocialMedia == true && ( this.state.theme === 'regular' || this.state.theme === 'compact' || this.state.theme === 'profile' ) &&
 							<div className="mpp-social">
 								{ this.state.socialFacebook != '' &&
 									<a href={this.state.socialFacebook}>
