@@ -614,6 +614,7 @@ class MPP_Gutenberg extends Component {
 											label: __( 'Color', 'metronet-profile-picture' ),
 										} ] }
 										>
+										</PanelColorSettings>
 										<PanelColorSettings
 										title={ __( 'Profile Headline Color', 'metronet-profile-picture' ) }
 										initialOpen={ false }
@@ -623,7 +624,6 @@ class MPP_Gutenberg extends Component {
 											label: __( 'Color', 'metronet-profile-picture' ),
 										} ] }
 										></PanelColorSettings>
-										</PanelColorSettings>
 										<PanelColorSettings
 										title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
 										initialOpen={ false }
@@ -1140,6 +1140,7 @@ class MPP_Gutenberg extends Component {
 												value={ this.state.tabbedAuthorProfileHeading }
 												formattingControls={[]}
 												onChange={ ( value ) => {this.onChangetabbedAuthorProfileHeading(value); setAttributes( { tabbedAuthorProfileHeading: value } ) } }
+												style={{backgroundColor: this.state.profileTabHeadlineColor}}
 										/>
 									</div>
 									{this.state.showSocialMedia &&
