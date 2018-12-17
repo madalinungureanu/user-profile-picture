@@ -80,6 +80,9 @@ class MPP_Gutenberg extends Component {
 			profileTabColor: this.props.attributes.profileTabColor,
 			profileTabHeadlineColor: this.props.attributes.profileTabHeadlineColor,
 			profileTabPostsColor: this.props.attributes.profileTabPostsColor,
+			profileTabHeadlineTextColor: this.props.attributes.profileTabHeadlineTextColor,
+			profileTabTextColor: this.props.attributes.profileTabTextColor,
+			profileTabPostsTextColor: this.props.attributes.profileTabPostsTextColor,
 		};
 	}
 	get_users = () => {
@@ -391,16 +394,38 @@ class MPP_Gutenberg extends Component {
 		this.setState( {
 			profileTabColor: value
 		});
+		this.props.setAttributes( { profileTabColor: value } );
 	}
 	onChangePostsTabColor = ( value ) => {
 		this.setState( {
 			profileTabPostsColor: value
 		});
+		this.props.setAttributes( { profileTabPostsColor: value } );
+
 	}
 	onChangePostsTabHeadlineColor = ( value ) => {
 		this.setState( {
 			profileTabHeadlineColor: value
 		});
+		this.props.setAttributes( { profileTabHeadlineColor: value } );
+	}
+	onChangeProfileTabPostColorText = ( value ) => {
+		this.setState( {
+			profileTabPostsTextColor: value
+		});
+		this.props.setAttributes( { profileTabPostsTextColor: value } );
+	}
+	onChangeProfileTabHeadlineColorText = ( value ) => {
+		this.setState( {
+			profileTabHeadlineTextColor: value
+		});
+		this.props.setAttributes( { profileTabHeadlineTextColor: value } );
+	}
+	onChangeProfileTabColorText = ( value ) => {
+		this.setState( {
+			profileTabTextColor: value
+		});
+		this.props.setAttributes( { profileTabTextColor: value } );
 	}
 	render() {
 		// Setup the attributes
@@ -606,11 +631,31 @@ class MPP_Gutenberg extends Component {
 										>
 										</PanelColorSettings>
 										<PanelColorSettings
+										title={ __( 'Profile Tab Color Text', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabTextColor,
+											onChange: this.onChangeProfileTabColorText,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										</PanelColorSettings>
+										<PanelColorSettings
 										title={ __( 'Profile Posts Color', 'metronet-profile-picture' ) }
 										initialOpen={ false }
 										colorSettings={ [ {
 											value: this.state.profileTabPostsColor,
 											onChange: this.onChangePostsTabColor,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										</PanelColorSettings>
+										<PanelColorSettings
+										title={ __( 'Profile Post Color Text', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabPostsTextColor,
+											onChange: this.onChangeProfileTabPostColorText,
 											label: __( 'Color', 'metronet-profile-picture' ),
 										} ] }
 										>
@@ -624,6 +669,16 @@ class MPP_Gutenberg extends Component {
 											label: __( 'Color', 'metronet-profile-picture' ),
 										} ] }
 										></PanelColorSettings>
+										<PanelColorSettings
+										title={ __( 'Profile Headline Color Text', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabHeadlineColorText,
+											onChange: this.onChangeProfileTabHeadlineColorText,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										</PanelColorSettings>
 										<PanelColorSettings
 										title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
 										initialOpen={ false }
@@ -1094,7 +1149,7 @@ class MPP_Gutenberg extends Component {
 
 									}
 									onClick={this.onChangeActiveProfileTab}
-									style={{backgroundColor: this.state.profileTabColor}}
+									style={{backgroundColor: this.state.profileTabColor, color: this.state.profileTabTextColor}}
 									>
 									<RichText
 											tagName="span"
@@ -1110,7 +1165,7 @@ class MPP_Gutenberg extends Component {
 											this.state.activeTab === 'latest' ? 'active' : ''
 										)}
 										onClick={this.onChangeActivePostTab}
-										style={{backgroundColor: this.state.profileTabPostsColor}}
+										style={{backgroundColor: this.state.profileTabPostsColor, color: this.state.profileTabPostsTextColor}}
 										>
 										<RichText
 											tagName="span"
@@ -1139,8 +1194,8 @@ class MPP_Gutenberg extends Component {
 												className="mpp-author-profile-heading"
 												value={ this.state.tabbedAuthorProfileHeading }
 												formattingControls={[]}
-												onChange={ ( value ) => {this.onChangetabbedAuthorProfileHeading(value); setAttributes( { tabbedAuthorProfileHeading: value } ) } }
-												style={{backgroundColor: this.state.profileTabHeadlineColor}}
+												onChange={ ( value ) => {this.onChangetabbedAuthorProfileHeading(value); setAttributes( { profileTabHeadlineTextColor: value } ) } }
+												style={{backgroundColor: this.state.profileTabHeadlineColor, color: this.state.profileTabHeadlineTextColor}}
 										/>
 									</div>
 									{this.state.showSocialMedia &&

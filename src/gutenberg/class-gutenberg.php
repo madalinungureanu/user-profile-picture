@@ -229,6 +229,18 @@ class Metronet_Profile_Picture_Gutenberg {
 				'profileTabPostsColor' => array(
 					'type' => 'string',
 					'default' => '#30424b',
+				),
+				'profileTabHeadlineTextColor' => array(
+					'type' => 'string',
+					'default' => '#FFFFFF'
+				),
+				'profileTabTextColor' => array(
+					'type' => 'string',
+					'default' => '#FFFFFF',
+				),
+				'profileTabPostsTextColor' => array(
+					'type' => 'string',
+					'default' => '#FFFFFF',
 				)
 			),
 			'render_callback' => array($this, 'display_frontend'),
