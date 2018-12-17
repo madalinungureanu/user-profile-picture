@@ -74,7 +74,8 @@ class MPP_Gutenberg extends Component {
 			tabbedAuthorSubHeading: this.props.attributes.tabbedAuthorSubHeading,
 			activeTab: 'profile',
 			loadingLatestPosts: true,
-			latestPosts: {}
+			latestPosts: {},
+			postLinkColor: this.props.attributes.postLinkColor,
 		};
 	}
 	get_users = () => {
@@ -193,6 +194,29 @@ class MPP_Gutenberg extends Component {
 				profile_url: this.state.users[user_id].permalink
 			}
 		);
+		this.getLatestPosts();
+	}
+	getLatestPosts = () => {
+		this.setState(
+			{
+				loadingLatestPosts: true
+			}
+		);
+		let classRef = this;
+		axios.post(mpp_gutenberg.rest_url + `/get_posts`, {user_id: this.state.active_user }, { 'headers': { 'X-WP-Nonce': mpp_gutenberg.nonce } } ).then( (response) => {
+			const latestPosts = response.data;
+			let postJSX = latestPosts.map( function(data) {
+				return (
+					<li key={data.ID}><a style={{color: classRef.state.postLinkColor}} href={data.permalink}>{data.post_title}</a></li>
+				)
+			});
+
+			this.setState( {
+				loadingLatestPosts: false,
+				latestPosts: postJSX
+				}
+			)
+		} );
 	}
 	componentDidMount = () => {
 		this.get_users();
@@ -336,20 +360,13 @@ class MPP_Gutenberg extends Component {
 				loadingLatestPosts: true
 			}
 		);
-		axios.post(mpp_gutenberg.rest_url + `/get_posts`, {user_id: this.state.active_user }, { 'headers': { 'X-WP-Nonce': mpp_gutenberg.nonce } } ).then( (response) => {
-			const latestPosts = response.data;
-			let postJSX = latestPosts.map( function(data) {
-				return (
-					<li key={data.ID}><a href={data.permalink}>{data.post_title}</a></li>
-				)
-			});
-
-			this.setState( {
-				loadingLatestPosts: false,
-				latestPosts: postJSX
-				}
-			)
-		} );
+		this.getLatestPosts();
+	}
+	onChangePostLinkColor = ( value ) => {
+		this.setState( {
+			postLinkColor: value
+		});
+		this.getLatestPosts();
 	}
 	render() {
 		// Setup the attributes
@@ -531,6 +548,18 @@ class MPP_Gutenberg extends Component {
 									colorSettings={ [ {
 										value: profileLinkColor,
 										onChange: onChangeProfileLinkColor,
+										label: __( 'Link Color', 'metronet-profile-picture' ),
+									} ] }
+									>
+									</PanelColorSettings>
+								}
+								{this.state.theme === 'tabbed' &&
+									<PanelColorSettings
+									title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
+									initialOpen={ false }
+									colorSettings={ [ {
+										value: this.state.postLinkColor,
+										onChange: this.onChangePostLinkColor,
 										label: __( 'Link Color', 'metronet-profile-picture' ),
 									} ] }
 									>

@@ -209,6 +209,10 @@ class Metronet_Profile_Picture_Gutenberg {
 				'tabbedAuthorProfileTitle' => array(
 					'type' => 'string',
 					'default' => ''
+				),
+				'postLinkColor' => array(
+					'type' => 'string',
+					'default' => 'inherit'
 				)
 			),
 			'render_callback' => array($this, 'display_frontend'),
