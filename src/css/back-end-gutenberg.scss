@@ -129,7 +129,8 @@
 /* Icon Sizes */
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 @each $size in $sizes {
-	.editor-styles-wrapper .mpp-profile-wrap.regular .mt-font-size-#{$size} {
+	.editor-styles-wrapper .mpp-profile-wrap.regular .mt-font-size-#{$size},
+	.editor-styles-wrapper .mpp-profile-wrap.profile .mt-font-size-#{$size} {
 		p,
 		div {
 			font-size: #{$size}px;
@@ -221,6 +222,107 @@ $colors: twitter #00aced,
 			content: "";
 			display: table;
 			clear: both;
+		}
+	}
+}
+
+/* For Tabbed Theme */
+/* For Profile Theme */
+.editor-styles-wrapper .mpp-author-tabbed {
+	padding: 10px;
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.mpp-author-social-wrapper {
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+	h2 {
+		font-size: 0.8em;
+		font-weight: normal;
+		margin-bottom: 5px;
+		&:before {
+			display: none;
+		}
+	}
+	.mpp-tab-wrapper {
+		clear: both;
+	}
+	.mpp-author-heading {
+		float: left;
+	}
+	.mpp-author-social {
+		float: right;
+	}
+	.mpp-author-heading .mpp-author-profile-heading {
+		display: inline-block;
+		background: #42737b;
+		color: #FFF;
+		padding: 10px 20px;
+		font-size: 14px;
+		text-transform: uppercase;
+	}
+	.mpp-author-profile-sub-heading {
+		font-size: 14px;
+		line-height: 1.1;
+		max-width: 150px;
+		text-align: center;
+	}
+	&.round .profile-avatar {
+		border-radius: 50%;
+	}
+	.mpp-profile-image-wrapper {
+		clear: both;
+		position: relative;
+		float: left;
+		line-height: 1.0;
+		z-index: 1000;
+		margin-right: 30px;
+	}
+	.mpp-profile-meta {
+		clear: both;
+		margin: 10px 0;
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+	.mpp-tabbed-profile-information {
+	}
+	.mpp-author-profile-title {
+		color: gray;
+		text-transform: uppercase;
+		font-size: 12px;
+	}
+	ul.mpp-author-tabs {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		margin-bottom: 50px;
+
+		li {
+			display: inline-block;
+			min-width: 200px;
+			background: #42737b;
+			margin: 0 5px 0 0;
+			text-align: center;
+			margin-right: 10px;
+			color: #FFF;
+			padding: 10px 20px;
+			font-size: 16px;
+		}
+		li:last-child {
+			margin-right: 0;
+		}
+		li.mpp-latest-posts {
+			background: #30424b;
 		}
 	}
 }
