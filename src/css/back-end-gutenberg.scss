@@ -334,4 +334,85 @@ $colors: twitter #00aced,
 			background: #30424b;
 		}
 	}
+	ul.mpp-author-tab-content {
+		list-style-type: none;
+		li {
+			margin: 0;
+		}
+		&.light {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #f7f7f7;
+				border: 1px solid darken(#f7f7f7, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+				color: #333;
+			}
+			a:hover {
+				background: darken(#f7f7f7, 10%);
+			}
+		}
+		&.black {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #333;
+				color: #FFF;
+				border: 1px solid darken(#333, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#333, 10%);
+			}
+		}
+		&.magenta {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #FF00FF;
+				color: #FFF;
+				border: 1px solid darken(#FF00FF, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#FF00FF, 10%);
+			}
+		}
+		&.blue {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #0009c1;
+				color: #FFF;
+				border: 1px solid darken(#0009c1, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#0009c1, 10%);
+			}
+		}
+		&.green {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #03ac27;
+				color: #FFF;
+				border: 1px solid darken(#03ac27, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#03ac27, 10%);
+			}
+		}
+	}
 }

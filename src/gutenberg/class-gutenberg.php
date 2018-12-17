@@ -214,10 +214,6 @@ class Metronet_Profile_Picture_Gutenberg {
 					'type' => 'string',
 					'default' => ''
 				),
-				'postLinkColor' => array(
-					'type' => 'string',
-					'default' => 'inherit'
-				),
 				'profileTabHeadlineColor' => array(
 					'type' => 'string',
 					'default' => '#42737b'
@@ -241,6 +237,10 @@ class Metronet_Profile_Picture_Gutenberg {
 				'profileTabPostsTextColor' => array(
 					'type' => 'string',
 					'default' => '#FFFFFF',
+				),
+				'profileLatestPostsOptionsValue' => array(
+					'default' => 'string',
+					'default' => 'light'
 				)
 			),
 			'render_callback' => array($this, 'display_frontend'),

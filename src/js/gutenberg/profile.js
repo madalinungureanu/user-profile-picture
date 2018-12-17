@@ -76,13 +76,13 @@ class MPP_Gutenberg extends Component {
 			activeTab: 'profile',
 			loadingLatestPosts: true,
 			latestPosts: {},
-			postLinkColor: this.props.attributes.postLinkColor,
 			profileTabColor: this.props.attributes.profileTabColor,
 			profileTabHeadlineColor: this.props.attributes.profileTabHeadlineColor,
 			profileTabPostsColor: this.props.attributes.profileTabPostsColor,
 			profileTabHeadlineTextColor: this.props.attributes.profileTabHeadlineTextColor,
 			profileTabTextColor: this.props.attributes.profileTabTextColor,
 			profileTabPostsTextColor: this.props.attributes.profileTabPostsTextColor,
+			profileLatestPostsOptionsValue: this.props.attributes.profileLatestPostsOptionsValue,
 		};
 	}
 	get_users = () => {
@@ -214,7 +214,7 @@ class MPP_Gutenberg extends Component {
 			const latestPosts = response.data;
 			let postJSX = latestPosts.map( function(data) {
 				return (
-					<li key={data.ID}><a style={{color: classRef.state.postLinkColor}} href={data.permalink}>{data.post_title}</a></li>
+					<li key={data.ID}><a href={data.permalink}>{data.post_title}</a></li>
 				)
 			});
 
@@ -369,12 +369,6 @@ class MPP_Gutenberg extends Component {
 		);
 		this.getLatestPosts();
 	}
-	onChangePostLinkColor = ( value ) => {
-		this.setState( {
-			postLinkColor: value
-		});
-		this.getLatestPosts();
-	}
 	onChangetabbedAuthorProfile = ( value ) => {
 		this.setState( {
 			tabbedAuthorProfile: value
@@ -427,6 +421,13 @@ class MPP_Gutenberg extends Component {
 		});
 		this.props.setAttributes( { profileTabTextColor: value } );
 	}
+	onLatestPostsChange = ( value ) => {
+		this.setState(
+			{
+				profileLatestPostsOptionsValue: value,
+			}
+		);
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -471,6 +472,7 @@ class MPP_Gutenberg extends Component {
 				tabbedAuthorProfile,
 				tabbedAuthorSubHeading,
 				tabbedAuthorProfileTitle,
+				profileLatestPostsOptionsValue,
 
 			},
 			attributes,
@@ -508,6 +510,16 @@ class MPP_Gutenberg extends Component {
 		const profileSocialMediaOptions = [
 			{ value: 'colors', label: __( 'Brand Colors', 'metronet-profile-picture' ) },
 			{ value: 'custom', label: __( 'Custom', 'metronet-profile-picture' ) },
+		];
+
+		// Latest Posts Theme Options
+		const profileLatestPostsOptions = [
+			{ value: 'none', label: __( 'None', 'metronet-profile-picture' ) },
+			{ value: 'light', label: __( 'Light', 'metronet-profile-picture' ) },
+			{ value: 'black', label: __( 'Black', 'metronet-profile-picture' ) },
+			{ value: 'magenta', label: __( 'Magenta', 'metronet-profile-picture' ) },
+			{ value: 'blue', label: __( 'Blue', 'metronet-profile-picture' ) },
+			{ value: 'green', label: __( 'Green', 'metronet-profile-picture' ) },
 		];
 
 		return(
@@ -585,6 +597,18 @@ class MPP_Gutenberg extends Component {
 									onChange={ ( value ) => {this.props.setAttributes( { showSocialMedia: value } ); this.handleSocialMediaChange( value );  } }
 								/>
 							</PanelBody>
+							{this.state.theme === 'tabbed' &&
+							<PanelBody title={ __( 'User Profile Settings', 'metronet-profile-picture' ) }>
+								<SelectControl
+										label={ __( 'Select a theme', 'metronet-profile-picture' ) }
+										value={this.state.latestPostsTheme}
+										options={ {
+
+										} }
+										onChange={ ( value ) => { this.on_user_change(value); setAttributes({user_id: Number(value)}); } }
+								/>
+							</PanelBody>
+							}
 							<PanelBody title={ __( 'Colors', 'metronet-profile-picture' ) } initialOpen={false}>
 								<PanelColorSettings
 								title={ __( 'Background Color', 'metronet-profile-picture' ) }
@@ -679,19 +703,15 @@ class MPP_Gutenberg extends Component {
 										} ] }
 										>
 										</PanelColorSettings>
-										<PanelColorSettings
-										title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
-										initialOpen={ false }
-										colorSettings={ [ {
-											value: this.state.postLinkColor,
-											onChange: this.onChangePostLinkColor,
-											label: __( 'Link Color', 'metronet-profile-picture' ),
-										} ] }
-										>
-										</PanelColorSettings>
+										<SelectControl
+												label={ __( 'Select a Post Theme', 'metronet-profile-picture' ) }
+												value={this.state.profileLatestPostsOptionsValue}
+												options={profileLatestPostsOptions}
+												onChange={ ( value ) => { this.onLatestPostsChange(value); setAttributes({profileLatestPostsOptionsValue: value}); } }
+										/>
 									</Fragment>
 								}
-								{this.state.theme !== 'tabbed' &&
+								{this.state.theme !== 'tabbed' && this.state.theme !== 'profile' &&
 								<Fragment>
 									<PanelColorSettings
 									title={ __( 'View Posts Background Color', 'metronet-profile-picture' ) }
@@ -1343,7 +1363,13 @@ class MPP_Gutenberg extends Component {
 										}
 										{!this.state.loadingLatestPosts &&
 											<Fragment>
-												<ul className="mpp-latest-posts">
+												<ul
+												className={
+													classnames(
+														'mpp-author-tab-content',
+														this.state.profileLatestPostsOptionsValue
+													)
+												}>
 												{this.state.latestPosts}
 												</ul>
 											</Fragment>
