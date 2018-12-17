@@ -72,6 +72,7 @@ class MPP_Gutenberg extends Component {
 			tabbedAuthorProfile: this.props.attributes.tabbedAuthorProfile,
 			tabbedAuthorLatestPosts: this.props.attributes.tabbedAuthorLatestPosts,
 			tabbedAuthorSubHeading: this.props.attributes.tabbedAuthorSubHeading,
+			activeTab: 'profile'
 		};
 	}
 	get_users = () => {
@@ -504,46 +505,50 @@ class MPP_Gutenberg extends Component {
 									>
 									</PanelColorSettings>
 								}
-								<PanelColorSettings
-								title={ __( 'View Posts Background Color', 'metronet-profile-picture' ) }
-								initialOpen={ false }
-								colorSettings={ [ {
-									value: profileViewPostsBackgroundColor,
-									onChange: onChangeViewPostsBackgroundColor,
-									label: __( 'View Posts Background', 'metronet-profile-picture' ),
-								} ] }
-								>
-								</PanelColorSettings>
-								<PanelColorSettings
-								title={ __( 'View Posts Text Color', 'metronet-profile-picture' ) }
-								initialOpen={ false }
-								colorSettings={ [ {
-									value: profileViewPostsTextColor,
-									onChange: onChangeViewPostsTextColor,
-									label: __( 'View Posts Text Color', 'metronet-profile-picture' ),
-								} ] }
-								>
-								</PanelColorSettings>
-								<PanelColorSettings
-								title={ __( 'Website Background Color', 'metronet-profile-picture' ) }
-								initialOpen={ false }
-								colorSettings={ [ {
-									value: profileWebsiteBackgroundColor,
-									onChange: onChangeWebsitesBackgroundColor,
-									label: __( 'View Website Background', 'metronet-profile-picture' ),
-								} ] }
-								>
-								</PanelColorSettings>
-								<PanelColorSettings
-								title={ __( 'View Website Text Color', 'metronet-profile-picture' ) }
-								initialOpen={ false }
-								colorSettings={ [ {
-									value: profileWebsiteTextColor,
-									onChange: onChangeWebsiteTextColor,
-									label: __( 'View Website Text Color', 'metronet-profile-picture' ),
-								} ] }
-								>
-								</PanelColorSettings>
+								{this.state.theme !== 'tabbed' &&
+								<Fragment>
+									<PanelColorSettings
+									title={ __( 'View Posts Background Color', 'metronet-profile-picture' ) }
+									initialOpen={ false }
+									colorSettings={ [ {
+										value: profileViewPostsBackgroundColor,
+										onChange: onChangeViewPostsBackgroundColor,
+										label: __( 'View Posts Background', 'metronet-profile-picture' ),
+									} ] }
+									>
+									</PanelColorSettings>
+									<PanelColorSettings
+									title={ __( 'View Posts Text Color', 'metronet-profile-picture' ) }
+									initialOpen={ false }
+									colorSettings={ [ {
+										value: profileViewPostsTextColor,
+										onChange: onChangeViewPostsTextColor,
+										label: __( 'View Posts Text Color', 'metronet-profile-picture' ),
+									} ] }
+									>
+									</PanelColorSettings>
+									<PanelColorSettings
+									title={ __( 'Website Background Color', 'metronet-profile-picture' ) }
+									initialOpen={ false }
+									colorSettings={ [ {
+										value: profileWebsiteBackgroundColor,
+										onChange: onChangeWebsitesBackgroundColor,
+										label: __( 'View Website Background', 'metronet-profile-picture' ),
+									} ] }
+									>
+									</PanelColorSettings>
+									<PanelColorSettings
+									title={ __( 'View Website Text Color', 'metronet-profile-picture' ) }
+									initialOpen={ false }
+									colorSettings={ [ {
+										value: profileWebsiteTextColor,
+										onChange: onChangeWebsiteTextColor,
+										label: __( 'View Website Text Color', 'metronet-profile-picture' ),
+									} ] }
+									>
+									</PanelColorSettings>
+								</Fragment>
+								}
 							</PanelBody>
 							<PanelBody title={ __( 'Spacing and Font Settings', 'metronet-profile-picture' ) } initialOpen={false}>
 							<RangeControl
@@ -562,6 +567,7 @@ class MPP_Gutenberg extends Component {
 									max={ 24 }
 									step={ 1 }
 								/>
+								{this.state.theme !== 'tabbed' &&
 								<RangeControl
 									label={ __( 'Button Size', 'metronet-profile-picture' ) }
 									value={ buttonFontSize }
@@ -570,12 +576,13 @@ class MPP_Gutenberg extends Component {
 									max={ 24 }
 									step={ 1 }
 								/>
+								}
 								<RangeControl
 									label={ __( 'Padding', 'metronet-profile-picture' ) }
 									value={ padding }
 									onChange={ ( value ) => this.props.setAttributes( { padding: value } ) }
 									min={ 0 }
-									max={ 20 }
+									max={ 60 }
 									step={ 1 }
 								/>
 								<RangeControl
@@ -935,11 +942,39 @@ class MPP_Gutenberg extends Component {
 						</div>
 						}
 						{ this.state.theme === 'tabbed' &&
-							<div className="mpp-author-tabbed">
+							<div
+								className={
+									classnames(
+										'mpp-author-tabbed',
+										this.state.theme,
+										profileAlignment,
+										profileAvatarShape,
+										'mpp-block-profile'
+									)
+								}
+							>
 								<ul className="mpp-author-tabs">
-									<li className="mpp-author-details">{this.state.tabbedAuthorProfile}</li>
-									<li className="mpp-latest-posts">{this.state.tabbedAuthorLatestPosts}</li>
+									<li className={
+										classnames(
+											'mpp-tab-profile',
+											this.state.activeTab == 'profile' ? 'active' : ''
+										)
+									}>{this.state.tabbedAuthorProfile}</li>
+									<li className={
+										classnames(
+											'mpp-tab-posts',
+											this.state.activeTab == 'posts' ? 'active' : ''
+										)}>{this.state.tabbedAuthorLatestPosts}</li>
 								</ul>
+								<div className="mpp-tab-wrapper"
+									style={ {
+										padding: padding + 'px',
+										border: border + 'px solid ' + borderColor,
+										borderRadius: borderRounded + 'px',
+										backgroundColor: profileBackgroundColor,
+										color: profileTextColor,
+									} }
+								>
 								<div className="mpp-author-social-wrapper">
 									<div class="mpp-author-heading">
 										<RichText
@@ -950,6 +985,7 @@ class MPP_Gutenberg extends Component {
 												onChange={ ( value ) => {this.onChangeTabbedProfileText(value); setAttributes( { tabbedAuthorProfile: value } ) } }
 										/>
 									</div>
+									{this.state.showSocialMedia &&
 									<div class="mpp-author-social">
 										<div className="mpp-social">
 											{ this.state.socialFacebook != '' &&
@@ -1010,6 +1046,7 @@ class MPP_Gutenberg extends Component {
 											}
 										</div>
 									</div>
+									}
 								</div>
 								<div className="mpp-profile-image-wrapper">
 									<div className="mpp-profile-image-square">
@@ -1042,6 +1079,7 @@ class MPP_Gutenberg extends Component {
 									/>
 								</div>
 								<div class="mpp-tabbed-profile-information">
+									{ showTitle &&
 									<RichText
 											tagName="div"
 											className="mpp-author-profile-title"
@@ -1050,6 +1088,8 @@ class MPP_Gutenberg extends Component {
 											formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
 											onChange={ ( value ) => { setAttributes( { tabbedAuthorProfileTitle: value } ) } }
 										/>
+									}
+									{ showName &&
 									<RichText
 										tagName="h2"
 										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
@@ -1061,16 +1101,25 @@ class MPP_Gutenberg extends Component {
 										} }
 										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
 									/>
+									}
+									{ showDescription &&
 									<RichText
 										tagName="div"
-										className='mpp-profile-text'
+										className={
+											classnames(
+												'mpp-profile-text',
+												'mt-font-size-' + profileFontSize,
+											)
+										}
 										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
 										value={ profileContent }
 										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
 										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
 									/>
+									}
 								</div>
 							</div>
+						</div>
 						}
 					</Fragment>
 
