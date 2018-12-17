@@ -72,7 +72,9 @@ class MPP_Gutenberg extends Component {
 			tabbedAuthorProfile: this.props.attributes.tabbedAuthorProfile,
 			tabbedAuthorLatestPosts: this.props.attributes.tabbedAuthorLatestPosts,
 			tabbedAuthorSubHeading: this.props.attributes.tabbedAuthorSubHeading,
-			activeTab: 'profile'
+			activeTab: 'profile',
+			loadingLatestPosts: true,
+			latestPosts: {}
 		};
 	}
 	get_users = () => {
@@ -319,6 +321,35 @@ class MPP_Gutenberg extends Component {
 				tabbedAuthorSubHeading: value
 			}
 		);
+	}
+	onChangeActiveProfileTab = () => {
+		this.setState(
+			{
+				activeTab: 'profile'
+			}
+		);
+	}
+	onChangeActivePostTab = () => {
+		this.setState(
+			{
+				activeTab: 'latest',
+				loadingLatestPosts: true
+			}
+		);
+		axios.post(mpp_gutenberg.rest_url + `/get_posts`, {user_id: this.state.active_user }, { 'headers': { 'X-WP-Nonce': mpp_gutenberg.nonce } } ).then( (response) => {
+			const latestPosts = response.data;
+			let postJSX = latestPosts.map( function(data) {
+				return (
+					<li key={data.ID}><a href={data.permalink}>{data.post_title}</a></li>
+				)
+			});
+
+			this.setState( {
+				loadingLatestPosts: false,
+				latestPosts: postJSX
+				}
+			)
+		} );
 	}
 	render() {
 		// Setup the attributes
@@ -957,14 +988,19 @@ class MPP_Gutenberg extends Component {
 									<li className={
 										classnames(
 											'mpp-tab-profile',
-											this.state.activeTab == 'profile' ? 'active' : ''
+											this.state.activeTab === 'profile' ? 'active' : ''
 										)
-									}>{this.state.tabbedAuthorProfile}</li>
+
+									}
+									onClick={this.onChangeActiveProfileTab}
+									>{this.state.tabbedAuthorProfile}</li>
 									<li className={
 										classnames(
 											'mpp-tab-posts',
-											this.state.activeTab == 'posts' ? 'active' : ''
-										)}>{this.state.tabbedAuthorLatestPosts}</li>
+											this.state.activeTab === 'latest' ? 'active' : ''
+										)}
+										onClick={this.onChangeActivePostTab}
+										>{this.state.tabbedAuthorLatestPosts}</li>
 								</ul>
 								<div className="mpp-tab-wrapper"
 									style={ {
@@ -975,6 +1011,8 @@ class MPP_Gutenberg extends Component {
 										color: profileTextColor,
 									} }
 								>
+								{ this.state.activeTab === 'profile' &&
+									<Fragment>
 								<div className="mpp-author-social-wrapper">
 									<div class="mpp-author-heading">
 										<RichText
@@ -986,138 +1024,157 @@ class MPP_Gutenberg extends Component {
 										/>
 									</div>
 									{this.state.showSocialMedia &&
-									<div class="mpp-author-social">
-										<div className="mpp-social">
-											{ this.state.socialFacebook != '' &&
-												<a href={this.state.socialFacebook}>
-													<svg className="icon icon-facebook" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#facebook"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialTwitter != '' &&
-												<a href={this.state.socialTwitter}>
-													<svg className="icon icon-twitter" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#twitter"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialInstagram != '' &&
-												<a href={this.state.socialInstagram}>
-													<svg className="icon icon-instagram" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#instagram"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialPinterest != '' &&
-												<a href={this.state.socialPinterest}>
-													<svg className="icon icon-pinterest" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#pinterest"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialLinkedIn != '' &&
-												<a href={this.state.socialLinkedIn}>
-													<svg className="icon icon-linkedin" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#linkedin"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialYouTube != '' &&
-												<a href={this.state.socialYouTube}>
-													<svg className="icon icon-youtube" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#youtube"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialGitHub != '' &&
-												<a href={this.state.socialGitHub}>
-													<svg className="icon icon-github" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#github"></use>
-													</svg>
-												</a>
-											}
-											{ this.state.socialWordPress != '' &&
-												<a href={this.state.socialWordPress}>
-													<svg className="icon icon-wordpress" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
-														<use href="#wordpress"></use>
-													</svg>
-												</a>
-											}
+										<div class="mpp-author-social">
+											<div className="mpp-social">
+												{ this.state.socialFacebook != '' &&
+													<a href={this.state.socialFacebook}>
+														<svg className="icon icon-facebook" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#facebook"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialTwitter != '' &&
+													<a href={this.state.socialTwitter}>
+														<svg className="icon icon-twitter" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#twitter"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialInstagram != '' &&
+													<a href={this.state.socialInstagram}>
+														<svg className="icon icon-instagram" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#instagram"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialPinterest != '' &&
+													<a href={this.state.socialPinterest}>
+														<svg className="icon icon-pinterest" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#pinterest"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialLinkedIn != '' &&
+													<a href={this.state.socialLinkedIn}>
+														<svg className="icon icon-linkedin" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#linkedin"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialYouTube != '' &&
+													<a href={this.state.socialYouTube}>
+														<svg className="icon icon-youtube" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#youtube"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialGitHub != '' &&
+													<a href={this.state.socialGitHub}>
+														<svg className="icon icon-github" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#github"></use>
+														</svg>
+													</a>
+												}
+												{ this.state.socialWordPress != '' &&
+													<a href={this.state.socialWordPress}>
+														<svg className="icon icon-wordpress" role="img" style={{fill: this.state.socialMediaOptions === 'custom' ? socialMediaColors : ''}}>
+															<use href="#wordpress"></use>
+														</svg>
+													</a>
+												}
+											</div>
 										</div>
-									</div>
-									}
-								</div>
-								<div className="mpp-profile-image-wrapper">
-									<div className="mpp-profile-image-square">
-										<MediaUpload
-											buttonProps={ {
-												className: 'change-image'
-											} }
-											onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
-											type="image"
-											value={ profileImgID }
-											render={ ( { open } ) => (
-												<Button onClick={ open }>
-													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-														class="profile-avatar"
-														src={ profileImgURL }
-														alt="avatar"
-													/>  }
-												</Button>
-											) }
-										>
-										</MediaUpload>
-									</div>
-									<RichText
-										tagName="div"
-										className="mpp-author-profile-sub-heading"
-										placeholder={ __( 'Add profile description...', 'metronet-profile-picture' ) }
-										value={ this.state.tabbedAuthorSubHeading }
-										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-										onChange={ ( value ) => {this.onChangeTabbedSubHeading(value); setAttributes( { tabbedAuthorSubHeading: value } ) } }
-									/>
-								</div>
-								<div class="mpp-tabbed-profile-information">
-									{ showTitle &&
-									<RichText
-											tagName="div"
-											className="mpp-author-profile-title"
-											placeholder={ __( 'Add profile title...', 'metronet-profile-picture' ) }
-											value={ tabbedAuthorProfileTitle }
-											formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-											onChange={ ( value ) => { setAttributes( { tabbedAuthorProfileTitle: value } ) } }
-										/>
-									}
-									{ showName &&
-									<RichText
-										tagName="h2"
-										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
-										value={ profileName }
-										className='mpp-profile-name'
-										style={ {
-											color: profileTextColor,
-											fontSize: headerFontSize + 'px'
-										} }
-										onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
-									/>
-									}
-									{ showDescription &&
-									<RichText
-										tagName="div"
-										className={
-											classnames(
-												'mpp-profile-text',
-												'mt-font-size-' + profileFontSize,
-											)
 										}
-										placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
-										value={ profileContent }
-										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
-									/>
-									}
-								</div>
+									</div>
+									<div className="mpp-profile-image-wrapper">
+										<div className="mpp-profile-image-square">
+											<MediaUpload
+												buttonProps={ {
+													className: 'change-image'
+												} }
+												onSelect={ ( img ) => { this.handleImageChange( img.id, img.url ); setAttributes( { profileImgID: img.id, profileImgURL: img.url } ); } }
+												type="image"
+												value={ profileImgID }
+												render={ ( { open } ) => (
+													<Button onClick={ open }>
+														{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
+															class="profile-avatar"
+															src={ profileImgURL }
+															alt="avatar"
+														/>  }
+													</Button>
+												) }
+											>
+											</MediaUpload>
+										</div>
+										<RichText
+											tagName="div"
+											className="mpp-author-profile-sub-heading"
+											placeholder={ __( 'Add profile description...', 'metronet-profile-picture' ) }
+											value={ this.state.tabbedAuthorSubHeading }
+											formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+											onChange={ ( value ) => {this.onChangeTabbedSubHeading(value); setAttributes( { tabbedAuthorSubHeading: value } ) } }
+										/>
+									</div>
+									<div class="mpp-tabbed-profile-information">
+										{ showTitle &&
+										<RichText
+												tagName="div"
+												className="mpp-author-profile-title"
+												placeholder={ __( 'Add profile title...', 'metronet-profile-picture' ) }
+												value={ tabbedAuthorProfileTitle }
+												formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+												onChange={ ( value ) => { setAttributes( { tabbedAuthorProfileTitle: value } ) } }
+											/>
+										}
+										{ showName &&
+										<RichText
+											tagName="h2"
+											placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
+											value={ profileName }
+											className='mpp-profile-name'
+											style={ {
+												color: profileTextColor,
+												fontSize: headerFontSize + 'px'
+											} }
+											onChange={ ( value ) => { this.onChangeName(value); setAttributes( { profileName: value } ) } }
+										/>
+										}
+										{ showDescription &&
+										<RichText
+											tagName="div"
+											className={
+												classnames(
+													'mpp-profile-text',
+													'mt-font-size-' + profileFontSize,
+												)
+											}
+											placeholder={ __( 'Add profile text...', 'metronet-profile-picture' ) }
+											value={ profileContent }
+											formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+											onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
+										/>
+										}
+									</div>
+								</Fragment>
+								}
+								{this.state.activeTab === 'latest' &&
+									<Fragment>
+										{this.state.loadingLatestPosts &&
+											<Fragment>
+												{__('Loading...', 'metronet-profile-picture')}
+												<Spinner />
+											</Fragment>
+										}
+										{!this.state.loadingLatestPosts &&
+											<Fragment>
+												<ul className="mpp-latest-posts">
+												{this.state.latestPosts}
+												</ul>
+											</Fragment>
+										}
+									</Fragment>
+								}
 							</div>
 						</div>
 						}

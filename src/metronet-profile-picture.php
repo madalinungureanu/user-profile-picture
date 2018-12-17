@@ -637,15 +637,6 @@ class Metronet_Profile_Picture	{
 		);
 		register_rest_route(
 			'mpp/v2',
-			'get_posts',
-			array(
-				'methods' => 'POST',
-				'callback' =>  array( $this, 'rest_api_get_posts_for_user' ),
-				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
-			)
-		);
-		register_rest_route(
-			'mpp/v2',
 			'/profile-image/me',
 			array(
 				'methods' => 'POST',
@@ -658,6 +649,15 @@ class Metronet_Profile_Picture	{
 			array(
 				'methods' => 'POST',
 				'callback' =>  array( $this, 'rest_api_get_users' ),
+				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
+			)
+		);
+		register_rest_route(
+			'mpp/v2',
+			'/get_posts',
+			array(
+				'methods' => 'POST',
+				'callback' =>  array( $this, 'rest_api_get_posts_for_user' ),
 				'permission_callback' => array( $this, 'rest_get_users_permissions_callback' )
 			)
 		);
@@ -793,6 +793,9 @@ class Metronet_Profile_Picture	{
 			'posts_per_page' => 5
 		);
 		$posts = get_posts( $args );
+		foreach( $posts as &$post ) {
+			$post->permalink = get_permalink( $post->ID );
+		}
 		wp_send_json( $posts );
 	}
 	/**
