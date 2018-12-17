@@ -198,6 +198,10 @@ class Metronet_Profile_Picture_Gutenberg {
 					'type' => 'string',
 					'default' => __( 'Author Details', 'metronet-profile-picture' )
 				),
+				'tabbedAuthorProfileHeading' => array(
+					'type' => 'string',
+					'default' => __( 'Author Details', 'metronet-profile-picture' )
+				),
 				'tabbedAuthorLatestPosts' => array(
 					'type' => 'string',
 					'default' => __( 'Latest Posts', 'metronet-profile-picture' )
@@ -213,6 +217,18 @@ class Metronet_Profile_Picture_Gutenberg {
 				'postLinkColor' => array(
 					'type' => 'string',
 					'default' => 'inherit'
+				),
+				'profileTabHeadlineColor' => array(
+					'type' => 'string',
+					'default' => '#42737b'
+				),
+				'profileTabColor' => array(
+					'type' => 'string',
+					'default' => '#42737b',
+				),
+				'profileTabPostsColor' => array(
+					'type' => 'string',
+					'default' => '#30424b',
 				)
 			),
 			'render_callback' => array($this, 'display_frontend'),

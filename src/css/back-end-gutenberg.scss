@@ -229,7 +229,6 @@ $colors: twitter #00aced,
 }
 
 /* For Tabbed Theme */
-/* For Profile Theme */
 .editor-styles-wrapper .mpp-author-tabbed {
 	padding: 10px;
 	&:after {
@@ -243,6 +242,7 @@ $colors: twitter #00aced,
 			display: table;
 			clear: both;
 		}
+		margin-bottom: 10px;
 	}
 	h2 {
 		font-size: 0.8em;
@@ -326,28 +326,6 @@ $colors: twitter #00aced,
 			color: #FFF;
 			padding: 10px 20px;
 			font-size: 16px;
-		}
-		li.mpp-tab-posts.active:after {
-			content: "";
-			display: block;
-			position: absolute;
-			bottom: -10px;
-			left: calc(50% - 10px);
-			border-top: 10px solid #30424b;
-			border-top-color: #30424b;
-			border-left: 10px solid transparent;
-			border-right: 10px solid transparent;
-		}
-		li.mpp-tab-profile.active:after {
-			content: "";
-			display: block;
-			position: absolute;
-			bottom: -10px;
-			left: calc(50% - 10px);
-			border-top: 10px solid #42737b;
-			border-top-color: #42737b;
-			border-left: 10px solid transparent;
-			border-right: 10px solid transparent;
 		}
 		li:last-child {
 			margin-right: 0;

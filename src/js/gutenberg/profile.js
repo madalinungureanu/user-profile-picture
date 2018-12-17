@@ -72,10 +72,14 @@ class MPP_Gutenberg extends Component {
 			tabbedAuthorProfile: this.props.attributes.tabbedAuthorProfile,
 			tabbedAuthorLatestPosts: this.props.attributes.tabbedAuthorLatestPosts,
 			tabbedAuthorSubHeading: this.props.attributes.tabbedAuthorSubHeading,
+			tabbedAuthorProfileHeading: this.props.attributes.tabbedAuthorProfileHeading,
 			activeTab: 'profile',
 			loadingLatestPosts: true,
 			latestPosts: {},
 			postLinkColor: this.props.attributes.postLinkColor,
+			profileTabColor: this.props.attributes.profileTabColor,
+			profileTabHeadlineColor: this.props.attributes.profileTabHeadlineColor,
+			profileTabPostsColor: this.props.attributes.profileTabPostsColor,
 		};
 	}
 	get_users = () => {
@@ -368,6 +372,36 @@ class MPP_Gutenberg extends Component {
 		});
 		this.getLatestPosts();
 	}
+	onChangetabbedAuthorProfile = ( value ) => {
+		this.setState( {
+			tabbedAuthorProfile: value
+		});
+	}
+	onChangetabbedAuthorProfileHeading = ( value ) => {
+		this.setState( {
+			tabbedAuthorProfileHeading: value
+		});
+	}
+	onChangetabbedAuthorLatestPosts = ( value ) => {
+		this.setState( {
+			tabbedAuthorLatestPosts: value
+		});
+	}
+	onChangeProfileTabColor = ( value ) => {
+		this.setState( {
+			profileTabColor: value
+		});
+	}
+	onChangePostsTabColor = ( value ) => {
+		this.setState( {
+			profileTabPostsColor: value
+		});
+	}
+	onChangePostsTabHeadlineColor = ( value ) => {
+		this.setState( {
+			profileTabHeadlineColor: value
+		});
+	}
 	render() {
 		// Setup the attributes
 		let {
@@ -484,11 +518,13 @@ class MPP_Gutenberg extends Component {
 									value={ profileAvatarShape }
 									onChange={ ( value ) => this.props.setAttributes( { profileAvatarShape: value } ) }
 								/>
+								{ this.state.theme !== 'tabbed' &&
 								<TextControl
 									label={__('Website', 'metronet-profile-picture')}
 									value={this.state.website}
 									onChange={ ( value ) => { this.props.setAttributes( { website: value }); this.handleWebsiteChange(value); } }
 								/>
+								}
 								<ToggleControl
 									label={ __( 'Show Name', 'metronet-profile-picture' ) }
 									checked={ showName }
@@ -504,16 +540,20 @@ class MPP_Gutenberg extends Component {
 									checked={ showDescription }
 									onChange={ () => this.props.setAttributes( { showDescription: ! showDescription } ) }
 								/>
-								<ToggleControl
-									label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
-									checked={ showViewPosts }
-									onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
-								/>
-								<ToggleControl
-									label={ __( 'Show Website', 'metronet-profile-picture' ) }
-									checked={ this.state.show_website }
-									onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
-								/>
+								{ this.state.theme !== 'tabbed' &&
+								<Fragment>
+									<ToggleControl
+										label={ __( 'Show View Posts', 'metronet-profile-picture' ) }
+										checked={ showViewPosts }
+										onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
+									/>
+									<ToggleControl
+										label={ __( 'Show Website', 'metronet-profile-picture' ) }
+										checked={ this.state.show_website }
+										onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
+									/>
+								</Fragment>
+								}
 								<ToggleControl
 									label={ __( 'Show Social Media', 'metronet-profile-picture' ) }
 									checked={ this.state.showSocialMedia }
@@ -554,16 +594,47 @@ class MPP_Gutenberg extends Component {
 									</PanelColorSettings>
 								}
 								{this.state.theme === 'tabbed' &&
-									<PanelColorSettings
-									title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
-									initialOpen={ false }
-									colorSettings={ [ {
-										value: this.state.postLinkColor,
-										onChange: this.onChangePostLinkColor,
-										label: __( 'Link Color', 'metronet-profile-picture' ),
-									} ] }
-									>
-									</PanelColorSettings>
+									<Fragment>
+										<PanelColorSettings
+										title={ __( 'Profile Tab Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabColor,
+											onChange: this.onChangeProfileTabColor,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										</PanelColorSettings>
+										<PanelColorSettings
+										title={ __( 'Profile Posts Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabPostsColor,
+											onChange: this.onChangePostsTabColor,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										<PanelColorSettings
+										title={ __( 'Profile Headline Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.profileTabHeadlineColor,
+											onChange: this.onChangePostsTabHeadlineColor,
+											label: __( 'Color', 'metronet-profile-picture' ),
+										} ] }
+										></PanelColorSettings>
+										</PanelColorSettings>
+										<PanelColorSettings
+										title={ __( 'Post Link Color', 'metronet-profile-picture' ) }
+										initialOpen={ false }
+										colorSettings={ [ {
+											value: this.state.postLinkColor,
+											onChange: this.onChangePostLinkColor,
+											label: __( 'Link Color', 'metronet-profile-picture' ),
+										} ] }
+										>
+										</PanelColorSettings>
+									</Fragment>
 								}
 								{this.state.theme !== 'tabbed' &&
 								<Fragment>
@@ -1002,6 +1073,7 @@ class MPP_Gutenberg extends Component {
 						</div>
 						}
 						{ this.state.theme === 'tabbed' &&
+							<Fragment>
 							<div
 								className={
 									classnames(
@@ -1022,14 +1094,32 @@ class MPP_Gutenberg extends Component {
 
 									}
 									onClick={this.onChangeActiveProfileTab}
-									>{this.state.tabbedAuthorProfile}</li>
+									style={{backgroundColor: this.state.profileTabColor}}
+									>
+									<RichText
+											tagName="span"
+											placeholder={ __( 'Add tab name.', 'metronet-profile-picture' ) }
+											value={this.state.tabbedAuthorProfile}
+											formattingControls={[]}
+											onChange={ ( value ) => {this.onChangetabbedAuthorProfile(value); setAttributes( { tabbedAuthorProfile: value } ) } }
+										/>
+									</li>
 									<li className={
 										classnames(
 											'mpp-tab-posts',
 											this.state.activeTab === 'latest' ? 'active' : ''
 										)}
 										onClick={this.onChangeActivePostTab}
-										>{this.state.tabbedAuthorLatestPosts}</li>
+										style={{backgroundColor: this.state.profileTabPostsColor}}
+										>
+										<RichText
+											tagName="span"
+											placeholder={ __( 'Add tab name.', 'metronet-profile-picture' ) }
+											value={this.state.tabbedAuthorLatestPosts}
+											formattingControls={[]}
+											onChange={ ( value ) => {this.onChangetabbedAuthorLatestPosts(value); setAttributes( { tabbedAuthorLatestPosts: value } ) } }
+										/>
+										</li>
 								</ul>
 								<div className="mpp-tab-wrapper"
 									style={ {
@@ -1047,9 +1137,9 @@ class MPP_Gutenberg extends Component {
 										<RichText
 												tagName="div"
 												className="mpp-author-profile-heading"
-												value={ this.state.tabbedAuthorProfile }
-												formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-												onChange={ ( value ) => {this.onChangeTabbedProfileText(value); setAttributes( { tabbedAuthorProfile: value } ) } }
+												value={ this.state.tabbedAuthorProfileHeading }
+												formattingControls={[]}
+												onChange={ ( value ) => {this.onChangetabbedAuthorProfileHeading(value); setAttributes( { tabbedAuthorProfileHeading: value } ) } }
 										/>
 									</div>
 									{this.state.showSocialMedia &&
@@ -1206,6 +1296,7 @@ class MPP_Gutenberg extends Component {
 								}
 							</div>
 						</div>
+						</Fragment>
 						}
 					</Fragment>
 
