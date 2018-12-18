@@ -1,7 +1,7 @@
 .mpp-profile-wrap.regular {
 	position: relative;
 	margin: 0 auto;
-
+	line-height: 1.1;
 	&.round .mpp-profile-image-wrapper {
 		border-radius: 50%;
 		overflow: hidden;
@@ -148,15 +148,6 @@
 			text-align: center;
 			margin-bottom: 10px;
 		}
-	}
-	&.right .mpp-profile-view-posts {
-		float: right;
-		margin-left: 20px;
-	}
-	&.center .mpp-profile-view-posts {
-		display: inline-block;
-		float: none;
-		margin-left: 20px;
 	}
 }
 
