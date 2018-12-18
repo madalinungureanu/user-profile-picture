@@ -250,6 +250,10 @@ class Metronet_Profile_Picture_Gutenberg {
 				'showSocialMedia' => array(
 					'type' => 'bool',
 					'default' => true
+				),
+				'profileName' => array(
+					'type' => 'string',
+					'default' => ''
 				)
 
 			),
@@ -263,37 +267,66 @@ class Metronet_Profile_Picture_Gutenberg {
 		?>
 		<div class="mpp-profile-wrap mpp-block-profile <?php echo esc_attr( $attributes['profileAlignment'] ); ?> <?php echo esc_attr( $attributes['theme'] ); ?> <?php echo esc_attr( $attributes['profileAvatarShape'] ); ?>" style="<?php echo $attributes['padding'] > 0 ? 'padding: ' . esc_attr( $attributes['padding'] ) . 'px;' : ''?><?php echo $attributes['border'] > 0 ? 'border:' . esc_attr( $attributes['border'] ) . 'px solid ' . esc_attr( $attributes['borderColor'] ) . ';' : ''?><?php echo $attributes['borderRounded'] > 0 ? 'border-radius:' . esc_attr( $attributes['borderRounded'] ) . 'px;': ''?>background-color: <?php echo esc_attr( $attributes['profileBackgroundColor'] ) . ';'; ?> color: <?php echo esc_attr( $attributes['profileTextColor'] ) . ';' ?>">
 			<div class="mpp-profile-gutenberg-wrap mt-font-size-<?php echo esc_attr( $attributes['profileFontSize'] ); ?>">
-				<div class="mpp-profile-image-wrapper">
-					<div class="mpp-profile-image-square">
-						<img class="profile-avatar" alt="avatar" src="<?php echo esc_url( $attributes['profileImgURL'] ); ?>" />
+				<?php if( 'regular' === $attributes['theme']): ?>
+					<div class="mpp-profile-image-wrapper">
+						<div class="mpp-profile-image-square">
+							<img class="profile-avatar" alt="avatar" src="<?php echo esc_url( $attributes['profileImgURL'] ); ?>" />
+						</div>
 					</div>
-				</div>
-				<div class="mpp-content-wrap">
-					<?php if ( $attributes['showName']):?>
-					<h2 style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ) . 'px;'?>"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
+					<div class="mpp-content-wrap">
+						<?php if ( $attributes['showName']):?>
+						<h2 style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ) . 'px;'?>"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
+						<?php endif; ?>
+						<?php if ( $attributes['showTitle']):?>
+						<p style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>"><?php echo wp_kses_post( $attributes['profileTitle'] ); ?></p>
+						<?php endif; ?>
+						<?php if ( $attributes['showDescription']):?>
+						<div><?php echo wp_kses_post( $attributes['profileContent'] ); ?></div>
+						<?php endif; ?>
+						<?php if ( isset( $attributes['profileURL'] ) && strlen( $attributes['profileURL' ] ) > 0 ) :?>
+							<div class="mpp-gutenberg-view-posts">
+								<?php if ( $attributes['showViewPosts'] ): ?>
+									<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; width: <?php echo esc_attr( $attributes['showPostsWidth'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
+										<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>">
+										<?php esc_html_e( 'View Posts', 'metronet-profile-picture' ); ?></a>
+									</div><!-- .mpp-profile-view-posts -->
+								<?php endif; ?>
+								<?php if ( '' != $attributes['website'] && $attributes['showWebsite'] ): ?>
+								<div class="mpp-profile-view-website" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>;color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ) ;?>px;">
+									<a href="<?php echo esc_url( $attributes['website'] ) ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;"><?php esc_html_e( 'View Website', 'metronet-profile-picture' ); ?></a>
+								</div><!-- .mpp-profile-view-website -->
+								<?php endif; ?>
+							</div><!-- .mpp-gutenberg-view-posts -->
+						<?php endif; ?>
+					</div><!-- .mpp-content-wrap -->
+				<?php endif; /* End Regular Theme */ ?>
+				<?php if( 'profile' === $attributes['theme'] ): ?>
+					<?php if ( $attributes['showName'] ): ?>
+					<h2 style="color: <?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ) . 'px'; ?>"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
 					<?php endif; ?>
-					<?php if ( $attributes['showTitle']):?>
-					<p style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>"><?php echo wp_kses_post( $attributes['profileTitle'] ); ?></p>
+					<div class="mpp-profile-image-wrapper">
+						<div class="mpp-profile-image-square">
+							<img src="<?php echo esc_url( $attributes['profileImgURL'] ); ?>" alt="avatar" class="profile-avatar" />
+						</div>
+					</div><!-- .mpp-profile-image-wrapper -->
+					<?php if ( $attributes['showDescription'] ): ?>
+					<div class="mpp-profile-text">
+						<?php echo wp_kses_post( $attributes['profileContent'] ); ?>
+					</div><!-- .mpp-profile-text -->
 					<?php endif; ?>
-					<?php if ( $attributes['showDescription']):?>
-					<div><?php echo wp_kses_post( $attributes['profileContent'] ); ?></div>
-					<?php endif; ?>
-					<?php if ( isset( $attributes['profileURL'] ) && strlen( $attributes['profileURL' ] ) > 0 ) :?>
-						<div class="mpp-gutenberg-view-posts">
-							<?php if ( $attributes['showViewPosts'] ): ?>
-								<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; width: <?php echo esc_attr( $attributes['showPostsWidth'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
-									<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>">
-									<?php esc_html_e( 'View Posts', 'metronet-profile-picture' ); ?></a>
-								</div><!-- .mpp-profile-view-posts -->
-							<?php endif; ?>
-							<?php if ( '' != $attributes['website'] && $attributes['showWebsite'] ): ?>
-							<div class="mpp-profile-view-website" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>;color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ) ;?>px;">
-								<a href="<?php echo esc_attr( $attributes['website'] ) ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;"><?php esc_html_e( 'View Website', 'metronet-profile-picture' ); ?></a>
-							</div><!-- .mpp-profile-view-website -->
-							<?php endif; ?>
-						</div><!-- .mpp-gutenberg-view-posts -->
-					<?php endif; ?>
-				</div><!-- .mpp-content-wrap -->
+					<div class="mpp-profile-meta" style="font-size: <?php echo esc_attr( $attributes['fontSize'] ); ?>px;">
+						<?php if ( $attributes['showViewPosts'] ): ?>
+							<div class="mpp-profile-link alignleft">
+								<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="color: <?php echo esc_attr( $attributes['profileLinkColor'] ); ?>;"><?php esc_html_e( 'View all posts by', 'metronet-profile-picture' ); ?> <?php echo esc_html( $attributes['profileName'] ); ?></a>
+							</div><!-- .mpp-profile-link -->
+							<div class="mpp-profile-link alignright">
+								<a href="<?php echo esc_url( $attributes['website'] ); ?>" style="color: <?php echo esc_attr( $attributes['profileLinkColor'] ); ?>">
+								<?php esc_html_e( 'Website', 'metronet-profile-picture' ); ?>
+								</a>
+							</div><!-- .mpp-profile-link -->
+						<?php endif; ?>
+					</div><!-- .mpp-profile-meta -->
+				<?php endif; /* End of profile theme */ ?>
 				<?php if ( true == $attributes['showSocialMedia'] && ( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ) ) : ?>
 					<?php echo $this->get_social_icons( $attributes ); ?>
 				<?php endif; ?>

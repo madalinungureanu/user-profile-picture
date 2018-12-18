@@ -163,7 +163,8 @@ class MPP_Gutenberg extends Component {
 				profileImgID: profile_picture_id,
 				profileImgURL: profile_picture,
 				showWebsite: show_website,
-				showSocialMedia: true
+				showSocialMedia: true,
+				profileName: active_user_profile.display_name
 			});
 		});
 	}
@@ -199,7 +200,8 @@ class MPP_Gutenberg extends Component {
 			socialPinterest: '',
 			socialTwitter: '',
 			socialWordPress: '',
-			socialYouTube: ''
+			socialYouTube: '',
+			profileName: this.state.users[user_id].display_name
 		} );
 		this.setState(
 			{
