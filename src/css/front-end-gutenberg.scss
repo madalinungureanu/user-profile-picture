@@ -248,6 +248,9 @@ $colors: twitter #00aced,
 		&:before {
 			display: none;
 		}
+		@media only screen and (max-width: 400px) {
+			text-align: center;
+		}
 	}
 	&.round .profile-avatar {
 		border-radius: 50%;
@@ -262,6 +265,12 @@ $colors: twitter #00aced,
 		max-width: 150px;
 		max-height: 150px;
 		margin-right: 15px;
+
+		@media only screen and (max-width: 400px) {
+			float: none;
+			text-align: center;
+			margin: 0 auto;
+		}
 	}
 	.mpp-profile-meta {
 		clear: both;
@@ -274,8 +283,17 @@ $colors: twitter #00aced,
 	}
 	.alignleft {
 		float: left;
+		@media only screen and (max-width: 400px) {
+			float: none;
+			text-align: center;
+			margin: 0 auto;
+		}
 	}
 	.alignright {
-		float: right;
+		@media only screen and (max-width: 400px) {
+			float: none;
+			text-align: center;
+			margin: 0 auto;
+		}
 	}
 }
