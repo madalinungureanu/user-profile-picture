@@ -242,16 +242,130 @@ class Metronet_Profile_Picture_Gutenberg {
 				'profileCompactAlignment' => array(
 					'type' => 'string',
 					'default' => 'center'
+				),
+				'showPostsWidth' => array(
+					'type' => 'string',
+					'default' => '',
+				),
+				'showSocialMedia' => array(
+					'type' => 'bool',
+					'default' => true
 				)
+
 			),
 			'render_callback' => array($this, 'display_frontend'),
             'editor_script'   => 'mpp_gutenberg'
 		) );
 	}
 
-	public function display_frontend() {
+	public function display_frontend( $attributes ) {
 		ob_start();
-		echo "hello world";
+		?>
+		<div class="mpp-profile-wrap mpp-block-profile <?php echo esc_attr( $attributes['profileAlignment'] ); ?> <?php echo esc_attr( $attributes['theme'] ); ?> <?php echo esc_attr( $attributes['profileAvatarShape'] ); ?>" style="<?php echo $attributes['padding'] > 0 ? 'padding: ' . esc_attr( $attributes['padding'] ) . 'px;' : ''?><?php echo $attributes['border'] > 0 ? 'border:' . esc_attr( $attributes['border'] ) . 'px solid ' . esc_attr( $attributes['borderColor'] ) . ';' : ''?><?php echo $attributes['borderRounded'] > 0 ? 'border-radius:' . esc_attr( $attributes['borderRounded'] ) . 'px;': ''?>background-color: <?php echo esc_attr( $attributes['profileBackgroundColor'] ) . ';'; ?> color: <?php echo esc_attr( $attributes['profileTextColor'] ) . ';' ?>">
+			<div class="mpp-profile-gutenberg-wrap mt-font-size-<?php echo esc_attr( $attributes['profileFontSize'] ); ?>">
+				<div class="mpp-profile-image-wrapper">
+					<div class="mpp-profile-image-square">
+						<img class="profile-avatar" alt="avatar" src="<?php echo esc_url( $attributes['profileImgURL'] ); ?>" />
+					</div>
+				</div>
+				<div class="mpp-content-wrap">
+					<?php if ( $attributes['showName']):?>
+					<h2 style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ) . 'px;'?>"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
+					<?php endif; ?>
+					<?php if ( $attributes['showTitle']):?>
+					<p style="color:<?php echo esc_attr( $attributes['profileTextColor'] ); ?>"><?php echo wp_kses_post( $attributes['profileTitle'] ); ?></p>
+					<?php endif; ?>
+					<?php if ( $attributes['showDescription']):?>
+					<div><?php echo wp_kses_post( $attributes['profileContent'] ); ?></div>
+					<?php endif; ?>
+					<?php if ( isset( $attributes['profileURL'] ) && strlen( $attributes['profileURL' ] ) > 0 ) :?>
+						<div class="mpp-gutenberg-view-posts">
+							<?php if ( $attributes['showViewPosts'] ): ?>
+								<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; width: <?php echo esc_attr( $attributes['showPostsWidth'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
+									<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>">
+									<?php esc_html_e( 'View Posts', 'metronet-profile-picture' ); ?></a>
+								</div><!-- .mpp-profile-view-posts -->
+							<?php endif; ?>
+							<?php if ( '' != $attributes['website'] && $attributes['showWebsite'] ): ?>
+							<div class="mpp-profile-view-website" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>;color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ) ;?>px;">
+								<a href="<?php echo esc_attr( $attributes['website'] ) ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;"><?php esc_html_e( 'View Website', 'metronet-profile-picture' ); ?></a>
+							</div><!-- .mpp-profile-view-website -->
+							<?php endif; ?>
+						</div><!-- .mpp-gutenberg-view-posts -->
+					<?php endif; ?>
+				</div><!-- .mpp-content-wrap -->
+				<?php if ( true == $attributes['showSocialMedia'] && ( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ) ) : ?>
+					<?php echo $this->get_social_icons( $attributes ); ?>
+				<?php endif; ?>
+			</div><!-- .mpp-profile-gutenberg-wrap -->
+		</div><!-- .mpp-profile-wrap -->
+		<?php
+		$this->load_gutenblock_svgs();
+		return ob_get_clean();
+	}
+
+	public function get_social_icons( $attributes ) {
+		ob_start();
+		?>
+		<div class="mpp-social">
+			<?php if( !empty( $attributes['socialFacebook'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialFacebook'] ); ?>">
+					<svg class="icon icon-facebook" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#facebook"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialTwitter'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialTwitter'] ); ?>">
+					<svg class="icon icon-twitter" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#twitter"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialInstagram'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialInstagram'] ); ?>">
+					<svg class="icon icon-instagram" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#instagram"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialPinterest'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialPinterest'] ); ?>">
+					<svg class="icon icon-pinterest" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#pinterest"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialLinkedIn'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialLinkedIn'] ); ?>">
+					<svg class="icon icon-linkedin" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#linkedin"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialYouTube'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialYouTube'] ); ?>">
+					<svg class="icon icon-youtube" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#youtube"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialGitHub'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialGitHub'] ); ?>">
+					<svg class="icon icon-github" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#github"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+			<?php if( !empty( $attributes['socialWordPress'] ) ): ?>
+				<a href="<?php echo esc_url( $attributes['socialWordPress'] ); ?>">
+					<svg class="icon icon-wordpress" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+						<use href="#wordpress"></use>
+					</svg>
+				</a>
+			<?php endif; ?>
+		</div><!-- .mpp-social -->
+		<?php
 		return ob_get_clean();
 	}
 
@@ -275,7 +389,7 @@ class Metronet_Profile_Picture_Gutenberg {
 			// If it exists, include it.
 			if ( file_exists( $svg_icons ) ) {
 				echo '<div style="position: absolute; height: 0; width: 0; overflow: hidden;">';
-				require_once( $svg_icons );
+				require( $svg_icons );
 				echo '</div>';
 			}
 		}

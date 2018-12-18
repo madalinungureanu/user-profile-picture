@@ -162,7 +162,8 @@ class MPP_Gutenberg extends Component {
 				profileURL: profile_url,
 				profileImgID: profile_picture_id,
 				profileImgURL: profile_picture,
-				showWebsite: show_website
+				showWebsite: show_website,
+				showSocialMedia: true
 			});
 		});
 	}
@@ -217,7 +218,7 @@ class MPP_Gutenberg extends Component {
 				socialPinterest: '',
 				socialTwitter: '',
 				socialWordPress: '',
-				socialYouTube: ''
+				socialYouTube: '',
 			}
 		);
 		this.getLatestPosts();
@@ -356,6 +357,7 @@ class MPP_Gutenberg extends Component {
 				showSocialMedia: value
 			}
 		);
+		this.props.setAttributes( { showSocialMedia: value } );
 	}
 	handleSocialMediaOptionChange = ( value ) => {
 		this.setState(
@@ -483,6 +485,8 @@ class MPP_Gutenberg extends Component {
 				showName,
 				showDescription,
 				showViewPosts,
+				showPostsWidth,
+				showSocialMedia,
 				showWebsite,
 				theme,
 				theme_list,
@@ -520,7 +524,8 @@ class MPP_Gutenberg extends Component {
 		profileContent = this.state.profile_description;
 		profileTitle = this.state.profile_title;
 		profileURL = this.state.profile_url;
-		let showPostsWidth = this.state.website === '' || !this.props.attributes.showWebsite ? '100%' : '';
+		showPostsWidth = this.state.website === '' || !this.props.attributes.showWebsite ? '100%' : '';
+		setAttributes({showPostsWidth: showPostsWidth });
 
 		const onChangeBackgroundColor = value => setAttributes( { profileBackgroundColor: value } );
 		const onChangeProfileTextColor = value => setAttributes( { profileTextColor: value } );
