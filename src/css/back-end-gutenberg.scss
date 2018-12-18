@@ -242,6 +242,9 @@ $colors: twitter #00aced,
 		display: table;
 		clear: both;
 	}
+	.mpp-social {
+		margin-top: 0;
+	}
 	.mpp-author-social-wrapper {
 		&:after {
 			content: "";

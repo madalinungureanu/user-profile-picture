@@ -297,3 +297,249 @@ $colors: twitter #00aced,
 		}
 	}
 }
+
+/* For Tabbed Theme */
+.mpp-author-tabbed {
+	padding: 10px;
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.mpp-social {
+		margin-top: 0;
+	}
+	.mpp-author-social-wrapper {
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+		margin-bottom: 10px;
+	}
+	h1, h2, h3, h4, h5 , h6 {
+		clear: none;
+	}
+	h2 {
+		font-size: 0.8em;
+		font-weight: normal;
+		margin-bottom: 5px;
+		&:before {
+			display: none;
+		}
+	}
+	.mpp-tab-wrapper {
+		clear: both;
+	}
+	.mpp-author-heading {
+		float: left;
+		@media only screen and (max-width: 600px) {
+			float: none;
+			text-align: center;
+			margin: 0 auto;
+			width: 90%;
+		}
+	}
+	.mpp-author-social {
+		float: right;
+		@media only screen and (max-width: 600px) {
+			float: none;
+			text-align: center;
+			margin: 0 auto;
+		}
+	}
+	.mpp-author-heading .mpp-author-profile-heading {
+		display: inline-block;
+		background: #42737b;
+		color: #FFF;
+		padding: 10px 20px;
+		font-size: 14px;
+		text-transform: uppercase;
+		@media only screen and (max-width: 600px) {
+			display: block;
+			margin-bottom: 10px;
+		}
+	}
+	.mpp-author-profile-sub-heading {
+		font-size: 14px;
+		line-height: 1.1;
+		max-width: 150px;
+		text-align: center;
+	}
+	&.round .profile-avatar {
+		border-radius: 50%;
+	}
+	.mpp-profile-image-wrapper {
+		clear: both;
+		position: relative;
+		float: left;
+		line-height: 1.0;
+		z-index: 1000;
+		margin-right: 30px;
+		img {
+			min-width: 150px;
+			min-height: 150px;
+			max-height: 150px;
+			max-width: 150px;
+		}
+
+	}
+	.mpp-profile-meta {
+		clear: both;
+		margin: 10px 0;
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+	.mpp-author-profile-title {
+		color: gray;
+		text-transform: uppercase;
+		font-size: 12px;
+	}
+	.mpp-tabbed-profile-information {
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+	.mpp-tab {
+		display: none;
+	}
+	.mpp-tab-active {
+		display: block;
+	}
+	ul.mpp-author-tabs {
+		position:relative;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+
+		li {
+			cursor: pointer;
+			position: relative;
+			display: inline-block;
+			min-width: 200px;
+			background: #42737b;
+			margin: 0 5px 0 0;
+			text-align: center;
+			margin-right: 10px;
+			color: #FFF;
+			padding: 10px 20px;
+			font-size: 16px;
+			@media only screen and (max-width: 500px) {
+				width: 100%;
+				display: block;
+			}
+
+			&.active:after {
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: -10px;
+				left: calc(50% - 10px);
+				border-top: 10px solid #42737b;
+				border-top-color: #42737b;
+				border-left: 10px solid transparent;
+				border-right: 10px solid transparent;
+				@media only screen and (max-width: 500px) {
+					display: none;
+				}
+			}
+		}
+		li:last-child {
+			margin-right: 0;
+		}
+		li.mpp-tab-posts {
+			background: #30424b;
+			&.active:after {
+				border-top: 10px solid #30424b;
+				border-top-color: #30424b;
+			}
+		}
+	}
+	ul.mpp-author-tab-content {
+		list-style-type: none;
+		li {
+			margin: 0;
+		}
+		&.light {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #f7f7f7;
+				border: 1px solid darken(#f7f7f7, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+				color: #333;
+			}
+			a:hover {
+				background: darken(#f7f7f7, 10%);
+			}
+		}
+		&.black {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #333;
+				color: #FFF;
+				border: 1px solid darken(#333, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#333, 10%);
+			}
+		}
+		&.magenta {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #FF00FF;
+				color: #FFF;
+				border: 1px solid darken(#FF00FF, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#FF00FF, 10%);
+			}
+		}
+		&.blue {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #0009c1;
+				color: #FFF;
+				border: 1px solid darken(#0009c1, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#0009c1, 10%);
+			}
+		}
+		&.green {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #03ac27;
+				color: #FFF;
+				border: 1px solid darken(#03ac27, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+			}
+			a:hover {
+				background: darken(#03ac27, 10%);
+			}
+		}
+	}
+}
