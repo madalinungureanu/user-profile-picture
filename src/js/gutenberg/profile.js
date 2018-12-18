@@ -989,7 +989,7 @@ class MPP_Gutenberg extends Component {
 											render={ ( { open } ) => (
 												<Button onClick={ open }>
 													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-														class="profile-avatar"
+														className="profile-avatar"
 														src={ profileImgURL }
 														alt="avatar"
 													/>  }
@@ -1113,7 +1113,7 @@ class MPP_Gutenberg extends Component {
 											render={ ( { open } ) => (
 												<Button onClick={ open }>
 													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-														class="profile-avatar"
+														className="profile-avatar"
 														src={ profileImgURL }
 														alt="avatar"
 													/>  }
@@ -1190,7 +1190,7 @@ class MPP_Gutenberg extends Component {
 											render={ ( { open } ) => (
 												<Button onClick={ open }>
 													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-														class="profile-avatar"
+														className="profile-avatar"
 														src={ profileImgURL }
 														alt="avatar"
 													/>  }
@@ -1210,7 +1210,7 @@ class MPP_Gutenberg extends Component {
 										onChange={ ( value ) => {this.onChangeProfileText(value); setAttributes( { profileContent: value } ) } }
 									/>
 								}
-								<div class="mpp-compact-meta">
+								<div className="mpp-compact-meta">
 									{showViewPosts &&
 									<div
 										className="mpp-profile-view-posts"
@@ -1377,7 +1377,7 @@ class MPP_Gutenberg extends Component {
 								{ this.state.activeTab === 'profile' &&
 									<Fragment>
 								<div className="mpp-author-social-wrapper">
-									<div class="mpp-author-heading">
+									<div className="mpp-author-heading">
 										<RichText
 												tagName="div"
 												className="mpp-author-profile-heading"
@@ -1388,7 +1388,7 @@ class MPP_Gutenberg extends Component {
 										/>
 									</div>
 									{this.state.showSocialMedia &&
-										<div class="mpp-author-social">
+										<div className="mpp-author-social">
 											<div className="mpp-social">
 												{ this.state.socialFacebook != '' &&
 													<a href={this.state.socialFacebook}>
@@ -1462,7 +1462,7 @@ class MPP_Gutenberg extends Component {
 												render={ ( { open } ) => (
 													<Button onClick={ open }>
 														{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
-															class="profile-avatar"
+															className="profile-avatar"
 															src={ profileImgURL }
 															alt="avatar"
 														/>  }
@@ -1481,7 +1481,7 @@ class MPP_Gutenberg extends Component {
 										</div>
 
 									</div>
-									<div class="mpp-tabbed-profile-information">
+									<div className="mpp-tabbed-profile-information">
 										{ showTitle &&
 										<RichText
 												tagName="div"
