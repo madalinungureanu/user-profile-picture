@@ -489,6 +489,7 @@ $colors: twitter #00aced,
 			max-width: 150px;
 		}
 
+
 	}
 	.mpp-profile-meta {
 		clear: both;
@@ -579,13 +580,13 @@ $colors: twitter #00aced,
 			a:visited {
 				display: block;
 				background: #FFFFFF;
-				border: 1px solid darken(#FFFFFF, 10%);
+				border: 1px solid darken(#FFFFFF, 5%);
 				padding: 10px 20px;
 				text-decoration: none;
 				color: #333;
 			}
 			a:hover {
-				background: darken(#FFFFFF, 10%);
+				background: darken(#FFFFFF, 5%);
 			}
 		}
 		&.light {

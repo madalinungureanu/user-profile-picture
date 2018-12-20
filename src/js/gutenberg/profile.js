@@ -554,6 +554,7 @@ class MPP_Gutenberg_Enhanced extends Component {
 		// Latest Posts Theme Options
 		const profileLatestPostsOptions = [
 			{ value: 'none', label: __( 'None', 'metronet-profile-picture' ) },
+			{ value: 'white', label: __( 'White', 'metronet-profile-picture' ) },
 			{ value: 'light', label: __( 'Light', 'metronet-profile-picture' ) },
 			{ value: 'black', label: __( 'Black', 'metronet-profile-picture' ) },
 			{ value: 'magenta', label: __( 'Magenta', 'metronet-profile-picture' ) },
