@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: users, user, user profile, gravatar, avatar
 Requires at least: 3.5
 Tested up to: 5.0
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,9 +22,9 @@ A template tag is supplied for outputting to a theme and the option to override 
 
 == Gutenberg Compatibility ==
 
-As of version 2.0.0, there is a Gutenberg block for outputting to a post. See the video below for a 5 minute overview.
+As of version 2.0.0, there is a Gutenberg block for outputting to a post.
 
-https://www.youtube.com/watch?v=FP1n0HCfW00&rel=0
+As of version 2.1.0, the old block is deprecated but still supported. A new block supports themes, more output control, and better style support.
 
 == Documentation and Feedback ==
 
@@ -38,11 +38,11 @@ See the documentation on <a href="https://github.com/ronalfy/user-profile-pictur
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Place `<?php mt_profile_img() ?>` in your templates (arguments and usage are below)
 
-Arguments: 
+Arguments:
 
 `/**
 * mt_profile_img
-* 
+*
 * Adds a profile image
 *
 @param $user_id INT - The user ID for the user to retrieve the image for
@@ -86,7 +86,7 @@ Author or greater.
 
 As of 1.5, three image sizes are created: profile_24, profile_48, and profile_96. You are not limited to these sizes, however.
 
-= The image is cropped wrong.  How do I fix this? = 
+= The image is cropped wrong.  How do I fix this? =
 
 We highly recommend the <a href='http://wordpress.org/extend/plugins/post-thumbnail-editor/'>Post Thumbnail Editor</a> plugin for cropping thumbnails, as you can custom-crop various image sizes without affecting other images.
 
@@ -103,9 +103,14 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 2.1.0 =
+* Released 2018-12-19
+* Old block deprecated, but still supported
+* New block added with more control over appearance and includes themes.
+
 = 2.0.2 =
 * Released 2018-11-20
-* Gutenberg fixes with alignment (center, right) on the front end. 
+* Gutenberg fixes with alignment (center, right) on the front end.
 * Gutenberg fixes with the toggle boxes defaulting back to nothing.
 
 = 2.0.1 =
@@ -190,7 +195,7 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Reducing clutter in the interface.  Removed text option to upload.  Added default image if no profile image is available.  Added option to remove the profile image.
 * Fixed internationalization bug in the JavaScript.
 
-= 1.1.0 = 
+= 1.1.0 =
 * Released 2014-11-11
 * Added the ability to remove profile images (aside from deleting the image).
 * Added better internationalization capabilities.
@@ -208,33 +213,33 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Released 2013-09-09
 * Fixed avatar override on options discussion page.
 
-= 1.0.20 = 
+= 1.0.20 =
 * Released 2013-05-13
 * Added a filter for turning on "Override Avatar" by default.
 
-= 1.0.19 = 
+= 1.0.19 =
 * Added support for 2.0.x version of <a href='http://wordpress.org/extend/plugins/post-thumbnail-editor/'>Post Thumbnail Editor</a>
 
-= 1.0.18 = 
+= 1.0.18 =
 * Added basic multisite support
 
 = 1.0.16 =
-* Fixed a bug where only the profile image interface was showing for only authors and not editors and administrators. 
+* Fixed a bug where only the profile image interface was showing for only authors and not editors and administrators.
 
 = 1.0.15 =
 * Built-in support for <a href="http://wordpress.org/extend/plugins/post-thumbnail-editor/">Post Thumbnail Editor</a>
 * Better integration with the new WP 3.5 media uploader
 * Various bug fixes.
 
-= 1.0.10 = 
+= 1.0.10 =
 * Usability enhancements.
 * Stripping out useless code.
 * Updating documentation
 
-= 1.0.9 = 
+= 1.0.9 =
 * Adding support for the new 3.5 media uploader.
 
-= 1.0.3 = 
+= 1.0.3 =
 * Bug fix:  Avatar classes in the comment section
 
 = 1.0.2 =
@@ -249,6 +254,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Upgrade Notice ==
 
+= 2.1.0 =
+Old block deprecated, but still supported. New block added with more control over appearance and includes themes.
+
 = 2.0.2 =
 Gutenberg fixes with alignment on the front end. Gutenberg fixes with the toggle boxes defaulting back to nothing.
 
@@ -258,7 +266,7 @@ Fixing PHP 5.2 incompatibility. Fixing Gutenberg front-end when there is no prof
 = 2.0.0 =
 Added Gutenberg block for easy outputting to posts. Tested with WordPress 5.0 successfully.
 
-= 1.5.5 = 
+= 1.5.5 =
 Loading image now shows between states. New "Click to Edit" bar added to interface.
 
 = 1.5.1 =
