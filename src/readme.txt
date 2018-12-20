@@ -24,7 +24,9 @@ A template tag is supplied for outputting to a theme and the option to override 
 
 As of version 2.0.0, there is a Gutenberg block for outputting to a post.
 
-As of version 2.1.0, the old block is deprecated but still supported. A new block supports themes, more output control, and better style support.
+As of version 2.1.0, the old block is deprecated but still supported. A new block supports themes, more output control, and better style support. You can see an overview in the video below. Sorry about the audio quality.
+
+https://www.youtube.com/watch?v=k9bDmgunXvM&rel=0
 
 == Documentation and Feedback ==
 
