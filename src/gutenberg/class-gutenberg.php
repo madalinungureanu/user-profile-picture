@@ -411,12 +411,12 @@ class Metronet_Profile_Picture_Gutenberg {
 						</div>
 					</div><!-- .mpp-profile-image-square -->
 				</div><!-- .mpp-profile-image-wrapper -->
-				<div class="mpp-tabbed-profile-information>
-					<?php if( $attributes['showTitle'] ): ?>
+				<div class="mpp-tabbed-profile-information">
+					<?php if( $attributes['showTitle'] || '' !== $attributes['tabbedAuthorProfileTitle'] ): ?>
 					<?php echo '<div>' . wp_kses_post( $attributes['tabbedAuthorProfileTitle'] ) . '</div>'; ?>
 					<?php endif; ?>
 					<?php if( $attributes['showName'] ): ?>
-					<h2 style="color: <?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ); ?>px;"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
+					<h2 style="color: <?php echo esc_attr( $attributes['profileTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['headerFontSize'] ) . 'px;'; ?>"><?php echo wp_kses_post( $attributes['profileName'] ); ?></h2>
 					<?php endif; ?>
 					<?php if( $attributes['showDescription'] ): ?>
 					<div class="mpp-profile-text mt-font-size-<?php echo esc_attr( $attributes['profileFontSize'] ); ?>">

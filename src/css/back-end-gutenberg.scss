@@ -454,6 +454,21 @@ $colors: twitter #00aced,
 		li {
 			margin: 0;
 		}
+		&.white {
+			a,
+			a:hover,
+			a:visited {
+				display: block;
+				background: #FFFFFF;
+				border: 1px solid darken(#FFFFFF, 10%);
+				padding: 10px 20px;
+				text-decoration: none;
+				color: #333;
+			}
+			a:hover {
+				background: darken(#FFFFFF, 10%);
+			}
+		}
 		&.light {
 			a,
 			a:hover,
