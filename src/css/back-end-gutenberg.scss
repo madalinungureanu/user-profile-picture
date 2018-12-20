@@ -322,6 +322,14 @@ $colors: twitter #00aced,
 			clear: both;
 		}
 	}
+	.alignleft {
+		max-width: none;
+		float: left;
+	}
+	.alignright {
+		max-width: none;
+		float: right;
+	}
 }
 
 /* For Tabbed Theme */
@@ -442,6 +450,7 @@ $colors: twitter #00aced,
 	}
 	ul.mpp-author-tab-content {
 		list-style-type: none;
+		margin: 0;
 		li {
 			margin: 0;
 		}

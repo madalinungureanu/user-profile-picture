@@ -386,6 +386,7 @@ $colors: twitter #00aced,
 		}
 	}
 	.alignleft {
+		max-width: none;
 		float: left;
 		@media only screen and (max-width: 400px) {
 			float: none;
@@ -394,6 +395,7 @@ $colors: twitter #00aced,
 		}
 	}
 	.alignright {
+		max-width: none;
 		@media only screen and (max-width: 400px) {
 			float: none;
 			text-align: center;
@@ -567,6 +569,7 @@ $colors: twitter #00aced,
 	}
 	ul.mpp-author-tab-content {
 		list-style-type: none;
+		margin: 0;
 		li {
 			margin: 0;
 		}
