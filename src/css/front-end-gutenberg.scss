@@ -1,3 +1,16 @@
+.post-content .mpp-profile-wrap,
+.post-content .mpp-enhanced-profile-wrap {
+	h1, h2 , h3, h4 , h5, h6 {
+		clear: none;
+	}
+	h2 {
+		margin: 0;
+		margin-bottom: 10px;
+	}
+	p {
+		margin-bottom: 10px;
+	}
+}
 .mpp-profile-wrap {
 	margin: 0 auto;
 	padding: 3%;
@@ -14,6 +27,10 @@
 	}
 	h1,h2,h3,h4,h5,h6 {
 		clear: none;
+	}
+	h2 {
+		margin-top: 0;
+		margin-bottom: 10px;
 	}
 	h2:before {
 		display: none;
