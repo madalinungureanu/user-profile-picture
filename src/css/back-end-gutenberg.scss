@@ -1,4 +1,93 @@
-.mpp-profile-wrap.regular {
+.editor-styles-wrapper .mpp-profile-wrap {
+	margin: 0 auto;
+	padding: 3%;
+	border-radius: 5px;
+	margin-bottom: 1.2em;
+	margin-bottom: 20px;
+	line-height: 1.1;
+	&.round .mpp-profile-image-wrapper {
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	&.round .mpp-profile-image-wrapper img {
+		border-radius: 50%;
+	}
+	h1,h2,h3,h4,h5,h6 {
+		clear: none;
+	}
+	h2:before {
+		display: none;
+	}
+	.mpp-profile-image-wrapper {
+		position: relative;
+		float: left;
+		line-height: 1.1;
+		z-index: 1000;
+		background: #ddd;
+		position: relative;
+		min-width: 150px;
+		min-height: 150px;
+		max-width: 150px;
+		max-height: 150px;
+		width: 100%;
+		margin-right: 20px;
+		button {
+			position: relative;
+			min-width: 150px;
+			min-height: 150px;
+			max-width: 150px;
+			max-height: 150px;
+			z-index: 1000;
+		}
+		.mpp-profile-image-square {
+			position: relative;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 5;
+		}
+		.mpp-profile-image-square img {
+			height: 100%;
+			width: 100%;
+			position: relative;
+			z-index: 5;
+		}
+		.mpp-content-wrap {
+			display: block;
+			padding: 0 15px 0 15px;
+			-ms-flex: 3 0 0px;
+			flex: 3 0 0;
+		}
+		.mpp-profile-name {
+			font: 1.4em;
+			line-height: 1.2;
+		}
+		@media only screen and (max-width: 600px) {
+			flex: auto;
+		}
+	}
+	.mpp-profile-view-posts {
+		display: block;
+		width: 100%;
+		text-align: center;
+		padding: 10px 20px;
+		margin-top: 20px;
+		background-color: #cf6d38;
+		color: #FFF;
+		a,
+		a:hover,
+		a:visited {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #FFF;
+			text-decoration: none;
+		}
+	}
+}
+
+.editor-styles-wrapper .mpp-enhanced-profile-wrap.regular {
 	position: relative;
 	margin: 0 auto;
 	line-height: 1.1;
@@ -129,9 +218,10 @@
 /* Icon Sizes */
 $sizes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
 @each $size in $sizes {
-	.editor-styles-wrapper .mpp-profile-wrap.regular .mt-font-size-#{$size},
-	.editor-styles-wrapper .mpp-profile-wrap.profile .mt-font-size-#{$size},
-	.editor-styles-wrapper .mpp-profile-wrap.compact .mt-font-size-#{$size},
+	.editor-styles-wrapper .mpp-profile-wrap.mt-font-size-#{$size},
+	.editor-styles-wrapper .mpp-enhanced-profile-wrap.regular .mt-font-size-#{$size},
+	.editor-styles-wrapper .mpp-enhanced-profile-wrap.profile .mt-font-size-#{$size},
+	.editor-styles-wrapper .mpp-enhanced-profile-wrap.compact .mt-font-size-#{$size},
 	.editor-styles-wrapper .mpp-profile-text.mt-font-size-#{$size} {
 		font-size: #{$size}px;
 		p,
@@ -199,7 +289,7 @@ $colors: twitter #00aced,
 }
 
 /* For Profile Theme */
-.editor-styles-wrapper .mpp-profile-wrap.profile {
+.editor-styles-wrapper .mpp-enhanced-profile-wrap.profile {
 	padding: 10px;
 	h2 {
 		font-size: 0.8em;
@@ -434,7 +524,7 @@ $colors: twitter #00aced,
 }
 
 /* For Compact Theme */
-.editor-styles-wrapper .mpp-profile-wrap.compact {
+.editor-styles-wrapper .mpp-enhanced-profile-wrap.compact {
 	text-align: center;
 	padding: 10px;
 	max-width: 400px;

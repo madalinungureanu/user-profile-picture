@@ -17,32 +17,112 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/gutenberg/class-gutenberg.php:196, src/gutenberg/class-gutenberg.php:200
+#: src/gutenberg/class-gutenberg.php:199, src/gutenberg/class-gutenberg.php:203
 msgid "Author Details"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:204
+#: src/gutenberg/class-gutenberg.php:207
 msgid "Latest Posts"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:295, src/gutenberg/class-gutenberg.php:351, src/js/gutenberg/profile.js:1058, src/js/gutenberg/profile.js:1231
+#: src/gutenberg/class-gutenberg.php:299, src/gutenberg/class-gutenberg.php:355, src/js/gutenberg/main.js:211, src/js/gutenberg/profile-legacy.js:438, src/js/gutenberg/profile.js:1058, src/js/gutenberg/profile.js:1231
 msgid "View Posts"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:300, src/gutenberg/class-gutenberg.php:356, src/js/gutenberg/profile.js:1076, src/js/gutenberg/profile.js:1251
+#: src/gutenberg/class-gutenberg.php:304, src/gutenberg/class-gutenberg.php:360, src/js/gutenberg/profile.js:1076, src/js/gutenberg/profile.js:1251
 msgid "View Website"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:324, src/js/gutenberg/profile.js:1143
+#: src/gutenberg/class-gutenberg.php:328, src/js/gutenberg/profile.js:1143
 msgid "View all posts by"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:328, src/js/gutenberg/profile.js:628, src/js/gutenberg/profile.js:1152
+#: src/gutenberg/class-gutenberg.php:332, src/js/gutenberg/profile.js:628, src/js/gutenberg/profile.js:1152
 msgid "Website"
 msgstr ""
 
-#: src/js/gutenberg/main.js:44
+#: src/js/gutenberg/main.js:115
+msgid "User Profile Legacy"
+msgstr ""
+
+#: src/js/gutenberg/main.js:235
 msgid "User Profile"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:234, src/js/gutenberg/profile.js:544
+msgid "Square"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:235, src/js/gutenberg/profile.js:545
+msgid "Round"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:242, src/js/gutenberg/profile.js:589, src/js/gutenberg/profile.js:1530
+msgid "Loading..."
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:250, src/js/gutenberg/profile.js:597, src/js/gutenberg/profile.js:669
+msgid "User Profile Settings"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:252, src/js/gutenberg/profile.js:599
+msgid "Select a user"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:258, src/js/gutenberg/profile.js:837
+msgid "Font Size"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:266, src/js/gutenberg/profile.js:620
+msgid "Avatar Shape"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:267, src/js/gutenberg/profile.js:621
+msgid "Choose between a round or square avatar shape."
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:273, src/js/gutenberg/profile-legacy.js:278, src/js/gutenberg/profile.js:682, src/js/gutenberg/profile.js:687
+msgid "Background Color"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:283, src/js/gutenberg/profile-legacy.js:288, src/js/gutenberg/profile.js:692, src/js/gutenberg/profile.js:697
+msgid "Text Color"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:293, src/js/gutenberg/profile.js:785
+msgid "View Posts Background Color"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:298, src/js/gutenberg/profile.js:790
+msgid "View Posts Background"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:303, src/js/gutenberg/profile-legacy.js:308, src/js/gutenberg/profile.js:795, src/js/gutenberg/profile.js:800
+msgid "View Posts Text Color"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:314, src/js/gutenberg/profile.js:634
+msgid "Show Name"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:319, src/js/gutenberg/profile.js:639
+msgid "Show Title"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:324, src/js/gutenberg/profile.js:644
+msgid "Show Description"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:329, src/js/gutenberg/profile.js:651
+msgid "Show View Posts"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:389, src/js/gutenberg/profile.js:1006, src/js/gutenberg/profile.js:1094, src/js/gutenberg/profile.js:1171, src/js/gutenberg/profile.js:1498
+msgid "Add name"
+msgstr ""
+
+#: src/js/gutenberg/profile-legacy.js:414, src/js/gutenberg/profile.js:1032, src/js/gutenberg/profile.js:1130, src/js/gutenberg/profile.js:1207, src/js/gutenberg/profile.js:1517
+msgid "Add profile text..."
 msgstr ""
 
 #: src/js/gutenberg/profile.js:42
@@ -59,14 +139,6 @@ msgstr ""
 
 #: src/js/gutenberg/profile.js:45
 msgid "Compact"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:544
-msgid "Square"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:545
-msgid "Round"
 msgstr ""
 
 #: src/js/gutenberg/profile.js:550
@@ -113,48 +185,12 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:589, src/js/gutenberg/profile.js:1530
-msgid "Loading..."
-msgstr ""
-
-#: src/js/gutenberg/profile.js:597, src/js/gutenberg/profile.js:669
-msgid "User Profile Settings"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:599
-msgid "Select a user"
-msgstr ""
-
 #: src/js/gutenberg/profile.js:605, src/js/gutenberg/profile.js:671
 msgid "Select a theme"
 msgstr ""
 
 #: src/js/gutenberg/profile.js:613
 msgid "Select an alignment"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:620
-msgid "Avatar Shape"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:621
-msgid "Choose between a round or square avatar shape."
-msgstr ""
-
-#: src/js/gutenberg/profile.js:634
-msgid "Show Name"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:639
-msgid "Show Title"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:644
-msgid "Show Description"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:651
-msgid "Show View Posts"
 msgstr ""
 
 #: src/js/gutenberg/profile.js:656
@@ -167,14 +203,6 @@ msgstr ""
 
 #: src/js/gutenberg/profile.js:680
 msgid "Colors"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:682, src/js/gutenberg/profile.js:687
-msgid "Background Color"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:692, src/js/gutenberg/profile.js:697
-msgid "Text Color"
 msgstr ""
 
 #: src/js/gutenberg/profile.js:703, src/js/gutenberg/profile.js:708
@@ -213,18 +241,6 @@ msgstr ""
 msgid "Select a Post Theme"
 msgstr ""
 
-#: src/js/gutenberg/profile.js:785
-msgid "View Posts Background Color"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:790
-msgid "View Posts Background"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:795, src/js/gutenberg/profile.js:800
-msgid "View Posts Text Color"
-msgstr ""
-
 #: src/js/gutenberg/profile.js:805
 msgid "Website Background Color"
 msgstr ""
@@ -243,10 +259,6 @@ msgstr ""
 
 #: src/js/gutenberg/profile.js:829
 msgid "Header Font Size"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:837
-msgid "Font Size"
 msgstr ""
 
 #: src/js/gutenberg/profile.js:846
@@ -311,14 +323,6 @@ msgstr ""
 
 #: src/js/gutenberg/profile.js:943
 msgid "WordPress"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:1006, src/js/gutenberg/profile.js:1094, src/js/gutenberg/profile.js:1171, src/js/gutenberg/profile.js:1498
-msgid "Add name"
-msgstr ""
-
-#: src/js/gutenberg/profile.js:1032, src/js/gutenberg/profile.js:1130, src/js/gutenberg/profile.js:1207, src/js/gutenberg/profile.js:1517
-msgid "Add profile text..."
 msgstr ""
 
 #: src/js/gutenberg/profile.js:1345, src/js/gutenberg/profile.js:1361

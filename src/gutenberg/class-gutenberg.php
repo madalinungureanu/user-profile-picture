@@ -30,6 +30,9 @@ class Metronet_Profile_Picture_Gutenberg {
 
 	public function register_block() {
 		register_block_type( 'mpp/user-profile', array(
+			'attributes' => array()
+		) );
+		register_block_type( 'mpp/user-profile-enhanced', array(
 			'attributes' => array(
 				'profileName' => array(
 					'type' => 'string',
@@ -263,13 +266,14 @@ class Metronet_Profile_Picture_Gutenberg {
 	}
 
 	public function display_frontend( $attributes ) {
+		if( is_admin() ) return;
 		ob_start();
 		if ( empty( $attributes['profileImgURL'] ) ) {
 			$attributes['profileImgURL'] = wp_get_attachment_image_url( $attributes['profileImgID'], 'thumbnail', false, '' );
 		}
 		?>
 		<?php if( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ): ?>
-			<div class="mpp-profile-wrap mpp-block-profile <?php echo 'compact' === $attributes['theme'] ? esc_attr( $attributes['profileCompactAlignment'] ) : ''; ?> <?php echo esc_attr( $attributes['theme'] ); ?> <?php echo esc_attr( $attributes['profileAvatarShape'] ); ?>" style="<?php echo $attributes['padding'] > 0 ? 'padding: ' . esc_attr( $attributes['padding'] ) . 'px;' : ''?><?php echo $attributes['border'] > 0 ? 'border:' . esc_attr( $attributes['border'] ) . 'px solid ' . esc_attr( $attributes['borderColor'] ) . ';' : ''?><?php echo $attributes['borderRounded'] > 0 ? 'border-radius:' . esc_attr( $attributes['borderRounded'] ) . 'px;': ''?>background-color: <?php echo esc_attr( $attributes['profileBackgroundColor'] ) . ';'; ?> color: <?php echo esc_attr( $attributes['profileTextColor'] ) . ';' ?>">
+			<div class="mpp-enhanced-profile-wrap mpp-block-profile <?php echo 'compact' === $attributes['theme'] ? esc_attr( $attributes['profileCompactAlignment'] ) : ''; ?> <?php echo esc_attr( $attributes['theme'] ); ?> <?php echo esc_attr( $attributes['profileAvatarShape'] ); ?>" style="<?php echo $attributes['padding'] > 0 ? 'padding: ' . esc_attr( $attributes['padding'] ) . 'px;' : ''?><?php echo $attributes['border'] > 0 ? 'border:' . esc_attr( $attributes['border'] ) . 'px solid ' . esc_attr( $attributes['borderColor'] ) . ';' : ''?><?php echo $attributes['borderRounded'] > 0 ? 'border-radius:' . esc_attr( $attributes['borderRounded'] ) . 'px;': ''?>background-color: <?php echo esc_attr( $attributes['profileBackgroundColor'] ) . ';'; ?> color: <?php echo esc_attr( $attributes['profileTextColor'] ) . ';' ?>">
 				<div class="mpp-profile-gutenberg-wrap mt-font-size-<?php echo esc_attr( $attributes['profileFontSize'] ); ?>">
 					<?php if( 'regular' === $attributes['theme']): ?>
 						<div class="mpp-profile-image-wrapper">

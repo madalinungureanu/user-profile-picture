@@ -34,7 +34,7 @@ const {
 import classnames from 'classnames';
 
 
-class MPP_Gutenberg extends Component {
+class MPP_Gutenberg_Enhanced extends Component {
 	constructor() {
 		super( ...arguments );
 
@@ -950,7 +950,7 @@ class MPP_Gutenberg extends Component {
 							<div
 								className={
 									classnames(
-										'mpp-profile-wrap',
+										'mpp-enhanced-profile-wrap',
 										this.state.theme,
 										profileAlignment,
 										profileAvatarShape,
@@ -1558,4 +1558,4 @@ class MPP_Gutenberg extends Component {
 	}
 }
 
-export default MPP_Gutenberg;
+export default MPP_Gutenberg_Enhanced;
