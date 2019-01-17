@@ -1,5 +1,5 @@
 === User Profile Picture ===
-Contributors: ronalfy
+Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks
 Requires at least: 3.5
 Tested up to: 5.0

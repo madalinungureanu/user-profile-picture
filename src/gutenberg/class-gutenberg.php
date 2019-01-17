@@ -554,16 +554,18 @@ class Metronet_Profile_Picture_Gutenberg {
 		wp_enqueue_script('mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url('js/gutenberg'.$min_or_not.'.js'), array('wp-blocks', 'wp-element'), METRONET_PROFILE_PICTURE_VERSION, true);
 
 		/* For the Gutenberg plugin */
-		if ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
-			$locale  = gutenberg_get_jed_locale_data( 'metronet-profile-picture' );
-			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "metronet-profile-picture" );';
-			wp_script_add_data( 'mpp_gutenberg', 'data', $content );
-		} elseif (function_exists('wp_get_jed_locale_data')) {
-			/* for 5.0 */
-			$locale  = wp_get_jed_locale_data( 'metronet-profile-picture' );
-			$content = 'wp.i18n.setLocaleData( ' . json_encode( $locale ) . ', "metronet-profile-picture" );';
-			wp_script_add_data( 'mpp_gutenberg', 'data', $content );
-		}
+        if (function_exists('wp_set_script_translations')) {
+            wp_set_script_translations('mpp_gutenberg', 'post-type-archive-mapping');
+        } elseif (function_exists('gutenberg_get_jed_locale_data')) {
+            $locale  = gutenberg_get_jed_locale_data('post-type-archive-mapping');
+            $content = 'wp.i18n.setLocaleData( ' . json_encode($locale) . ', "post-type-archive-mapping" );';
+            wp_script_add_data('mpp_gutenberg', 'data', $content);
+        } elseif (function_exists('wp_get_jed_locale_data')) {
+            /* for 5.0 */
+            $locale  = wp_get_jed_locale_data('post-type-archive-mapping');
+            $content = 'wp.i18n.setLocaleData( ' . json_encode($locale) . ', "post-type-archive-mapping" );';
+            wp_script_add_data('mpp_gutenberg', 'data', $content);
+        }
 
 		// Pass in REST URL
 		wp_localize_script(
