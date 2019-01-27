@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks
 Requires at least: 3.5
 Tested up to: 5.0
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -104,6 +104,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.2.2 =
+* Released 2019-01-26
+* Resolving PHP notice for dirname
 
 = 2.1.1 =
 * Released 2018-12-20
@@ -260,6 +264,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.2 =
+Resolving PHP notice for dirname
 
 = 2.1.1 =
 Adding white posts theme to the tabbed view block. Fixing clearing for the tabbed view block.
