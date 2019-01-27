@@ -524,7 +524,7 @@ class Metronet_Profile_Picture_Gutenberg {
 		if ( '' != get_post_type() ) {
 			// Define SVG sprite file.
 			$path = '/img/social-logos.svg';
-			$svg_icons = rtrim( dirname( plugin_dir_path(__FILE__), 1 ), '/' );
+			$svg_icons = rtrim( dirname( plugin_dir_path(__FILE__) ), '/' );
 			if ( ! empty( $path ) && is_string( $path) ) {
 				$svg_icons .= '/' . ltrim( $path, '/' );
 			}
