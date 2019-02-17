@@ -4,14 +4,14 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.1.2
+Version: 2.1.3
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.1.2' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.1.3' );
 class Metronet_Profile_Picture	{
 
 	//private
@@ -686,7 +686,16 @@ class Metronet_Profile_Picture	{
 	 * @param array $request WP REST API array
 	 **/
 	public function rest_api_get_users( $request ) {
-		$user_query = new WP_User_Query( array( 'who' => 'authors', 'orderby' => 'display_name' ) );
+
+		/**
+		 * Filter the capability types of users.
+		 *
+		 * @since 2.1.3
+		 *
+		 * @param string User role for users
+		 */
+		$capabilities = apply_filters( 'mpp_gutenberg_user_role', 'authors' );
+		$user_query = new WP_User_Query( array( 'who' => $capabilities, 'orderby' => 'display_name' ) );
 		$user_results = $user_query->get_results();
 		$return = array();
 		foreach( $user_results as $result ) {
