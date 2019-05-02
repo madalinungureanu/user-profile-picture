@@ -2,7 +2,7 @@
 Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
-Tested up to: 5.1
+Tested up to: 5.2
 Stable tag: 2.1.3
 Requires PHP: 5.2
 License: GPLv2 or later
@@ -105,11 +105,11 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
-= 2.2.3 =
+= 2.1.3 =
 * Released 2019-02-16
 * Added filter to get users in Gutenberg besides author
 
-= 2.2.2 =
+= 2.1.2 =
 * Released 2019-01-26
 * Resolving PHP notice for dirname
 
