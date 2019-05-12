@@ -1026,6 +1026,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'socialGitHub' => '',
 		'socialMediaOptions' => 'brand', /* can be brand or custom */
 		'socialMediaColors' => '#000000', /* Only applicable if socialMediaOptions is custom */
+		'profileCompactAlignment' => 'center', /* Can be left, center, or right */
 
 	);
 	$attributes = wp_parse_args( $attributes, $defaults );
