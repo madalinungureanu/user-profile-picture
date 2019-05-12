@@ -982,6 +982,44 @@ function mt_profile_img( $user_id, $args = array() ) {
 } //end mt_profile_img
 
 function mt_author_box( $user_id = 0, $attributes = array() ) {
+	$user = get_user_by( 'id', $user_id );
+	$defaults = array(
+		'theme' => 'regular', /* can be 'regular', 'compact', 'profie', or 'tabbed' */
+		'profileAvatarShape' => 'square', /* Can be 'square' or 'rounded' */
+		'padding' => 10,
+		'border' => 1,
+		'borderRounded' => 5,
+		'borderColor' => '#000000',
+		'profileBackgroundColor' => '#FFFFFF',
+		'profileTextColor' => '#000000',
+		'showName' => true,
+		'showTitle' => false,
+		'profileName' => $user->data->display_name,
+		'profileTitle' => '',
+		'profileImgURL' => get_avatar_url( $user_id, isset( $attributes['avatarSize'] ) ? $attributes['avatarSize'] : 150 ),
+		'headerFontSize' => 24,
+		'showDescription' => true,
+		'showSocialMedia' => false,
+		'profileContent' => get_user_meta( $user_id, 'description', true ),
+		'profileFontSize' => 18,
+		'showViewPosts' => true,
+		'profileURL' => get_author_posts_url( $user_id ),
+		'website' => '', /* Needs to be a URl */
+		'showWebsite' => false,
+		'showPostsWidth' => '100%',
+		'profileViewPostsBackgroundColor' => '#cf6d38',
+		'profileViewPostsTextColor' => '#FFFFFF',
+		'buttonFontSize' => 16,
+		'profileWebsiteBackgroundColor' => '#333333',
+		'profileWebsiteTextColor' => '#FFFFFF',
+
+
+
+
+
+	);
+	$attributes = wp_parse_args( $attributes, $defaults );
+	$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
 	if( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ):
 	?>
 			<div class="mpp-enhanced-profile-wrap mpp-block-profile <?php echo 'compact' === $attributes['theme'] ? esc_attr( $attributes['profileCompactAlignment'] ) : ''; ?> <?php echo esc_attr( $attributes['theme'] ); ?> <?php echo esc_attr( $attributes['profileAvatarShape'] ); ?>" style="<?php echo $attributes['padding'] > 0 ? 'padding: ' . esc_attr( $attributes['padding'] ) . 'px;' : ''?><?php echo $attributes['border'] > 0 ? 'border:' . esc_attr( $attributes['border'] ) . 'px solid ' . esc_attr( $attributes['borderColor'] ) . ';' : ''?><?php echo $attributes['borderRounded'] > 0 ? 'border-radius:' . esc_attr( $attributes['borderRounded'] ) . 'px;': ''?>background-color: <?php echo esc_attr( $attributes['profileBackgroundColor'] ) . ';'; ?> color: <?php echo esc_attr( $attributes['profileTextColor'] ) . ';' ?>">
@@ -1005,7 +1043,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 							<?php if ( isset( $attributes['profileURL'] ) && strlen( $attributes['profileURL' ] ) > 0 ) :?>
 								<div class="mpp-gutenberg-view-posts">
 									<?php if ( $attributes['showViewPosts'] ): ?>
-										<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; width: <?php echo esc_attr( $attributes['showPostsWidth'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
+										<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; <?php ( '' != $attributes['website'] && $attributes['showWebsite'] ) ? '' : 'width:' . esc_attr( $attributes['showPostsWidth'] ) . ';' ?> font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
 											<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>">
 											<?php esc_html_e( 'View Posts', 'metronet-profile-picture' ); ?></a>
 										</div><!-- .mpp-profile-view-posts -->
@@ -1164,8 +1202,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		wp_enqueue_style( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( '/css/front-end-gutenberg.css' ), array(), METRONET_PROFILE_PICTURE_VERSION, 'all' );
 		wp_enqueue_script('mpp_gutenberg_tabs', Metronet_Profile_Picture::get_plugin_url('js/mpp-frontend'.$min_or_not.'.js'), array('jquery'), METRONET_PROFILE_PICTURE_VERSION, true);
 		add_action( 'admin_footer', array( 'mpp_load_gutenblock_svgs' ) );
-		$this->load_gutenblock_svgs();
-		return ob_get_clean();
+		echo ob_get_clean();
 }
 function mpp_load_gutenblock_svgs() {
 	if ( '' != get_post_type() ) {
