@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 2.1.3
+Stable tag: 2.2.0
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -104,6 +104,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.2.0 =
+* Released 2019-05-12
+* Added template tags for displaying an author box
 
 = 2.1.3 =
 * Released 2019-02-16
@@ -268,6 +272,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.2.0 =
+Added template tags for displaying an author box
 
 = 2.1.3 =
 Added filter to get users in Gutenberg besides author
