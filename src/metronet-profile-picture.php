@@ -981,8 +981,24 @@ function mt_profile_img( $user_id, $args = array() ) {
 	}
 } //end mt_profile_img
 
+/**
+ * mt_author_box
+ *
+ * Adds a profile author box
+ *
+ * @since 2.2.0
+ *
+ * @param int $user_id INT - The user ID for the user to retrieve the profile for
+ * @param array $attributes See defaults in function for all attributes
+ *
+ * @return string User profile box if user exists
+ *
+*/
 function mt_author_box( $user_id = 0, $attributes = array() ) {
 	$user = get_user_by( 'id', $user_id );
+	if ( false === $user ) {
+		return '';
+	}
 	$defaults = array(
 		'theme' => 'regular', /* can be 'regular', 'compact', 'profie', or 'tabbed' */
 		'profileAvatarShape' => 'square', /* Can be 'square' or 'rounded' */
@@ -1228,6 +1244,20 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		add_action( 'wp_footer', 'mpp_load_gutenblock_svgs' );
 		echo ob_get_clean();
 }
+/**
+ * mpp_get_social_icons
+ *
+ * Get social icons based on passed attributes
+ *
+ * @see mt_author_box for attribute valies
+ *
+ * @since 2.2.0
+ *
+ * @param array $attributes See defaults in function mt_author_box for all attributes
+ *
+ * @return string User social icons
+ *
+*/
 function mpp_get_social_icons( $attributes ) {
 	ob_start();
 	?>
@@ -1292,6 +1322,16 @@ function mpp_get_social_icons( $attributes ) {
 	<?php
 	return ob_get_clean();
 }
+/**
+ * mpp_load_gutenblock_svgs
+ *
+ * Load social icons in footer of theme
+ *
+ * @since 2.2.0
+ *
+ * @return html Echo sprite for social icons
+ *
+*/
 function mpp_load_gutenblock_svgs() {
 	if ( '' != get_post_type() ) {
 		// Define SVG sprite file.
