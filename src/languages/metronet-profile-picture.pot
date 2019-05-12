@@ -21,23 +21,23 @@ msgstr ""
 msgid "Author Details"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:207
+#: src/gutenberg/class-gutenberg.php:207, src/metronet-profile-picture.php:1050
 msgid "Latest Posts"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:299, src/gutenberg/class-gutenberg.php:355, src/js/gutenberg/main.js:211, src/js/gutenberg/profile-legacy.js:438, src/js/gutenberg/profile.js:1059, src/js/gutenberg/profile.js:1232
+#: src/gutenberg/class-gutenberg.php:299, src/gutenberg/class-gutenberg.php:355, src/js/gutenberg/main.js:211, src/js/gutenberg/profile-legacy.js:438, src/js/gutenberg/profile.js:1059, src/js/gutenberg/profile.js:1232, src/metronet-profile-picture.php:1088, src/metronet-profile-picture.php:1144
 msgid "View Posts"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:304, src/gutenberg/class-gutenberg.php:360, src/js/gutenberg/profile.js:1077, src/js/gutenberg/profile.js:1252
+#: src/gutenberg/class-gutenberg.php:304, src/gutenberg/class-gutenberg.php:360, src/js/gutenberg/profile.js:1077, src/js/gutenberg/profile.js:1252, src/metronet-profile-picture.php:1093, src/metronet-profile-picture.php:1149
 msgid "View Website"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:328, src/js/gutenberg/profile.js:1144
+#: src/gutenberg/class-gutenberg.php:328, src/js/gutenberg/profile.js:1144, src/metronet-profile-picture.php:1117
 msgid "View all posts by"
 msgstr ""
 
-#: src/gutenberg/class-gutenberg.php:332, src/js/gutenberg/profile.js:629, src/js/gutenberg/profile.js:1153
+#: src/gutenberg/class-gutenberg.php:332, src/js/gutenberg/profile.js:629, src/js/gutenberg/profile.js:1153, src/metronet-profile-picture.php:1121
 msgid "Website"
 msgstr ""
 
@@ -373,18 +373,26 @@ msgstr ""
 msgid "Remove Profile Image"
 msgstr ""
 
-#: src/metronet-profile-picture.php:746
+#: src/metronet-profile-picture.php:755
 msgid "You must be able to upload files."
 msgstr ""
 
-#: src/metronet-profile-picture.php:750, src/metronet-profile-picture.php:783, src/metronet-profile-picture.php:809, src/metronet-profile-picture.php:845
+#: src/metronet-profile-picture.php:759, src/metronet-profile-picture.php:792, src/metronet-profile-picture.php:818, src/metronet-profile-picture.php:854
 msgid "User not found."
 msgstr ""
 
-#: src/metronet-profile-picture.php:754
+#: src/metronet-profile-picture.php:763
 msgid "User not owner."
 msgstr ""
 
-#: src/metronet-profile-picture.php:818, src/metronet-profile-picture.php:852
+#: src/metronet-profile-picture.php:827, src/metronet-profile-picture.php:861
 msgid "Profile picture not found."
+msgstr ""
+
+#: src/metronet-profile-picture.php:1049
+msgid "Author"
+msgstr ""
+
+#: src/metronet-profile-picture.php:1051
+msgid "Author Information"
 msgstr ""
