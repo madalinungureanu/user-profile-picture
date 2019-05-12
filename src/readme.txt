@@ -69,6 +69,23 @@ if (function_exists ( 'mt_profile_img' ) ) {
 }
 ?>
 `
+
+Since 2.2.0, you can add a profile author box using function `mt_author_box`.
+
+`
+<?php
+mt_author_box( $post->post_author, array(
+	'theme'              => 'tabbed',
+	'profileAvatarShape' => 'round',
+	'showWebsite'        => true,
+	'website'            => 'https://www.ronalfy.com',
+	'showSocialMedia'    => true,
+	'socialMediaOptions' => 'brand',
+	'socialWordPress'    => 'https://profiles.wordpress.org/ronalfy',
+	'socialFacebook'     => 'https://facebook.com/mindefusement',
+) );
+`
+
 View the code on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
 
 The REST API is currently supported for versions of WordPress 4.4 and up.
