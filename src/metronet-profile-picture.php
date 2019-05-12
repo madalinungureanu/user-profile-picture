@@ -994,13 +994,14 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'profileTextColor' => '#000000',
 		'showName' => true,
 		'showTitle' => false,
+		'fontSize' => 18,
 		'profileName' => $user->data->display_name,
 		'profileTitle' => '',
 		'avatarSize' => 150,
 		'profileImgURL' => get_avatar_url( $user_id, isset( $attributes['avatarSize'] ) ? $attributes['avatarSize'] : 150 ),
 		'headerFontSize' => 24,
 		'showDescription' => true,
-		'showSocialMedia' => false,
+		'showSocialMedia' => true,
 		'profileContent' => get_user_meta( $user_id, 'description', true ),
 		'profileFontSize' => 18,
 		'showViewPosts' => true,
@@ -1013,6 +1014,19 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'buttonFontSize' => 16,
 		'profileWebsiteBackgroundColor' => '#333333',
 		'profileWebsiteTextColor' => '#FFFFFF',
+		'profileLinkColor' => '#000000',
+		'showSocialMedia' => false,
+		'socialWordPress' => '',
+		'socialFacebook' => '',
+		'socialTwitter' => '',
+		'socialInstagram' => '',
+		'socialPinterest' => '',
+		'socialLinkedIn' => '',
+		'socialYouTube' => '',
+		'socialGitHub' => '',
+		'socialMediaOptions' => 'brand', /* can be brand or custom */
+		'socialMediaColors' => '#000000', /* Only applicable if socialMediaOptions is custom */
+
 	);
 	$attributes = wp_parse_args( $attributes, $defaults );
 	$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
@@ -1109,7 +1123,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 						</div>
 					<?php endif; /* Compact theme end */ ?>
 					<?php if ( true == $attributes['showSocialMedia'] && ( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ) ) : ?>
-						<?php echo $this->get_social_icons( $attributes ); ?>
+						<?php echo mpp_get_social_icons( $attributes ); ?>
 					<?php endif; ?>
 				</div><!-- .mpp-profile-gutenberg-wrap -->
 			</div><!-- .mpp-profile-wrap -->
@@ -1199,6 +1213,70 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		wp_enqueue_script('mpp_gutenberg_tabs', Metronet_Profile_Picture::get_plugin_url('js/mpp-frontend'.$min_or_not.'.js'), array('jquery'), METRONET_PROFILE_PICTURE_VERSION, true);
 		add_action( 'wp_footer', 'mpp_load_gutenblock_svgs' );
 		echo ob_get_clean();
+}
+function mpp_get_social_icons( $attributes ) {
+	ob_start();
+	?>
+	<div class="mpp-social">
+		<?php if( !empty( $attributes['socialFacebook'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialFacebook'] ); ?>">
+				<svg class="icon icon-facebook" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#facebook"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialTwitter'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialTwitter'] ); ?>">
+				<svg class="icon icon-twitter" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#twitter"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialInstagram'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialInstagram'] ); ?>">
+				<svg class="icon icon-instagram" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#instagram"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialPinterest'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialPinterest'] ); ?>">
+				<svg class="icon icon-pinterest" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#pinterest"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialLinkedIn'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialLinkedIn'] ); ?>">
+				<svg class="icon icon-linkedin" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#linkedin"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialYouTube'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialYouTube'] ); ?>">
+				<svg class="icon icon-youtube" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#youtube"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialGitHub'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialGitHub'] ); ?>">
+				<svg class="icon icon-github" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#github"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+		<?php if( !empty( $attributes['socialWordPress'] ) ): ?>
+			<a href="<?php echo esc_url( $attributes['socialWordPress'] ); ?>">
+				<svg class="icon icon-wordpress" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';': ''; ?>">
+					<use href="#wordpress"></use>
+				</svg>
+			</a>
+		<?php endif; ?>
+	</div><!-- .mpp-social -->
+	<?php
+	return ob_get_clean();
 }
 function mpp_load_gutenblock_svgs() {
 	if ( '' != get_post_type() ) {
