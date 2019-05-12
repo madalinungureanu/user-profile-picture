@@ -996,6 +996,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'showTitle' => false,
 		'profileName' => $user->data->display_name,
 		'profileTitle' => '',
+		'avatarSize' => 150,
 		'profileImgURL' => get_avatar_url( $user_id, isset( $attributes['avatarSize'] ) ? $attributes['avatarSize'] : 150 ),
 		'headerFontSize' => 24,
 		'showDescription' => true,
@@ -1006,17 +1007,12 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'profileURL' => get_author_posts_url( $user_id ),
 		'website' => '', /* Needs to be a URl */
 		'showWebsite' => false,
-		'showPostsWidth' => '100%',
+		'showPostsWidth' => '100%', /* ignored if website is not empty and true */
 		'profileViewPostsBackgroundColor' => '#cf6d38',
 		'profileViewPostsTextColor' => '#FFFFFF',
 		'buttonFontSize' => 16,
 		'profileWebsiteBackgroundColor' => '#333333',
 		'profileWebsiteTextColor' => '#FFFFFF',
-
-
-
-
-
 	);
 	$attributes = wp_parse_args( $attributes, $defaults );
 	$min_or_not = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
@@ -1201,7 +1197,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		<?php
 		wp_enqueue_style( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( '/css/front-end-gutenberg.css' ), array(), METRONET_PROFILE_PICTURE_VERSION, 'all' );
 		wp_enqueue_script('mpp_gutenberg_tabs', Metronet_Profile_Picture::get_plugin_url('js/mpp-frontend'.$min_or_not.'.js'), array('jquery'), METRONET_PROFILE_PICTURE_VERSION, true);
-		add_action( 'admin_footer', array( 'mpp_load_gutenblock_svgs' ) );
+		add_action( 'wp_footer', 'mpp_load_gutenblock_svgs' );
 		echo ob_get_clean();
 }
 function mpp_load_gutenblock_svgs() {
