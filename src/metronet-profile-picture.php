@@ -1027,6 +1027,17 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'socialMediaOptions' => 'brand', /* can be brand or custom */
 		'socialMediaColors' => '#000000', /* Only applicable if socialMediaOptions is custom */
 		'profileCompactAlignment' => 'center', /* Can be left, center, or right */
+		/* Tabbed Attributes */
+		'tabbedAuthorProfileTitle' => '',
+		'tabbedAuthorSubHeading' => '',
+		'tabbedAuthorProfile' => __( 'Author', 'metronet-profile-picture' ),
+		'tabbedAuthorLatestPosts' => __( 'Latest Posts', 'metronet-profile-picture' ),
+		'tabbedAuthorProfileHeading' => __( 'Author Information', 'metronet-profile-picture'),
+		'profileLatestPostsOptionsValue' => 'white', /* can be none, white, light, black, magenta, blue, green */
+		'profileTabColor' => '#333333',
+		'profileTabPostsColor' => '#333333',
+		'profileTabHeadlineColor' => '#333333',
+		'profileTabHeadlineTextColor' => '#FFFFFF'
 
 	);
 	$attributes = wp_parse_args( $attributes, $defaults );
@@ -1159,7 +1170,7 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 					</div><!-- .mpp-author-social-wrapper -->
 					<?php if( $attributes['showSocialMedia'] ): ?>
 						<div class="mpp-author-social">
-						<?php echo $this->get_social_icons( $attributes ); ?>
+						<?php echo mpp_get_social_icons( $attributes ); ?>
 						</div>
 					<?php endif; ?>
 				</div><!-- .mpp-author-social-wrapper -->
