@@ -1037,7 +1037,9 @@ function mt_author_box( $user_id = 0, $attributes = array() ) {
 		'profileTabColor' => '#333333',
 		'profileTabPostsColor' => '#333333',
 		'profileTabHeadlineColor' => '#333333',
-		'profileTabHeadlineTextColor' => '#FFFFFF'
+		'profileTabHeadlineTextColor' => '#FFFFFF',
+		'profileTabTextColor' => '#FFFFFF',
+		'profileTabPostsTextColor' => '#FFFFFF'
 
 	);
 	$attributes = wp_parse_args( $attributes, $defaults );
