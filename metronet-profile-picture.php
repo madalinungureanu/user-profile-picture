@@ -217,10 +217,10 @@ class Metronet_Profile_Picture {
 		}
 		check_ajax_referer( "mt-update-post_$post_id" );
 
-		$thumb_html   = '<a style="display:block" href="#" class="mpp_add_media default-image">';
-		$thumb_htmlc .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
-		$thumb_html  .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
-		$thumb_html  .= '</a>';
+		$thumb_html  = '<a style="display:block" href="#" class="mpp_add_media default-image">';
+		$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
+		$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
+		$thumb_html .= '</a>';
 
 		//Save user meta and update thumbnail
 		update_user_option( $user_id, 'metronet_image_id', 0 );
@@ -505,11 +505,21 @@ class Metronet_Profile_Picture {
 			'supports'           => array( 'thumbnail' ),
 		);
 		register_post_type( 'mt_pp', $post_type_args );
-		add_image_size( 'profile_24', 24, 24, true );
-		add_image_size( 'profile_48', 48, 48, true );
-		add_image_size( 'profile_96', 96, 96, true );
-		add_image_size( 'profile_150', 150, 150, true );
-		add_image_size( 'profile_300', 300, 300, true );
+
+		/**
+		 * Filter the the creation of image sizes.
+		 *
+		 * @since 2.2.5
+		 *
+		 * @param bool Whether to allow image size creation or not
+		 */
+		if ( apply_filters( 'mpp_add_image_sizes', true ) ) {
+			add_image_size( 'profile_24', 24, 24, true );
+			add_image_size( 'profile_48', 48, 48, true );
+			add_image_size( 'profile_96', 96, 96, true );
+			add_image_size( 'profile_150', 150, 150, true );
+			add_image_size( 'profile_300', 300, 300, true );
+		}
 
 	}//end function init
 
