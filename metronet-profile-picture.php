@@ -11,7 +11,22 @@ Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
+
 define( 'METRONET_PROFILE_PICTURE_VERSION', '2.2.5' );
+
+/**
+ * Main Class for User Profile Picture
+ *
+ * Main class for user profile picture.
+ *
+ * @category User Profile Picture
+ * @package  User Profile Picture
+ * @author   Ronald Huereca <ronald@mediaron.com>
+ * @license  GPL-2.0+
+ * @link     https://github.com/ronalfy/user-profile-picture
+ *
+ * @since 1.0.0
+ */
 class Metronet_Profile_Picture {
 
 	//private
