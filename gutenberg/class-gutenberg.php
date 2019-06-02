@@ -65,7 +65,7 @@ class Metronet_Profile_Picture_Gutenberg {
 					),
 					'profileImgID'                    => array(
 						'type'    => 'number',
-						'default' => ''
+						'default' => '',
 					),
 					'profileURL'                      => array(
 						'type'    => 'string',
@@ -152,8 +152,8 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => true,
 					),
 					'user_id'                         => array(
-						'type'    => 'number',
-						'default' => 0
+						'type'    => 'int',
+						'default' => 0,
 					),
 					'socialFacebook'                  => array(
 						'type'    => 'string',
