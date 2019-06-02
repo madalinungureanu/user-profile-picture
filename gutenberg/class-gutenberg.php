@@ -64,7 +64,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'profileImgID'                    => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => '',
 					),
 					'profileURL'                      => array(
@@ -72,15 +72,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'padding'                         => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 0,
 					),
 					'border'                          => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 0,
 					),
 					'borderRounded'                   => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 0
 					),
 					'borderColor'                     => array(
@@ -116,15 +116,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => 'inherit',
 					),
 					'headerFontSize'                  => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 24,
 					),
 					'buttonFontSize'                  => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 16,
 					),
 					'profileFontSize'                 => array(
-						'type'    => 'number',
+						'type'    => 'int',
 						'default' => 18,
 					),
 					'profileAvatarShape'              => array(

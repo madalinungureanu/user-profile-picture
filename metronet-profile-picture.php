@@ -508,6 +508,8 @@ class Metronet_Profile_Picture {
 		add_image_size( 'profile_24', 24, 24, true );
 		add_image_size( 'profile_48', 48, 48, true );
 		add_image_size( 'profile_96', 96, 96, true );
+		add_image_size( 'profile_150', 150, 150, true );
+		add_image_size( 'profile_300', 300, 300, true );
 
 	}//end function init
 
@@ -806,6 +808,8 @@ class Metronet_Profile_Picture {
 				'24'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
 				'48'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
 				'96'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+				'150'       => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_150', false, '' ),
+				'300'       => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_300', false, '' ),
 				'thumbnail' => wp_get_attachment_image_url( $post_thumbnail_id, 'thumbnail', false, '' ),
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
@@ -913,6 +917,8 @@ class Metronet_Profile_Picture {
 			'24'   => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
 			'48'   => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
 			'96'   => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
+			'150'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_150', false, '' ),
+			'300'  => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_300', false, '' ),
 			'full' => $attachment_url,
 		);
 	}
