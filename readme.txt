@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 2.2.0
+Stable tag: 2.2.5
 Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,8 @@ Set a custom profile image (avatar) for a user using the standard WordPress medi
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
+
+<a href="https://mediaron.com/user-profile-picture/">View Documentation and Examples</a>
 
 https://www.youtube.com/watch?v=9icnOWWZUpA&rel=0
 
@@ -121,6 +123,13 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.2.5 =
+* Released 2019-06-02
+* Code cleanup.
+* Leaner Gutenberg JavaScript.
+* Gutenberg improvements.
+* Security improvements.
 
 = 2.2.0 =
 * Released 2019-05-12
@@ -290,44 +299,5 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Upgrade Notice ==
 
-= 2.2.0 =
-Added template tags for displaying an author box
-
-= 2.1.3 =
-Added filter to get users in Gutenberg besides author
-
-= 2.1.2 =
-Resolving PHP notice for dirname
-
-= 2.1.1 =
-Adding white posts theme to the tabbed view block. Fixing clearing for the tabbed view block.
-
-= 2.1.0 =
-Old block deprecated, but still supported. New block added with more control over appearance and includes themes.
-
-= 2.0.2 =
-Gutenberg fixes with alignment on the front end. Gutenberg fixes with the toggle boxes defaulting back to nothing.
-
-= 2.0.1 =
-Fixing PHP 5.2 incompatibility. Fixing Gutenberg front-end when there is no profile picture.
-
-= 2.0.0 =
-Added Gutenberg block for easy outputting to posts. Tested with WordPress 5.0 successfully.
-
-= 1.5.5 =
-Loading image now shows between states. New "Click to Edit" bar added to interface.
-
-= 1.5.1 =
-Fixed a condition where a featured image was shown for the author instead of a blank gravatar
-
-= 1.5.0 =
-AMP now supported. Two REST API Endpoints added.
-
-= 1.4.3 =
-Bug fix: Post featured image is being shown as user's profile picture when no avatar is selected.
-
-= 1.4.1 =
-Fix select states in image modal.
-
-= 1.4.0 =
-Avatar override is now a default option. Numerous bug fixes. Please see changelog.
+= 2.2.5 =
+Code cleanup. Leaner Gutenberg JavaScript. Gutenberg improvements. Security improvements.
