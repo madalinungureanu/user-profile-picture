@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.2.5
+Version: 2.2.6
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -12,7 +12,7 @@ Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.2.5' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.2.6' );
 
 /**
  * Main Class for User Profile Picture
@@ -850,10 +850,15 @@ class Metronet_Profile_Picture {
 		if ( ! $user_id ) {
 			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
 		}
-		$is_post_owner = ( get_post( $media_id )->post_author === $user_id ) ? true : false;
-		if ( ! $is_post_owner ) {
-			return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			return new WP_Error( 'mpp_not_privs', __( 'You must have a role of editor or above to set a new profile image.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		} else {
+			$is_post_owner = ( get_post( $media_id )->post_author === $user_id ) ? true : false;
+			if ( ! $is_post_owner ) {
+				return new WP_Error( 'mpp_not_owner', __( 'User not owner.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+			}
 		}
+
 
 		$post_id = $this->get_post_id( $user_id );
 		//Save user meta
