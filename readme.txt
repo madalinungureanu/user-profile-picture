@@ -3,8 +3,8 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 2.2.6
-Requires PHP: 5.2
+Stable tag: 2.2.7
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/give/
@@ -123,6 +123,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.2.7 =
+* Released 2019-06-11
+* Fixing permissions in REST API
 
 = 2.2.6 =
 * Released 2019-06-10
@@ -302,6 +306,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.2.7 =
+Fixing permissions in REST API.
 
 = 2.2.6 =
 Fixing permissions in REST API.
