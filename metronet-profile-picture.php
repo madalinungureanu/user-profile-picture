@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.2.7
+Version: 2.2.8
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -12,7 +12,7 @@ Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.2.7' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.2.8' );
 
 /**
  * Main Class for User Profile Picture
@@ -730,6 +730,14 @@ class Metronet_Profile_Picture {
 		);
 		register_rest_route(
 			'mpp/v2',
+			'/profile-image/change',
+			array(
+				'methods'  => 'POST',
+				'callback' => array( $this, 'rest_api_change_profile_image' ),
+			)
+		);
+		register_rest_route(
+			'mpp/v2',
 			'/get_users',
 			array(
 				'methods'             => 'POST',
@@ -828,6 +836,49 @@ class Metronet_Profile_Picture {
 			$return[ $result->data->ID ]      = $result->data;
 		}
 		return $return;
+	}
+
+	/**
+	 * rest_api_change_profile_image()
+	 *
+	 * Changes a profile image for a user.
+	 *
+	 * @param array $request WP REST API array
+	 *
+	 * @return json image URLs matched to sizes
+	 **/
+	public function rest_api_change_profile_image( $request ) {
+
+		$user_id  = (int) $request['user_id'];
+		$media_id = (int) $request['media_id'];
+
+		if ( ! $user_id ) {
+			return new WP_Error( 'mpp_no_user', __( 'User not found.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		}
+
+		if ( ! current_user_can( 'upload_files', $user_id ) ) {
+			return new WP_Error( 'mpp_insufficient_privs', __( 'You must be able to upload files.', 'metronet-profile-picture' ), array( 'status' => 403 ) );
+		}
+
+		$post_id = $this->get_post_id( $user_id );
+
+		//Save user meta
+		update_user_option( $user_id, 'metronet_post_id', $post_id );
+		update_user_option( $user_id, 'metronet_image_id', $media_id ); //Added via this thread (Props Solinx) - https://wordpress.org/support/topic/storing-image-id-directly-as-user-meta-data
+
+		set_post_thumbnail( $post_id, $media_id );
+
+		$attachment_url = wp_get_attachment_url( $media_id );
+
+		return array(
+			'24'        => wp_get_attachment_image_url( $media_id, 'profile_24', false, '' ),
+			'48'        => wp_get_attachment_image_url( $media_id, 'profile_48', false, '' ),
+			'96'        => wp_get_attachment_image_url( $media_id, 'profile_96', false, '' ),
+			'150'       => wp_get_attachment_image_url( $media_id, 'profile_150', false, '' ),
+			'300'       => wp_get_attachment_image_url( $media_id, 'profile_300', false, '' ),
+			'thumbnail' => wp_get_attachment_image_url( $media_id, 'thumbnail', false, '' ),
+			'full'      => $attachment_url,
+		);
 	}
 
 	/**
