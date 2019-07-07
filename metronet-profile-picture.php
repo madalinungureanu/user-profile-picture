@@ -13,6 +13,11 @@ Domain Path: /languages
 */
 
 define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.0' );
+define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
+define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
+define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
+define( 'METRONET_PROFILE_PICTURE_SLUG', plugin_basename( __FILE__ ) );
+define( 'METRONET_PROFILE_PICTURE_FILE', __FILE__ );
 
 /**
  * Main Class for User Profile Picture
@@ -83,10 +88,98 @@ class Metronet_Profile_Picture {
 		//Avatar check overridden - Can be overridden using a higher priority
 		add_filter( 'mpp_hide_avatar_override', '__return_true', 5 );
 
-		// Include Gutenberg
-		include_once self::get_plugin_dir( '/gutenberg/class-gutenberg.php' );
-		new Metronet_Profile_Picture_Gutenberg();
+		// Determine if to load Gutenberg or not.
+		$options = $this->get_options();
+		if ( 'on' === $options['load_gutenberg'] ) {
+			// Include Gutenberg
+			include_once self::get_plugin_dir( '/gutenberg/class-gutenberg.php' );
+			new Metronet_Profile_Picture_Gutenberg();
+		}
+
 	} //end constructor
+
+	public function register_settings_menu() {
+		$hook = add_submenu_page(
+			'options-general.php',
+			__( 'User Profile Picture', 'metronet-profile-picture' ),
+			__( 'User Profile Picture', 'metronet-profile-picture' ),
+			'manage_options',
+			'mpp',
+			array( $this, 'admin_page' )
+		);
+	}
+
+	public function admin_page() {
+		if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
+			check_admin_referer( 'save_mpp_options' );
+			$this->update_options( $_POST['options'] );
+			printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'metronet-profile-picture' ) );
+		}
+		// Get options and defaults
+		$options = $this->get_options();
+		?>
+		<div class="wrap">
+			<form action="" method="POST">
+				<?php wp_nonce_field( 'save_mpp_options' ); ?>
+				<h1><?php esc_html_e( 'User Profile Picture', 'metronet-profile-picture' ); ?></h1>
+				<p><?php esc_html_e( 'Welcome to User Profile Picture!', 'metronet-profile-picture' ); ?></p>
+				<p><?php esc_html_e( 'Please try: ', 'metronet-profile-picture' ); ?><a target="_blank" href="https://mediaron.com/downloads/user-profile-picture-enhanced/"><?php esc_html_e( 'User Profile Picture Enhanced', 'metronet-profile-picture' ); ?></a></p>
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Gutenberg Blocks', 'metronet-profile-picture' ); ?></th>
+							<td>
+								<input type="hidden" name="options['load_gutenberg']" value="on" />
+								<input id="mpp-load-gutenberg" type="checkbox" value="off" name="options[load_gutenberg]" <?php checked( 'off', $options['load_gutenberg'] ); ?> /> <label for="mpp-load-gutenberg"><?php esc_html_e( 'Disable Gutenberg Blocks', 'metronet-profile-picture' ); ?></label>
+								<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<?php submit_button( __( 'Save Options', 'metronet-profile-picture' ) ); ?>
+			</form>
+		</div>
+		<?php
+	}
+
+	public function get_options() {
+		$options = get_option( 'mpp_options', false );
+		if ( false === $options ) {
+			$options = $this->get_defaults();
+		} elseif ( is_array( $options ) ) {
+			$options = wp_parse_args( $options, $this->get_defaults() );
+		} else {
+			$options = $this->get_defaults();
+		}
+		return $options;
+	}
+
+	/**
+	 * Update options via sanitization
+	 *
+	 * @since 2.3.0
+	 * @access public
+	 * @param array $options array of options to save
+	 * @return void
+	 */
+	private function update_options( $options ) {
+		foreach ( $options as $key => &$option ) {
+			switch ( $key ) {
+				default:
+					$option = sanitize_text_field( $options[ $key ] );
+					break;
+			}
+		}
+		update_option( 'mpp_options', $options );
+	}
+
+	private function get_defaults() {
+		$defaults = array(
+			'load_gutenberg' => 'on',
+		);
+		return $defaults;
+	}
 
 	/**
 	* ajax_add_thumbnail()
@@ -495,6 +588,10 @@ class Metronet_Profile_Picture {
 	 */
 	public function init() {
 
+		// For the admin interface
+		add_action( 'admin_menu', array( $this, 'register_settings_menu' ) );
+		add_action( 'plugin_action_links_' . METRONET_PROFILE_PICTURE_SLUG, array( $this, 'plugin_settings_link' ) );
+
 		add_theme_support( 'post-thumbnails' ); //This should be part of the theme, but the plugin registers it just in case.
 		//Register post types
 		$post_type_args = array(
@@ -536,7 +633,31 @@ class Metronet_Profile_Picture {
 
 	}//end function init
 
-
+	/**
+	 * Adds a plugin settings link.
+	 *
+	 * Adds a plugin settings link.
+	 *
+	 * @param array $settings The settings array for the plugin.
+	 *
+	 */
+	public function plugin_settings_link( $settings ) {
+		$admin_anchor  = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'options-general.php?page=mpp' ) ),
+			esc_html__( 'Settings', 'metronet-profile-picture' )
+		);
+		$admin_anchor .= sprintf(
+			' | <a href="%s">%s</a>',
+			esc_url( 'https://mediaron.com/downloads/user-profile-picture-enhanced/' ),
+			esc_html__( 'Get Enhanced!', 'metronet-profile-picture' )
+		);
+		if ( ! is_array( $settings ) ) {
+			return array( $admin_anchor );
+		} else {
+			return array_merge( $settings, array( $admin_anchor ) );
+		}
+	}
 
 	/**
 	 * insert_upload_form
