@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 2.2.8
+Stable tag: 2.3.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,8 @@ Set a custom profile image (avatar) for a user using the standard WordPress medi
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
+
+ > Get <a href="https://mediaron.com/downloads/user-profile-picture-enhanced/">User Profile Picture Enhanced</a>, an add-on for User Profile Picture.
 
 <a href="https://mediaron.com/user-profile-picture/">View Documentation and Examples</a>
 
@@ -123,6 +125,14 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.3.0 =
+* Released 2019-07-06
+* Gutenberg blocks are now in the User Profile Picture category.
+* New filters for add-on extensibility
+* Added Options page so you can disable the Gutenberg blocks if you so desire.
+* Bug fix: Adding user display name to post title when User Profile Picture creates the user page.
+* New add-on in the works: <a href="https://mediaron.com/downloads/user-profile-picture-enhanced/">User Profile Picture Enhanced</a>.
 
 = 2.2.8 =
 * Released 2019-06-11
@@ -310,6 +320,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.0 =
+Gutenberg blocks are now in the User Profile Picture category. New filters for add-on extensibility. Added Options page so you can disable the Gutenberg blocks if you so desire. Bug fix: Adding user display name to post title when User Profile Picture creates the user page.
 
 = 2.2.8 =
 New REST API endpoint for changing profile pictures.
