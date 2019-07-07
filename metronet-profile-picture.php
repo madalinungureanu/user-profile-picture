@@ -611,6 +611,13 @@ class Metronet_Profile_Picture {
 			</td>
 		</tr>
 		<?php
+		/**
+		 * Allow other plugins to run code after the user profile picture UI.
+		 *
+		 * @since 2.3.0
+		 *
+		 */
+		do_action( 'mpp_user_profile_form' );
 	} //end insert_upload_form
 
 	/**
@@ -1108,7 +1115,7 @@ function mt_profile_img( $user_id, $args = array() ) {
 		'attr' => '',
 		'echo' => true,
 	);
-	$args      = wp_parse_args( $args, $defaults );
+	$args     = wp_parse_args( $args, $defaults );
 	extract( $args ); //todo - get rid of evil extract
 
 	$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
