@@ -418,6 +418,9 @@ class Metronet_Profile_Picture {
 	 * @return int post_id
 	*/
 	private function get_post_id( $user_id = 0 ) {
+
+		$user = get_user_by( 'id', $user_id );
+
 		//Get/Create Profile Picture Post
 		$post_args = array(
 			'post_type'   => 'mt_pp',
@@ -431,6 +434,7 @@ class Metronet_Profile_Picture {
 					'post_author' => $user_id,
 					'post_type'   => 'mt_pp',
 					'post_status' => 'publish',
+					'post_title'  => $user->data->display_name,
 				)
 			);
 		} else {
