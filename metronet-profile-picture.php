@@ -1499,6 +1499,13 @@ function mpp_get_social_icons( $attributes ) {
  *
 */
 function mpp_load_gutenblock_svgs() {
+	/**
+	 * Allow other plugins to run code from inside this SVG block.
+	 *
+	 * @since 2.3.0
+	 *
+	 */
+	do_action( 'mpp_svg_start' );
 	if ( '' !== get_post_type() ) {
 		// Define SVG sprite file.
 		$path      = '/img/social-logos.svg';
@@ -1522,4 +1529,11 @@ function mpp_load_gutenblock_svgs() {
 			echo '</div>';
 		}
 	}
+	/**
+	 * Allow other plugins to run code from inside this SVG block at the end.
+	 *
+	 * @since 2.3.0
+	 *
+	 */
+	do_action( 'mpp_svg_end' );
 }
