@@ -99,6 +99,16 @@ class Metronet_Profile_Picture {
 
 	} //end constructor
 
+	/**
+	 * Add a User Profile Picture category for block creation.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $categories Array of available categories
+	 * @param object $post Post to attach it to
+	 *
+	 * @return array New Categories
+	 */
 	public function add_block_category( $categories, $post ) {
 		return array_merge(
 			$categories,
@@ -112,6 +122,12 @@ class Metronet_Profile_Picture {
 		);
 	}
 
+	/**
+	 * Register the settings menu for User Profile Picture
+	 *
+	 * @since 2.3.0
+	 *
+	 */
 	public function register_settings_menu() {
 		$hook = add_submenu_page(
 			'options-general.php',
@@ -123,6 +139,12 @@ class Metronet_Profile_Picture {
 		);
 	}
 
+	/**
+	 * Admin page for User Profile Picture
+	 *
+	 * @since 2.3.0
+	 *
+	 */
 	public function admin_page() {
 		if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 			check_admin_referer( 'save_mpp_options' );
@@ -148,15 +170,38 @@ class Metronet_Profile_Picture {
 								<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
 							</td>
 						</tr>
+						<?php
+						/**
+						 * Allow other plugins to run code after the user profile admin Table Row.
+						 *
+						 * @since 2.3.0
+						 *
+						 */
+						do_action( 'mpp_user_profile_admin_settings_after_row' );
+						?>
 					</tbody>
 				</table>
-
+				<?php
+				/**
+				 * Allow other plugins to run code after the user profile admin Table.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				do_action( 'mpp_user_profile_admin_settings_after_table' );
+				?>
 				<?php submit_button( __( 'Save Options', 'metronet-profile-picture' ) ); ?>
 			</form>
 		</div>
 		<?php
 	}
 
+	/**
+	 * Get the options for User Profile Picture
+	 *
+	 * @since 2.3.0
+	 *
+	 */
 	public function get_options() {
 		$options = get_option( 'mpp_options', false );
 		if ( false === $options ) {
@@ -178,6 +223,7 @@ class Metronet_Profile_Picture {
 	 * @return void
 	 */
 	private function update_options( $options ) {
+		$options = wp_unslash( $options );
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
 				default:
@@ -185,9 +231,26 @@ class Metronet_Profile_Picture {
 					break;
 			}
 		}
+		/**
+		 * Allow other plugins to perform their own sanitization functions.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param array $options An array of sanitized POST options
+		 *
+		 */
+		$options = apply_filters( 'mpp_options_sanitized', $options );
 		update_option( 'mpp_options', $options );
 	}
 
+	/**
+	 * Get the default options for User Profile Picture
+	 *
+	 * @access private
+	 *
+	 * @since 2.3.0
+	 *
+	 */
 	private function get_defaults() {
 		$defaults = array(
 			'load_gutenberg' => 'on',
