@@ -181,8 +181,10 @@ class Metronet_Profile_Picture {
 						 *
 						 * @since 2.3.0
 						 *
+						 * @param array $options Array of options.
+						 *
 						 */
-						do_action( 'mpp_user_profile_admin_settings_after_row' );
+						do_action( 'mpp_user_profile_admin_settings_after_row', $options );
 						?>
 					</tbody>
 				</table>
@@ -192,8 +194,10 @@ class Metronet_Profile_Picture {
 				 *
 				 * @since 2.3.0
 				 *
+				 * @param array $options Array of options.
+				 *
 				 */
-				do_action( 'mpp_user_profile_admin_settings_after_table' );
+				do_action( 'mpp_user_profile_admin_settings_after_table', $options );
 				?>
 				<?php submit_button( __( 'Save Options', 'metronet-profile-picture' ) ); ?>
 			</form>
@@ -227,7 +231,7 @@ class Metronet_Profile_Picture {
 	 * @param array $options array of options to save
 	 * @return void
 	 */
-	private function update_options( $options ) {
+	public function update_options( $options ) {
 		$options = wp_unslash( $options );
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
@@ -260,6 +264,16 @@ class Metronet_Profile_Picture {
 		$defaults = array(
 			'load_gutenberg' => 'on',
 		);
+
+		/**
+		 * Allow other plugins to add to the defaults.
+		 *
+		 * @since 2.3.1
+		 *
+		 * @param array $defaults An array of option defaults.
+		 *
+		 */
+		$defaults = apply_filters( 'mpp_options_defaults', $defaults );
 		return $defaults;
 	}
 
@@ -652,9 +666,9 @@ class Metronet_Profile_Picture {
 	 *@return int user_id
 	 *
 	 */
-	private function get_user_id() {
+	public function get_user_id() {
 		//Get user ID
-		$user_id = isset( $_GET['user_id'] ) ? absint( $_GET['user_id'] ) : 0;
+		$user_id = isset( $_GET['user_id'] ) ? absint( $_GET['user_id'] ) : 0; // phpcs:ignore
 		if ( 0 === $user_id && IS_PROFILE_PAGE ) {
 			$current_user = wp_get_current_user();
 			$user_id      = $current_user->ID;
@@ -822,7 +836,7 @@ class Metronet_Profile_Picture {
 		 * @since 2.3.0
 		 *
 		 */
-		do_action( 'mpp_user_profile_form' );
+		do_action( 'mpp_user_profile_form', $user_id );
 	} //end insert_upload_form
 
 	/**
