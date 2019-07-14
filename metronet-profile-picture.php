@@ -1292,6 +1292,8 @@ class Metronet_Profile_Picture {
 		}
 		check_admin_referer( 'update-user_' . $user_id );
 
+		flush_rewrite_rules( true );
+
 		$user_avatar = $_POST['metronet-user-avatar'];
 		if ( 'on' === $user_avatar ) {
 			update_user_option( $user_id, 'metronet_avatar_override', 'on' );
