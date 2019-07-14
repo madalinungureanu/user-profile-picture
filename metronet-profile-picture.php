@@ -128,13 +128,14 @@ class Metronet_Profile_Picture {
 	 *
 	 */
 	public function register_settings_menu() {
-		$hook = add_submenu_page(
-			'options-general.php',
+		$hook = add_menu_page(
 			__( 'User Profile Picture', 'metronet-profile-picture' ),
 			__( 'User Profile Picture', 'metronet-profile-picture' ),
 			'manage_options',
 			'mpp',
-			array( $this, 'admin_page' )
+			array( $this, 'admin_page' ),
+			'dashicons-groups',
+			100
 		);
 	}
 
