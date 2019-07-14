@@ -741,7 +741,7 @@ class Metronet_Profile_Picture {
 	public function plugin_settings_link( $settings ) {
 		$admin_anchor  = sprintf(
 			'<a href="%s">%s</a>',
-			esc_url( admin_url( 'options-general.php?page=mpp' ) ),
+			esc_url( admin_url( 'admin.php?page=mpp' ) ),
 			esc_html__( 'Settings', 'metronet-profile-picture' )
 		);
 		if ( ! defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
