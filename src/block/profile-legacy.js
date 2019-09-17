@@ -236,7 +236,7 @@ class MPP_Gutenberg extends Component {
 		];
 		return(
 			<Fragment>
-				{this.state.loading && 
+				{this.state.loading &&
 				<Fragment>
 					<Placeholder>
 						{__('Loading...', 'metronet-profile-picture')}
@@ -338,10 +338,11 @@ class MPP_Gutenberg extends Component {
 								onChange={ ( value ) => setAttributes( { profileAlignment: value } ) }
 							/>
 						</BlockControls>
-						<div 
+						<div
 							className={
 								classnames(
 									'mpp-profile-wrap',
+									'legacy',
 									profileAlignment,
 									profileAvatarShape,
 									'mt-font-size-' + profileFontSize,
@@ -382,7 +383,7 @@ class MPP_Gutenberg extends Component {
 									</div>
 								</div>
 								<div className="mpp-content-wrap">
-									{showName && 
+									{showName &&
 									<RichText
 										tagName="h2"
 										placeholder={ __( 'Add name', 'metronet-profile-picture' ) }
@@ -421,14 +422,14 @@ class MPP_Gutenberg extends Component {
 							{profileURL && !! profileURL.length &&
 							<div className="mpp-gutenberg-view-posts">
 							{showViewPosts &&
-								<div 
+								<div
 									className="mpp-profile-view-posts"
 									style={ {
 										backgroundColor: profileViewPostsBackgroundColor,
 										color: profileViewPostsTextColor,
 									} }
 								>
-									<a 
+									<a
 										href={profileURL}
 										style={ {
 											backgroundColor: profileViewPostsBackgroundColor,

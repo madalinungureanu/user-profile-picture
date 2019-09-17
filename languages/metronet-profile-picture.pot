@@ -1,0 +1,450 @@
+# Copyright (C) 2019 Ronald Huereca
+# This file is distributed under the same license as the User Profile Picture plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: User Profile Picture 2.2.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/user-profile-picture\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-06-10T16:20:09+00:00\n"
+"PO-Revision-Date: 2019-06-10T16:20:09+00:00\n"
+"X-Generator: WP-CLI 2.0.1\n"
+"X-Domain: metronet-profile-picture\n"
+
+#. Plugin Name of the plugin
+msgid "User Profile Picture"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/metronet-profile-picture/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Use the native WP uploader on your user profile page."
+msgstr ""
+
+#. Author of the plugin
+msgid "Ronald Huereca"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.mediaron.com"
+msgstr ""
+
+#: metronet-profile-picture.php:116
+#: metronet-profile-picture.php:167
+#: metronet-profile-picture.php:185
+#: metronet-profile-picture.php:221
+#: metronet-profile-picture.php:554
+#: metronet-profile-picture.php:560
+msgid "Upload or Change Profile Picture"
+msgstr ""
+
+#: metronet-profile-picture.php:118
+#: metronet-profile-picture.php:169
+#: metronet-profile-picture.php:186
+#: metronet-profile-picture.php:222
+#: metronet-profile-picture.php:556
+#: metronet-profile-picture.php:562
+msgid "Click to Edit"
+msgstr ""
+
+#: metronet-profile-picture.php:119
+#: metronet-profile-picture.php:170
+#: metronet-profile-picture.php:570
+msgid "Remove profile image"
+msgstr ""
+
+#: metronet-profile-picture.php:463
+#: metronet-profile-picture.php:630
+msgid "Crop Thumbnail"
+msgstr ""
+
+#: metronet-profile-picture.php:543
+msgid "Profile Image"
+msgstr ""
+
+#: metronet-profile-picture.php:595
+msgid "Override Avatar?"
+msgstr ""
+
+#: metronet-profile-picture.php:628
+msgid "Set Profile Image"
+msgstr ""
+
+#: metronet-profile-picture.php:629
+msgid "Remove Profile Image"
+msgstr ""
+
+#: metronet-profile-picture.php:847
+msgid "You must be able to upload files."
+msgstr ""
+
+#: metronet-profile-picture.php:851
+#: metronet-profile-picture.php:889
+#: metronet-profile-picture.php:916
+#: metronet-profile-picture.php:954
+msgid "User not found."
+msgstr ""
+
+#: metronet-profile-picture.php:854
+msgid "You must have a role of editor or above to set a new profile image."
+msgstr ""
+
+#: metronet-profile-picture.php:858
+msgid "User not owner."
+msgstr ""
+
+#: metronet-profile-picture.php:925
+#: metronet-profile-picture.php:961
+msgid "Profile picture not found."
+msgstr ""
+
+#: metronet-profile-picture.php:1154
+msgid "Author"
+msgstr ""
+
+#: metronet-profile-picture.php:1155
+#: gutenberg/class-gutenberg.php:212
+msgid "Latest Posts"
+msgstr ""
+
+#: metronet-profile-picture.php:1156
+msgid "Author Information"
+msgstr ""
+
+#: metronet-profile-picture.php:1193
+#: metronet-profile-picture.php:1249
+#: gutenberg/class-gutenberg.php:307
+#: gutenberg/class-gutenberg.php:363
+#: dist/blocks.build.js:1
+msgid "View Posts"
+msgstr ""
+
+#: metronet-profile-picture.php:1198
+#: metronet-profile-picture.php:1254
+#: gutenberg/class-gutenberg.php:312
+#: gutenberg/class-gutenberg.php:368
+#: dist/blocks.build.js:1
+msgid "View Website"
+msgstr ""
+
+#: metronet-profile-picture.php:1222
+#: gutenberg/class-gutenberg.php:336
+#: dist/blocks.build.js:1
+msgid "View all posts by"
+msgstr ""
+
+#: metronet-profile-picture.php:1226
+#: gutenberg/class-gutenberg.php:340
+#: dist/blocks.build.js:1
+msgid "Website"
+msgstr ""
+
+#: gutenberg/class-gutenberg.php:204
+#: gutenberg/class-gutenberg.php:208
+msgid "Author Details"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "User Profile Legacy"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "User Profile"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Regular"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Tabbed"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Compact"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Square"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Round"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Brand Colors"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Custom"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "None"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "White"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Light"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Black"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Magenta"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Blue"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Green"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Left"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Center"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Right"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "User Profile Settings"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Select a user"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Select a theme"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Select an alignment"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Avatar Shape"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Choose between a round or square avatar shape."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show Name"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show Title"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show Description"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show View Posts"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show Website"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Show Social Media"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Colors"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Background Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Text Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Link Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Tab Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Tab Color Text"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Posts Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Post Color Text"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Headline Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Profile Headline Color Text"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Select a Post Theme"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "View Posts Background Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "View Posts Background"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "View Posts Text Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Website Background Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "View Website Background"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "View Website Text Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Spacing and Font Settings"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Header Font Size"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Font Size"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Button Size"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Padding"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Border"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Border Rounded"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Border Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Social Media Settings"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Social Media Colors"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Social Media Color"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Facebook"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Twitter"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Instagram"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "LinkedIn"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "YouTube"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "GitHub"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Pinterest"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "WordPress"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Add name"
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Add profile text..."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Add tab name."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Add profile description..."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Add profile title..."
+msgstr ""
+
+#: dist/blocks.build.js:1
+msgid "Loading..."
+msgstr ""

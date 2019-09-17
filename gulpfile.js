@@ -148,7 +148,7 @@ gulp.task('scss_compile', function(){
 	.pipe(sourcemaps.init())
 	.pipe(postcss([
 		require('postcss-nested')
-	  ], {syntax: require('postcss-scss')}))  	
+	  ], {syntax: require('postcss-scss')}))
 	.pipe(sass())
 	.pipe(plumber(reportError))
 	.pipe(gulp.dest('dist/css'))
@@ -252,7 +252,29 @@ gulp.task('gutenberg', function () {
                         NODE_ENV: JSON.stringify('production')
                     }
 				}),
-				new webpack.optimize.UglifyJsPlugin()
+				new webpack.optimize.UglifyJsPlugin(
+					{
+						compress: {
+							warnings: false,
+							// Disabled because of an issue with Uglify breaking seemingly valid code:
+							// https://github.com/facebookincubator/create-react-app/issues/2376
+							// Pending further investigation:
+							// https://github.com/mishoo/UglifyJS2/issues/2011
+							comparisons: false,
+						},
+						mangle: {
+							safari10: true,
+							except: ['__', '_n', '_x', '_nx' ],
+						},
+						output: {
+							comments: false,
+							// Turned on because emoji and regex is not minified properly using default
+							// https://github.com/facebookincubator/create-react-app/issues/2488
+							ascii_only: true,
+						},
+						sourceMap: true,
+					}
+				)
             ]
         }, webpack, function (err, stats) {
             console.log(stats.toString({ colors: true }));
@@ -298,14 +320,34 @@ gulp.task('gutenbergmin', function () {
 						NODE_ENV: JSON.stringify('production')
 					}
 				}),
-				new webpack.optimize.UglifyJsPlugin()
+				new webpack.optimize.UglifyJsPlugin( {
+						compress: {
+							warnings: false,
+							// Disabled because of an issue with Uglify breaking seemingly valid code:
+							// https://github.com/facebookincubator/create-react-app/issues/2376
+							// Pending further investigation:
+							// https://github.com/mishoo/UglifyJS2/issues/2011
+							comparisons: false,
+						},
+						mangle: {
+							safari10: true,
+							except: ['__', '_n', '_x', '_nx' ],
+						},
+						output: {
+							comments: false,
+							// Turned on because emoji and regex is not minified properly using default
+							// https://github.com/facebookincubator/create-react-app/issues/2488
+							ascii_only: true,
+						},
+						sourceMap: true,
+					}
+				)
 			]
 		}, webpack, function (err, stats) {
 			console.log(stats.toString({ colors: true }));
 		}))
 		.pipe(sourcemaps.init())
 		.pipe(plumber(reportError))
-		.pipe(uglify())
 		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'));
