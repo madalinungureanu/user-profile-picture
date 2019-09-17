@@ -55,6 +55,14 @@ class Metronet_Profile_Picture_Gutenberg {
 						'type'    => 'string',
 						'default' => '',
 					),
+					'profileViewPosts'                => array(
+						'type'    => 'string',
+						'default' => __( 'View Posts', 'metronet-profile-picture' ),
+					),
+					'profileViewWebsite'                => array(
+						'type'    => 'string',
+						'default' => __( 'View Website', 'metronet-profile-picture' ),
+					),
 					'profileAlignment'                => array(
 						'type'    => 'string',
 						'default' => '',
@@ -304,12 +312,27 @@ class Metronet_Profile_Picture_Gutenberg {
 									<?php if ( $attributes['showViewPosts'] ) : ?>
 										<div class="mpp-profile-view-posts" style="background-color: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>; width: <?php echo esc_attr( $attributes['showPostsWidth'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
 											<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileViewPostsBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileViewPostsTextColor'] ); ?>">
-											<?php esc_html_e( 'View Posts', 'metronet-profile-picture' ); ?></a>
+											<?php
+											if ( isset( $attributes['profileViewPosts'] ) ) {
+												echo esc_html( $attributes['profileViewPosts'] );
+											} else {
+												esc_html_e( 'View Posts', 'metronet-profile-picture' );
+											}
+											?>
+											</a>
 										</div><!-- .mpp-profile-view-posts -->
 									<?php endif; ?>
 									<?php if ( '' != $attributes['website'] && $attributes['showWebsite'] ) : ?>
 									<div class="mpp-profile-view-website" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>;color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
-										<a href="<?php echo esc_url( $attributes['website'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;"><?php esc_html_e( 'View Website', 'metronet-profile-picture' ); ?></a>
+										<a href="<?php echo esc_url( $attributes['website'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;">
+										<?php
+										if ( isset( $attributes['profileViewWebsite'] ) ) {
+											echo esc_html( $attributes['profileViewWebsite'] );
+										} else {
+											esc_html_e( 'View Website', 'metronet-profile-picture' );
+										}
+										?>
+										</a>
 									</div><!-- .mpp-profile-view-website -->
 									<?php endif; ?>
 								</div><!-- .mpp-gutenberg-view-posts -->

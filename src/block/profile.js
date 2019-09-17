@@ -55,6 +55,8 @@ class MPP_Gutenberg_Enhanced extends Component {
 			profile_name_unfiltered: '',
 			profile_title: '',
 			show_website: this.props.attributes.showWebsite,
+			profileViewPosts: this.props.attributes.profileViewPosts,
+			profileViewWebsite: this.props.attributes.profileViewWebsite,
 			theme: this.props.attributes.theme,
 			themes: theme_list,
 			socialFacebook: this.props.attributes.socialFacebook,
@@ -483,6 +485,8 @@ class MPP_Gutenberg_Enhanced extends Component {
 				profileAvatarShape,
 				profileViewPostsBackgroundColor,
 				profileViewPostsTextColor,
+				profileViewPosts,
+				profileViewWebsite,
 				showTitle,
 				showName,
 				showDescription,
@@ -655,11 +659,25 @@ class MPP_Gutenberg_Enhanced extends Component {
 										checked={ showViewPosts }
 										onChange={ () => this.props.setAttributes( { showViewPosts: ! showViewPosts } ) }
 									/>
+									{ showViewPosts &&
+										<TextControl
+											label={__('View Posts Text', 'metronet-profile-picture')}
+											value={profileViewPosts}
+											onChange={ ( value ) => { this.props.setAttributes( { profileViewPosts: value }); } }
+										/>
+									}
 									<ToggleControl
 										label={ __( 'Show Website', 'metronet-profile-picture' ) }
 										checked={ this.state.show_website }
 										onChange={ ( value ) => { this.props.setAttributes( { showWebsite: value } ); this.setState({show_website: value}); } }
 									/>
+									{ this.state.show_website &&
+										<TextControl
+											label={__('View Website Text', 'metronet-profile-picture')}
+											value={profileViewWebsite}
+											onChange={ ( value ) => { this.props.setAttributes( { profileViewWebsite: value }); } }
+										/>
+									}
 								</Fragment>
 								}
 								<ToggleControl
@@ -1058,7 +1076,7 @@ class MPP_Gutenberg_Enhanced extends Component {
 											backgroundColor: profileViewPostsBackgroundColor,
 											color: profileViewPostsTextColor,
 										} }
-									>{__('View Posts', 'metronet-profile-picture')}</a>
+									>{profileViewPosts}</a>
 								</div>
 							}
 							{ this.state.website != '' && showWebsite &&
@@ -1076,7 +1094,7 @@ class MPP_Gutenberg_Enhanced extends Component {
 										backgroundColor: profileWebsiteBackgroundColor,
 										color: profileWebsiteTextColor,
 									} }
-								>{__('View Website', 'metronet-profile-picture')}</a>
+								>{profileViewWebsite}</a>
 							</div>
 							}
 							</div>

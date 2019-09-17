@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.2
-Stable tag: 2.3.2
+Stable tag: 2.3.5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -125,6 +125,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.3.5 =
+* Released 2019-09-17
+* Added option in Gutenberg block to customize the View Posts and View Website text.
 
 = 2.3.2 =
 * Released 2019-07-14
@@ -326,20 +330,5 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Upgrade Notice ==
 
-= 2.3.2 =
-Added top level navigation menu in anticipation for User Profile Picture Enhanced. Adding more filters for third-party plugin integration.
-
-= 2.3.0 =
-Gutenberg blocks are now in the User Profile Picture category. New filters for add-on extensibility. Added Options page so you can disable the Gutenberg blocks if you so desire. Bug fix: Adding user display name to post title when User Profile Picture creates the user page.
-
-= 2.2.8 =
-New REST API endpoint for changing profile pictures.
-
-= 2.2.7 =
-Fixing permissions in REST API.
-
-= 2.2.6 =
-Fixing permissions in REST API.
-
-= 2.2.5 =
-Code cleanup. Leaner Gutenberg JavaScript. Gutenberg improvements. Security improvements.
+= 2.3.5 =
+Added option in Gutenberg block to customize the View Posts and View Website text.
