@@ -1038,14 +1038,14 @@ class Metronet_Profile_Picture {
 				$result->data->profile_pictures    = array(
 					'avatar' => get_avatar( $result->data->ID ),
 				);
-				$result->data->is_user_logged_in   = ( get_current_user_id() === $result->data->ID ) ? true : false;
+				$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
 				$return[ $result->data->ID ]       = $result->data;
 				continue;
 			}
 			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
 			$result->data->display_name        = $result->data->display_name;
 			$result->data->has_profile_picture = true;
-			$result->data->is_user_logged_in   = ( get_current_user_id() === $result->data->ID ) ? true : false;
+			$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
 			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
 
 			// Get attachment URL.
