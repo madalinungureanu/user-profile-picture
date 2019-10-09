@@ -100,7 +100,7 @@ class MPP_Gutenberg_Enhanced extends Component {
 			let profile_title = '';
 			let profile_url = '';
 			let show_website = '';
-			$.each( response.data, function( key, value ) {
+			jQuery.each( response.data, function( key, value ) {
 				users[value.ID] = {
 					profile_pictures: value.profile_pictures,
 					has_profile_picture: value.has_profile_picture,

@@ -1,5 +1,5 @@
-<?php
-// Prevent direct file access
+<?php // phpcs:ignore
+// Prevent direct file access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access' );
 }
@@ -17,6 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0.0
  */
 class Metronet_Profile_Picture_Gutenberg {
+	/**
+	 * Class constructor.
+	 */
 	public function __construct() {
 		if ( ! function_exists( 'register_block_type' ) ) {
 			return;
@@ -24,10 +27,13 @@ class Metronet_Profile_Picture_Gutenberg {
 
 		add_action( 'init', array( $this, 'register_block' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'add_gutenberg_styles' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this,'add_gutenberg_scripts' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'add_gutenberg_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'load_gutenblock_svgs' ) );
 	}
 
+	/**
+	 * Register the main User Profile Picture block.
+	 */
 	public function register_block() {
 		register_block_type(
 			'mpp/user-profile',
@@ -38,12 +44,12 @@ class Metronet_Profile_Picture_Gutenberg {
 		register_block_type(
 			'mpp/user-profile-enhanced',
 			array(
-				'attributes' => array(
-					'profileName'                      => array(
+				'attributes'      => array(
+					'profileName'                     => array(
 						'type'    => 'string',
 						'default' => '',
 					),
-					'theme' => array(
+					'theme'                           => array(
 						'type'    => 'string',
 						'default' => 'regular',
 					),
@@ -59,7 +65,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'type'    => 'string',
 						'default' => __( 'View Posts', 'metronet-profile-picture' ),
 					),
-					'profileViewWebsite'                => array(
+					'profileViewWebsite'              => array(
 						'type'    => 'string',
 						'default' => __( 'View Website', 'metronet-profile-picture' ),
 					),
@@ -89,7 +95,7 @@ class Metronet_Profile_Picture_Gutenberg {
 					),
 					'borderRounded'                   => array(
 						'type'    => 'int',
-						'default' => 0
+						'default' => 0,
 					),
 					'borderColor'                     => array(
 						'type'    => 'string',
@@ -104,7 +110,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '#32373c',
 					),
 					'profileViewPostsBackgroundColor' => array(
-						'type' => 'string',
+						'type'    => 'string',
 						'default' => '#cf6d38',
 					),
 					'profileViewPostsTextColor'       => array(
@@ -279,6 +285,11 @@ class Metronet_Profile_Picture_Gutenberg {
 		);
 	}
 
+	/**
+	 * Display the front-end for the Gutenberg block.
+	 *
+	 * @param array $attributes Array of block attributes.
+	 */
 	public function display_frontend( $attributes ) {
 		if ( is_admin() ) {
 			return;
@@ -322,7 +333,7 @@ class Metronet_Profile_Picture_Gutenberg {
 											</a>
 										</div><!-- .mpp-profile-view-posts -->
 									<?php endif; ?>
-									<?php if ( '' != $attributes['website'] && $attributes['showWebsite'] ) : ?>
+									<?php if ( '' !== $attributes['website'] && $attributes['showWebsite'] ) : ?>
 									<div class="mpp-profile-view-website" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>;color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>; font-size: <?php echo esc_attr( $attributes['buttonFontSize'] ); ?>px;">
 										<a href="<?php echo esc_url( $attributes['website'] ); ?>" style="background: <?php echo esc_attr( $attributes['profileWebsiteBackgroundColor'] ); ?>; color: <?php echo esc_attr( $attributes['profileWebsiteTextColor'] ); ?>;">
 										<?php
@@ -395,7 +406,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						</div>
 					<?php endif; /* Compact theme end */ ?>
 					<?php if ( true === $attributes['showSocialMedia'] && ( 'regular' === $attributes['theme'] || 'compact' === $attributes['theme'] || 'profile' === $attributes['theme'] ) ) : ?>
-						<?php echo $this->get_social_icons( $attributes ); ?>
+						<?php echo $this->get_social_icons( $attributes ); // phpcs:ignore ?>
 					<?php endif; ?>
 				</div><!-- .mpp-profile-gutenberg-wrap -->
 			</div><!-- .mpp-profile-wrap -->
@@ -430,7 +441,7 @@ class Metronet_Profile_Picture_Gutenberg {
 					</div><!-- .mpp-author-social-wrapper -->
 					<?php if ( $attributes['showSocialMedia'] ) : ?>
 						<div class="mpp-author-social">
-						<?php echo $this->get_social_icons( $attributes ); ?>
+						<?php echo $this->get_social_icons( $attributes ); // phpcs:ignore ?>
 						</div>
 					<?php endif; ?>
 				</div><!-- .mpp-author-social-wrapper -->
@@ -486,6 +497,11 @@ class Metronet_Profile_Picture_Gutenberg {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Get the social icons for the block.
+	 *
+	 * @param array $attributes Gutenberg attributes.
+	 */
 	public function get_social_icons( $attributes ) {
 		ob_start();
 		?>
@@ -542,7 +558,7 @@ class Metronet_Profile_Picture_Gutenberg {
 			<?php if ( ! empty( $attributes['socialWordPress'] ) ) : ?>
 				<a href="<?php echo esc_url( $attributes['socialWordPress'] ); ?>">
 					<svg class="icon icon-wordpress" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';' : ''; ?>">
-						<use href="#wordpress"></use>
+						<use href="#wordpress"></use><?php // phpcs:ignore ?>
 					</svg>
 				</a>
 			<?php endif; ?>
@@ -551,6 +567,9 @@ class Metronet_Profile_Picture_Gutenberg {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Add SVGs for the social icons in the block.
+	 */
 	public function load_gutenblock_svgs() {
 		if ( '' !== get_post_type() ) {
 			// Define SVG sprite file.
@@ -577,6 +596,9 @@ class Metronet_Profile_Picture_Gutenberg {
 		}
 	}
 
+	/**
+	 * Add Gutenberg scripts.
+	 */
 	public function add_gutenberg_scripts() {
 
 		wp_enqueue_script( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( 'dist/blocks.build.js' ), array( 'wp-blocks', 'wp-element' ), METRONET_PROFILE_PICTURE_VERSION, true );
@@ -595,7 +617,7 @@ class Metronet_Profile_Picture_Gutenberg {
 			wp_script_add_data( 'mpp_gutenberg', 'data', $content );
 		}
 
-		// Pass in REST URL
+		// Pass in REST URL.
 		wp_localize_script(
 			'mpp_gutenberg',
 			'mpp_gutenberg',
@@ -609,11 +631,14 @@ class Metronet_Profile_Picture_Gutenberg {
 		wp_enqueue_style( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( '/dist/blocks.editor.build.css' ), array(), METRONET_PROFILE_PICTURE_VERSION, 'all' );
 	}
 
+	/**
+	 * Add Gutenberg styles.
+	 */
 	public function add_gutenberg_styles() {
 		if ( is_admin() ) {
 			return;
 		}
-		// Ensure script debug allows non-minified scripts
+		// Ensure script debug allows non-minified scripts.
 		wp_enqueue_style( 'mpp_gutenberg', Metronet_Profile_Picture::get_plugin_url( '/dist/blocks.style.build.css' ), array(), METRONET_PROFILE_PICTURE_VERSION, 'all' );
 		wp_enqueue_script( 'mpp_gutenberg_tabs', Metronet_Profile_Picture::get_plugin_url( 'js/mpp-frontend.js' ), array( 'jquery' ), METRONET_PROFILE_PICTURE_VERSION, true );
 
