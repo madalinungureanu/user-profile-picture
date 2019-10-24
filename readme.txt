@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -125,6 +125,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.3.7 =
+* Released 2019-10-23
+* Fixing options not being saved properly.
 
 = 2.3.6 =
 * Released 2019-10-09
@@ -335,5 +339,5 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Upgrade Notice ==
 
-= 2.3.6 =
-Ensuring plugin works with WordPress 5.3.
+= 2.3.7 =
+Fixing options not being saved properly.

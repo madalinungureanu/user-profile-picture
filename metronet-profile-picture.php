@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.3.6
+Version: 2.3.7
 Requires at least: 3.5
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
@@ -12,7 +12,7 @@ Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.6' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.7' );
 define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
 define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
@@ -166,7 +166,8 @@ class Metronet_Profile_Picture {
 	public function admin_page() {
 		if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 			check_admin_referer( 'save_mpp_options' );
-			$this->update_options( wp_unslash( filter_input( INPUT_POST, 'options' ) ) );
+			$options = wp_unslash( $_POST['options'] ); // phpcs:ignore
+			$this->update_options( $options );
 			printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'metronet-profile-picture' ) );
 		}
 		// Get options and defaults.
@@ -250,7 +251,6 @@ class Metronet_Profile_Picture {
 	 * @return void
 	 */
 	public function update_options( $options ) {
-		$options = wp_unslash( $options );
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
 				default:
