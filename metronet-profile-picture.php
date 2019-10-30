@@ -4,15 +4,15 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Ronald Huereca
-Version: 2.3.7
-Requires at least: 3.5
+Version: 2.3.8
+Requires at least: 4.6
 Author URI: https://www.mediaron.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.7' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.8' );
 define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
 define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
@@ -147,15 +147,25 @@ class Metronet_Profile_Picture {
 	 * @since 2.3.0
 	 */
 	public function register_settings_menu() {
-		$hook = add_menu_page(
-			__( 'User Profile Picture', 'metronet-profile-picture' ),
-			__( 'User Profile Picture', 'metronet-profile-picture' ),
-			'manage_options',
-			'mpp',
-			array( $this, 'admin_page' ),
-			'dashicons-groups',
-			100
-		);
+		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
+			$hook = add_menu_page(
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				'manage_options',
+				'mpp',
+				array( $this, 'admin_page' ),
+				'dashicons-groups',
+				100
+			);
+		} else {
+			$hook = add_options_page(
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				'manage_options',
+				'mpp',
+				array( $this, 'admin_page' )
+			);
+		}
 	}
 
 	/**
@@ -738,11 +748,18 @@ class Metronet_Profile_Picture {
 	 * @return array Settings array.
 	 */
 	public function plugin_settings_link( $settings ) {
-		$admin_anchor = sprintf(
-			'<a href="%s">%s</a>',
-			esc_url( admin_url( 'admin.php?page=mpp' ) ),
-			esc_html__( 'Settings', 'metronet-profile-picture' )
-		);
+		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
+			$admin_anchor = sprintf(
+				'<a href="%s">%s</a>',
+				esc_html__( 'Settings', 'metronet-profile-picture' )
+			);	
+		} else {
+			$admin_anchor = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( admin_url( 'options-general.php?page=mpp' ) ),
+				esc_html__( 'Settings', 'metronet-profile-picture' )
+			);
+		}
 		if ( ! defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
 			$admin_anchor .= sprintf(
 				' | <a href="%s">%s</a>',
