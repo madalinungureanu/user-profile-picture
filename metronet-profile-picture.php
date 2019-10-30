@@ -751,8 +751,9 @@ class Metronet_Profile_Picture {
 		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
 			$admin_anchor = sprintf(
 				'<a href="%s">%s</a>',
+				esc_url( admin_url( 'admin.php?page=mpp' ) ),
 				esc_html__( 'Settings', 'metronet-profile-picture' )
-			);	
+			);
 		} else {
 			$admin_anchor = sprintf(
 				'<a href="%s">%s</a>',
