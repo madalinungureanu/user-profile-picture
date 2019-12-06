@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,8 +13,6 @@ Set a custom profile image (avatar) for a user using the standard WordPress medi
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
-
- > Get <a href="https://mediaron.com/downloads/user-profile-picture-enhanced/">User Profile Picture Enhanced</a>, an add-on for User Profile Picture.
 
 <a href="https://mediaron.com/user-profile-picture/">View Documentation and Examples</a>
 
@@ -126,6 +124,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 == Changelog ==
 
+= 2.3.9 =
+* Released 2019-12-06
+* Removing adverts for User Profile Picture Enhanced.
+
 = 2.3.8 =
 * Released 2019-10-30
 * Removing top-level navigation.
@@ -145,7 +147,6 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 
 = 2.3.2 =
 * Released 2019-07-14
-* Added top level navigation menu in anticipation for User Profile Picture Enhanced.
 * Adding more filters for third-party plugin integration.
 
 = 2.3.0 =
@@ -154,7 +155,6 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * New filters for add-on extensibility
 * Added Options page so you can disable the Gutenberg blocks if you so desire.
 * Bug fix: Adding user display name to post title when User Profile Picture creates the user page.
-* New add-on in the works: <a href="https://mediaron.com/downloads/user-profile-picture-enhanced/">User Profile Picture Enhanced</a>.
 
 = 2.2.8 =
 * Released 2019-06-11
