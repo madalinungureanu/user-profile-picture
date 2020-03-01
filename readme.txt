@@ -2,7 +2,7 @@
 Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: 2.3.11
 Requires PHP: 5.6
 License: GPLv2 or later
