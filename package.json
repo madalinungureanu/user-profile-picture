@@ -27,6 +27,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "fstream": "^1.0.12",
+    "node-sass": "^4.13.1",
     "npm": "^6.9.0",
     "tar": "^4.4.9"
   }

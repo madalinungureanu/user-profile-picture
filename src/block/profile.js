@@ -1008,7 +1008,8 @@ class MPP_Gutenberg_Enhanced extends Component {
 											type="image"
 											value={ profileImgID }
 											render={ ( { open } ) => (
-												<Button onClick={ open }>
+												<Button 
+												onClick={ open }>
 													{ ! profileImgID ? <img src={profileImgURL} alt="placeholder" /> : <img
 														className="profile-avatar"
 														src={ profileImgURL }
