@@ -198,6 +198,14 @@ class Metronet_Profile_Picture {
 								<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
 							</td>
 						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Disable Image Sizes?', 'metronet-profile-picture' ); ?></th>
+							<td>
+								<input type="hidden" name="options['disable_image_sizes']" value="off" />
+								<input id="mpp-display-image-sizes" type="checkbox" value="on" name="options[disable_image_sizes]" <?php checked( 'on', $options['disable_image_sizes'] ); ?> /> <label for="mpp-display-image-sizes"><?php esc_html_e( 'Disable Image Sizes', 'metronet-profile-picture' ); ?></label>
+								<p class="description"><?php esc_html_e( 'Select this option to disable the four image sizes User Profile Picture Creates.' ); ?></p>
+							</td>
+						</tr>
 						<?php
 						/**
 						 * Allow other plugins to run code after the user profile admin Table Row.
@@ -281,7 +289,8 @@ class Metronet_Profile_Picture {
 	 */
 	private function get_defaults() {
 		$defaults = array(
-			'load_gutenberg' => 'on',
+			'load_gutenberg'      => 'on',
+			'disable_image_sizes' => 'off',
 		);
 
 		/**
@@ -715,6 +724,12 @@ class Metronet_Profile_Picture {
 		$post_type_args = apply_filters( 'mpp_post_type_args', $post_type_args );
 		register_post_type( 'mt_pp', $post_type_args );
 
+		// Determine if to load image sizes or not.
+		$options             = $this->get_options();
+		$display_image_sizes = true;
+		if ( 'on' === $options['disable_image_sizes'] ) {
+			$display_image_sizes = false;
+		}
 		/**
 		 * Filter the the creation of image sizes.
 		 *
@@ -722,7 +737,7 @@ class Metronet_Profile_Picture {
 		 *
 		 * @param bool Whether to allow image size creation or not
 		 */
-		if ( apply_filters( 'mpp_add_image_sizes', true ) ) {
+		if ( apply_filters( 'mpp_add_image_sizes', $display_image_sizes ) ) {
 			add_image_size( 'profile_24', 24, 24, true );
 			add_image_size( 'profile_48', 48, 48, true );
 			add_image_size( 'profile_96', 96, 96, true );
