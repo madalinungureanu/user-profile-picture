@@ -3,7 +3,7 @@ Contributors: ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 2.3.10
+Stable tag: 2.3.11
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -123,6 +123,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.3.11 =
+* Released 2020-02-29
+* Added option to disable image sizes.
 
 = 2.3.10 =
 * Released 2019-12-29
@@ -346,6 +350,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.3.11 =
+Added option to disable image sizes.
 
 = 2.3.10 =
 Added new hook for add-on capability.
