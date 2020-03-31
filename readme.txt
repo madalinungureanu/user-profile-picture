@@ -1,5 +1,5 @@
 === User Profile Picture ===
-Contributors: ronalfy, Alaadiaa
+Contributors: cozmoslabs, ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
 Tested up to: 5.4
@@ -7,18 +7,18 @@ Stable tag: 2.3.11
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/give/
+Donate link: https://cozmoslabs.com/
 
 Set a custom profile image (avatar) for a user using the standard WordPress media upload tool.
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
 
-<a href="https://mediaron.com/user-profile-picture/">View Documentation and Examples</a>
+<a href="https://www.cozmoslabs.com/user-profile-picture/">View Documentation and Examples</a>
 
 https://www.youtube.com/watch?v=9icnOWWZUpA&rel=0
 
-Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/members/">Members</a> to allow other roles (e.g. subscribers) the ability to upload images.
+Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/profile-builder/">Profile Builder</a> to allow other roles (e.g. subscribers) the ability to upload images.
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
@@ -32,9 +32,9 @@ https://www.youtube.com/watch?v=k9bDmgunXvM&rel=0
 
 == Documentation and Feedback ==
 
-See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
+See the documentation on <a href="https://github.com/madalinungureanu/user-profile-picture">GitHub</a>.
 
-> Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a> or <a href="https://mediaron.com/give/">Give Back</a> to show support.
+> Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a>.
 
 == Installation ==
 
@@ -88,7 +88,7 @@ mt_author_box( $post->post_author, array(
 ) );
 `
 
-View the code on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
+View the code on <a href="https://github.com/madalinungureanu/user-profile-picture">GitHub</a>.
 
 The REST API is currently supported for versions of WordPress 4.4 and up.
 
