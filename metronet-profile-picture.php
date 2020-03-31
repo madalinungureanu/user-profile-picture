@@ -28,7 +28,7 @@ define( 'METRONET_PROFILE_PICTURE_FILE', __FILE__ );
  * @package  User Profile Picture
  * @author   Ronald Huereca <ronald@mediaron.com>
  * @license  GPL-2.0+
- * @link     https://github.com/ronalfy/user-profile-picture
+ * @link     https://github.com/madalinungureanu/user-profile-picture
  *
  * @since 1.0.0
  */
