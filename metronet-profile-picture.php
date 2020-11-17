@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Cozmoslabs
-Version: 2.3.11
+Version: 2.4.0
 Requires at least: 4.6
 Author URI: https://www.cozmoslabs.com
 Contributors: ronalfy
@@ -12,7 +12,7 @@ Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.11' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.4.0' );
 define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
 define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
@@ -974,16 +974,18 @@ class Metronet_Profile_Picture {
 			'mpp/v2',
 			'/profile-image/me',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'rest_api_put_profile' ),
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'rest_api_put_profile' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 		register_rest_route(
 			'mpp/v2',
 			'/profile-image/change',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'rest_api_change_profile_image' ),
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'rest_api_change_profile_image' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 		register_rest_route(
@@ -1009,9 +1011,10 @@ class Metronet_Profile_Picture {
 			'mpp/v1',
 			'/user/(?P<id>\d+)',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'rest_api_get_profile' ),
-				'args'     => array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'rest_api_get_profile' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
 					'id' => array(
 						'validate_callback' => array( $this, 'rest_api_validate' ),
 						'sanitize_callback' => array( $this, 'rest_api_sanitize' ),
