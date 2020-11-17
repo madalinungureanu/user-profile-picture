@@ -1,34 +1,57 @@
 {
-  "name": "user-profile-picture",
-  "version": "2.0.0",
-  "description": "Set or remove a custom profile image for a user using the standard WordPress media upload tool.",
-  "scripts": {
-    "start": "cgb-scripts start",
-    "build": "cgb-scripts build",
-    "eject": "cgb-scripts eject"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ronalfy/user-profile-picture"
-  },
-  "author": "Ronald Huereca",
-  "license": "SEE LICENSE IN license.txt",
-  "bugs": {
-    "url": "https://wordpress.org/plugins/metronet-profile-picture/"
-  },
-  "homepage": "https://mediaron.com/portfolio/metronet-profile-picture/",
-  "devDependencies": {
-    "cgb-scripts": "^1.17.0",
-    "classnames": "^2.2.6",
-    "gulp": "^4.0.2",
-    "gulp-zip": "^4.1.0",
-    "lodash": "^4.17.11"
-  },
-  "dependencies": {
-    "axios": "^0.18.1",
-    "fstream": "^1.0.12",
-    "node-sass": "^4.13.1",
-    "npm": "^6.9.0",
-    "tar": "^4.4.9"
-  }
+	"name": "user-profile-picture",
+	"version": "4.0.0",
+	"description": "User profile picture plugin.",
+	"main": "index.js",
+	"scripts": {
+		"watch": "webpack --watch",
+		"build": "webpack --mode development",
+		"deploy": "webpack --mode production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mediaron"
+	},
+	"author": "MediaRon LLC",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://mediaron.com"
+	},
+	"homepage": "https://mediaron.com",
+	"devDependencies": {
+		"@babel/cli": "^7.1.0",
+		"@babel/core": "^7.1.0",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/preset-react": "^7.12.5",
+		"axios": "^0.19.2",
+		"babel-loader": "^8.0.2",
+		"babel-plugin-dynamic-import-node": "^2.3.3",
+		"babel-plugin-minify-mangle-names": "^0.5.0",
+		"css-loader": "^1.0.1",
+		"file-loader": "^6.0.0",
+		"lodash": "^4.17.20",
+		"mini-css-extract-plugin": "^0.9.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"postcss-loader": "^3.0.0",
+		"qs": "^6.9.4",
+		"re-resizable": "^6.7.0",
+		"react": "^16.14.0",
+		"react-color-gradient-picker": "^0.1.2",
+		"react-dom": "^16.14.0",
+		"react-redux": "^7.2.0",
+		"react-router-dom": "^5.1.2",
+		"react-svg-loader": "^3.0.3",
+		"redux": "^4.0.5",
+		"redux-form": "^8.3.5",
+		"sass": "^1.29.0",
+		"sass-loader": "^10.0.5",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.2.0",
+		"webpack-cli": "^4.1.0"
+	},
+	"dependencies": {
+		"@babel/plugin-proposal-class-properties": "^7.8.3",
+		"classnames": "^2.2.6",
+		"webpack-fix-style-only-entries": "^0.6.0"
+	}
 }
