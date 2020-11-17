@@ -99,19 +99,19 @@ const blockAttributes = {
 		default: 'square',
 	},
 	showName: {
-		type: 'bool',
+		type: 'boolean',
 		default: true,
 	},
 	showTitle: {
-		type: 'bool',
+		type: 'boolean',
 		default: true,
 	},
 	showDescription: {
-		type: 'bool',
+		type: 'boolean',
 		default: true,
 	},
 	showViewPosts: {
-		type: 'bool',
+		type: 'boolean',
 		default: true,
 	},
 	user_id: {

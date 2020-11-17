@@ -78,7 +78,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'profileImgID'                    => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => '',
 					),
 					'profileURL'                      => array(
@@ -86,15 +86,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'padding'                         => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'border'                          => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'borderRounded'                   => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'borderColor'                     => array(
@@ -130,15 +130,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => 'inherit',
 					),
 					'headerFontSize'                  => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 24,
 					),
 					'buttonFontSize'                  => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 16,
 					),
 					'profileFontSize'                 => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 18,
 					),
 					'profileAvatarShape'              => array(
@@ -146,27 +146,27 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => 'square',
 					),
 					'showName'                        => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showTitle'                       => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showDescription'                 => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showViewPosts'                   => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showWebsite'                     => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'user_id'                         => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'socialFacebook'                  => array(
@@ -270,7 +270,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'showSocialMedia'                 => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'profileName'                     => array(
