@@ -158,9 +158,10 @@ class Metronet_Profile_Picture {
 				100
 			);
 		} else {
-			$hook = add_options_page(
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
+			$hook = add_submenu_page(
+				'users.php',
+				__( 'Profile Picture', 'metronet-profile-picture' ),
+				__( 'Profile Picture', 'metronet-profile-picture' ),
 				'manage_options',
 				'mpp',
 				array( $this, 'admin_page' )
@@ -765,8 +766,8 @@ class Metronet_Profile_Picture {
 		} else {
 			$admin_anchor = sprintf(
 				'<a href="%s">%s</a>',
-				esc_url( admin_url( 'options-general.php?page=mpp' ) ),
-				esc_html__( 'Settings', 'metronet-profile-picture' )
+				esc_url( admin_url( 'users.php?page=mpp' ) ),
+				esc_html__( 'Profile Picture Options', 'metronet-profile-picture' )
 			);
 		}
 		if ( ! is_array( $settings ) ) {
