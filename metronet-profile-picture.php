@@ -78,6 +78,7 @@ class Metronet_Profile_Picture {
 		add_action( 'personal_options', array( $this, 'insert_upload_form' ) );
 
 		// Scripts.
+		add_action( 'admin_enqueue_scripts', array( $this, 'print_admin_scripts' ) );
 		add_action( 'admin_print_scripts-user-edit.php', array( $this, 'print_media_scripts' ) );
 		add_action( 'admin_print_scripts-profile.php', array( $this, 'print_media_scripts' ) );
 
@@ -205,11 +206,11 @@ class Metronet_Profile_Picture {
 		// Get options and defaults.
 		$options = $this->get_options();
 		?>
-		<div class="wrap" class="upp-admin-wrap">
+		<div class="wrap upp-admin-wrap">
 			<form action="" method="POST">
 				<?php wp_nonce_field( 'save_mpp_options' ); ?>
-				<h1><?php $this->plugin_logo(); ?> <?php esc_html_e( 'User Profile Picture', 'metronet-profile-picture' ); ?></h1>
-				<p><?php esc_html_e( 'Welcome to User Profile Picture!', 'metronet-profile-picture' ); ?></p>
+				<h1><strong>User Profile</strong> Picture</h1>
+				<p class="upp-info-text">The easiest way to add a profile picture for your users.</p>
 				<table class="form-table">
 					<tbody>
 						<tr>
@@ -778,23 +779,29 @@ class Metronet_Profile_Picture {
 	 * @return array Settings array.
 	 */
 	public function plugin_settings_link( $settings ) {
+		$admin_settings_links = array();
 		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
-			$admin_anchor = sprintf(
+			$admin_settings_links[] = sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( admin_url( 'admin.php?page=mpp' ) ),
 				esc_html__( 'Settings', 'metronet-profile-picture' )
 			);
 		} else {
-			$admin_anchor = sprintf(
+			$admin_settings_links[] = sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( admin_url( 'users.php?page=mpp' ) ),
-				esc_html__( 'Profile Picture Options', 'metronet-profile-picture' )
+				esc_html__( 'Options', 'metronet-profile-picture' )
+			);
+			$admin_settings_links[] = sprintf(
+				'<a href="%s" target="_blank">%s</a>',
+				esc_url( $this->get_plugin_docs_url() ),
+				esc_html__( 'Documentation', 'metronet-profile-picture' )
 			);
 		}
 		if ( ! is_array( $settings ) ) {
-			return array( $admin_anchor );
+			return $admin_settings_links;
 		} else {
-			return array_merge( $settings, array( $admin_anchor ) );
+			return array_merge( $settings, $admin_settings_links );
 		}
 	}
 
@@ -883,6 +890,31 @@ class Metronet_Profile_Picture {
 	public function profile_print_media_scripts() {
 		if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE === true ) {
 			$this->print_media_scripts();
+		}
+	}
+
+	/**
+	 * Print admin scripts and styles.
+	 *
+	 * @since 2.5.0
+	 */
+	public function print_admin_scripts() {
+		$screen = get_current_screen();
+		if ( 'users_page_mpp' === $screen->id ) {
+			wp_enqueue_script(
+				'mpp-admin-script',
+				self::get_plugin_url( '/dist/admin-panel.js' ),
+				array( 'jquery' ),
+				METRONET_PROFILE_PICTURE_VERSION,
+				true
+			);
+			wp_enqueue_style(
+				'mpp-admin-styles',
+				self::get_plugin_url( '/dist/admin.css' ),
+				array(),
+				METRONET_PROFILE_PICTURE_VERSION,
+				'all'
+			);
 		}
 	}
 
