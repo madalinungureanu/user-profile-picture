@@ -193,9 +193,9 @@ class Setup {
 				100
 			);
 		} else {
-			$hook = add_options_page(
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
+			$hook = add_users_page(
+				__( 'Profile Picture', 'metronet-profile-picture' ),
+				__( 'Profile Picture', 'metronet-profile-picture' ),
 				'manage_options',
 				'mpp',
 				array( $this, 'admin_page' )
