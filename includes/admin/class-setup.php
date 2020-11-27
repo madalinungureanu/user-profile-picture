@@ -175,4 +175,31 @@ class Setup {
 		</div>
 		<?php
 	}
+
+	/**
+	 * Register the settings menu for User Profile Picture
+	 *
+	 * @since 2.3.0
+	 */
+	public function register_settings_menu() {
+		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
+			$hook = add_menu_page(
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				'manage_options',
+				'mpp',
+				array( $this, 'admin_page' ),
+				'dashicons-groups',
+				100
+			);
+		} else {
+			$hook = add_options_page(
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				__( 'User Profile Picture', 'metronet-profile-picture' ),
+				'manage_options',
+				'mpp',
+				array( $this, 'admin_page' )
+			);
+		}
+	}
 }

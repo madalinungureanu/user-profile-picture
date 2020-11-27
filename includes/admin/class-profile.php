@@ -38,8 +38,8 @@ class Profile {
 			return; // Users must be author or greater.
 		}
 
-		$user_id = $this->get_user_id();
-		$post_id = $this->get_post_id( $user_id );
+		$user_id = Functions::get_user_id();
+		$post_id = Functions::get_post_id( $user_id );
 
 		?>
 		<tr valign="top">
@@ -60,7 +60,7 @@ class Profile {
 					echo '</a>';
 				} else {
 					echo '<a style="display:block" href="#" class="mpp_add_media default-image">';
-					$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
+					$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', Functions::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
 					echo wp_kses_post( $post_thumbnail );
 					echo sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 					echo '</a>';
@@ -72,7 +72,7 @@ class Profile {
 				?>
 					<a id="metronet-remove" class="<?php echo implode( ' ', $remove_classes ); // phpcs:ignore ?>" href="#" title="<?php esc_attr_e( 'Remove profile image', 'metronet-profile-picture' ); ?>"><?php esc_html_e( 'Remove profile image', 'metronet-profile-picture' ); ?></a>
 					<div style="display: none">
-						<?php printf( '<img class="mpp-loading" width="150" height="150" alt="Loading" src="%s" />', esc_url( self::get_plugin_url( '/img/loading.gif' ) ) ); ?>
+						<?php printf( '<img class="mpp-loading" width="150" height="150" alt="Loading" src="%s" />', esc_url( Functions::get_plugin_url( '/img/loading.gif' ) ) ); ?>
 					</div>
 				</div><!-- #metronet-profile-image -->
 				<div id="metronet-override-avatar">
@@ -88,7 +88,7 @@ class Profile {
 					}
 
 					// Filter for hiding the override interface.  If this option is set to true, the mpp_avatar_override filter is ignored and override is enabled by default.
-					$hide_override = apply_filters( 'mpp_hide_avatar_override', false );
+					$hide_override = apply_filters( 'mpp_hide_avatar_override', true );
 					if ( $hide_override ) :
 						?>
 						<input type="hidden" name="metronet-user-avatar" id="metronet-user-avatar" value="on"  />
@@ -128,16 +128,16 @@ class Profile {
 		if ( 'users_page_mpp' === $screen->id ) {
 			wp_enqueue_script(
 				'mpp-admin-script',
-				self::get_plugin_url( '/dist/admin-panel.js' ),
+				Functions::get_plugin_url( '/dist/admin-panel.js' ),
 				array( 'jquery' ),
-				METRONET_PROFILE_PICTURE_VERSION,
+				Functions::get_plugin_version(),
 				true
 			);
 			wp_enqueue_style(
 				'mpp-admin-styles',
-				self::get_plugin_url( '/dist/admin.css' ),
+				Functions::get_plugin_url( '/dist/admin.css' ),
 				array(),
-				METRONET_PROFILE_PICTURE_VERSION,
+				Functions::get_plugin_version(),
 				'all'
 			);
 		}
@@ -147,10 +147,10 @@ class Profile {
 	 * Output media scripts for thickbox and media uploader
 	 **/
 	public function print_media_scripts() {
-		$post_id = $this->get_post_id( $this->get_user_id() );
+		$post_id = Functions::get_post_id( Functions::get_user_id() );
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
-		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, METRONET_PROFILE_PICTURE_VERSION, true );
+		wp_enqueue_script( 'mt-pp', Functions::get_plugin_url( '/js/mpp.js' ), $script_deps, Functions::get_plugin_version(), true );
 		wp_localize_script(
 			'mt-pp',
 			'metronet_profile_image',
@@ -161,14 +161,14 @@ class Profile {
 				'ajax_url'            => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'user_post_id'        => absint( $post_id ),
 				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) ),
-				'loading_gif'         => esc_url( self::get_plugin_url( '/img/loading.gif' ) ),
+				'loading_gif'         => esc_url( Functions::get_plugin_url( '/img/loading.gif' ) ),
 			)
 		);
 		wp_enqueue_style(
 			'mpp-profile-picture',
-			$this->get_plugin_url( '/dist/profile-picture.css' ),
+			Functions::get_plugin_url( '/dist/profile-picture.css' ),
 			array( 'dashicons' ),
-			METRONET_PROFILE_PICTURE_VERSION,
+			Functions::get_plugin_version(),
 			'all'
 		);
 	}

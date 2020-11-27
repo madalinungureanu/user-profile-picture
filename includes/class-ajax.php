@@ -47,7 +47,7 @@ class Ajax {
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumb_src      = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail', false, '' );
 			$post_thumbnail = sprintf( '<img src="%s" width="150" height="150" title="%s" />', esc_url( $thumb_src[0] ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
-			$crop_html      = $this->get_post_thumbnail_editor_link( $post_id );
+			$crop_html      = '';
 			$thumb_html     = sprintf( '<a href="#" class="mpp_add_media">%s%s</a>', $post_thumbnail, sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) ) );
 			$thumb_html    .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( 'Remove profile image', 'metronet-profile-picture' ) );
 			wp_send_json(
@@ -97,7 +97,7 @@ class Ajax {
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumb_src      = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumbnail', false, '' );
 			$post_thumbnail = sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', esc_url( $thumb_src[0] ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
-			$crop_html      = $this->get_post_thumbnail_editor_link( $post_id );
+			$crop_html      = '';
 			$thumb_html     = sprintf( '<a href="#" class="mpp_add_media">%s%s</a>', $post_thumbnail, sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) ) );
 			$thumb_html    .= sprintf( '<a id="metronet-remove" class="dashicons dashicons-trash" href="#" title="%s">%s</a>', esc_attr__( 'Remove profile image', 'metronet-profile-picture' ), esc_html__( 'Remove profile image', 'metronet-profile-picture' ) );
 			wp_send_json(
@@ -114,7 +114,7 @@ class Ajax {
 			);
 		} else {
 			$thumb_html  = '<a style="display:block" href="#" class="mpp_add_media default-image">';
-			$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
+			$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', Functions::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
 			$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 			$thumb_html .= '</a>';
 		}
@@ -149,7 +149,7 @@ class Ajax {
 		check_ajax_referer( "mt-update-post_$post_id" );
 
 		$thumb_html  = '<a style="display:block" href="#" class="mpp_add_media default-image">';
-		$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
+		$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', Functions::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
 		$thumb_html .= sprintf( '<div id="metronet-click-edit">%s</div>', esc_html__( 'Click to Edit', 'metronet-profile-picture' ) );
 		$thumb_html .= '</a>';
 
