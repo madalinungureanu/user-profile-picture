@@ -24,6 +24,8 @@ class Setup {
 		add_action( 'plugin_action_links_' . Functions::get_plugin_slug(), array( $this, 'plugin_settings_link' ) );
 
 		add_action( 'init', array( $this, 'add_post_type' ) );
+
+		new \MPP\Includes\Admin\Tabs\Settings();
 	}
 
 	/**
