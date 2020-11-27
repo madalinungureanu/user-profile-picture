@@ -1,4 +1,4 @@
-=== User Profile Picture ===
+=== User Profile Picture - User Avatars ===
 Contributors: cozmoslabs, ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5

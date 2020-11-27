@@ -8,6 +8,8 @@ module.exports = {
 		'blocks.build': ['./src/blocks.js'],
 		'blocks.editor.build': ['./src/block/editor.scss'],
 		'blocks.style.build': ['./src/block/style.scss'],
+		'profile-picture': ['./src/scss/profile-picture.scss'],
+		'admin': ['./src/scss/admin.scss'],
 	},
 	output: {
 		filename: '[name].js',
