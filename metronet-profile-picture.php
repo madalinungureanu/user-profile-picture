@@ -58,12 +58,10 @@ class Metronet_Profile_Picture {
 		if ( 'on' === $options['load_gutenberg'] ) {
 			// Include Gutenberg.
 			add_filter( 'block_categories', array( $this, 'add_block_category' ), 10, 2 );
-			include_once Functions::get_plugin_dir( '/gutenberg/class-gutenberg.php' );
-			new Metronet_Profile_Picture_Gutenberg();
+			new \MPP\Includes\Blocks\Legacy\Blocks();
 		}
 
 		new \MPP\Includes\Ajax();
-		new \MPP\Includes\Blocks\Legacy\Blocks();
 		new \MPP\Includes\Rest();
 		new \MPP\Includes\Avatar_Overrides();
 		new \MPP\Includes\Admin\Setup();
