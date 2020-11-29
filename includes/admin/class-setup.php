@@ -199,7 +199,7 @@ class Setup {
 	 * Output the top-level admin tabs.
 	 */
 	public static function get_settings_tabs() {
-		$settings_url_base = Functions::get_settings_url( 'setup' )
+		$settings_url_base = Functions::get_settings_url( 'settings' )
 		?>
 			<?php
 			$tabs = array();
@@ -218,11 +218,11 @@ class Setup {
 			if ( $tabs && ! empty( $tabs ) && is_array( $tabs ) ) {
 				$active_tab = Functions::get_admin_tab();
 				if ( null === $active_tab ) {
-					$active_tab = 'setup';
+					$active_tab = 'settings';
 				}
 				$is_tab_match = false;
-				if ( 'setup' === $active_tab ) {
-					$active_tab = 'setup';
+				if ( 'settings' === $active_tab ) {
+					$active_tab = 'settings';
 				} else {
 					foreach ( $tabs as $tab ) {
 						$tab_get = isset( $tab['get'] ) ? $tab['get'] : '';
@@ -231,7 +231,7 @@ class Setup {
 						}
 					}
 					if ( ! $is_tab_match ) {
-						$active_tab = 'setup';
+						$active_tab = 'settings';
 					}
 				}
 				$do_action = false;
@@ -248,11 +248,10 @@ class Setup {
 					$tab_url   = isset( $tab['url'] ) ? $tab['url'] : '';
 					$tab_label = isset( $tab['label'] ) ? $tab['label'] : '';
 					$tab_html .= sprintf(
-						'<a href="%s" class="%s" id="eff-%s"><svg class="mpp-icon mpp-icon-tab">%s</svg><span>%s</span></a>',
+						'<a href="%s" class="%s" id="mpp-%s"><span>%s</span></a>',
 						esc_url( $tab_url ),
 						esc_attr( implode( ' ', $classes ) ),
 						esc_attr( $tab_get ),
-						sprintf( '<use xlink:href="#%s"></use>', esc_attr( $tab['icon'] ) ),
 						esc_html( $tab['label'] )
 					);
 				}
@@ -279,7 +278,7 @@ class Setup {
 
 				// Check to see if no tabs are available for this view.
 				if ( null === $current_tab && null === $current_sub_tab ) {
-					$current_tab = 'setup';
+					$current_tab = 'settings';
 				}
 				if ( $sub_tabs && ! empty( $sub_tabs ) && is_array( $sub_tabs ) ) {
 					if ( null === $current_sub_tab ) {
