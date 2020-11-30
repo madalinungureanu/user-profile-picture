@@ -607,7 +607,7 @@ class Blocks {
 			array(
 				'rest_url'    => esc_url( rest_url( 'mpp/v2' ) ),
 				'nonce'       => wp_create_nonce( 'wp_rest' ),
-				'mystery_man' => Metronet_Profile_Picture::get_plugin_url( 'img/mystery.png' ),
+				'mystery_man' => Functions::get_plugin_url( 'img/mystery.png' ),
 			)
 		);
 
