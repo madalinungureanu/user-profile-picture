@@ -19,6 +19,20 @@ class Media_Restrict {
 	 */
 	public function __construct() {
 		add_filter( 'ajax_query_attachments_args', array( $this, 'restrict_media_view' ) );
+
+		map_meta_cap( 'edit_post', 3, 8503 );
+	}
+
+	public function allow_subscriber_edit_post( $caps, $cap, $user_id, $args ) {
+		if ( 'edit_post' == $cap ) {
+			$post = get_post( $args[0] );
+			if ( 'mt_pp' !== $post->post_type ) {
+				return $caps;
+			}
+			remove_filter( 'map_meta_cap', array( $this, 'allow_subscriber_edit_post' ), 10, 4 );
+			map_meta_cap( 'edit_post', $user_id, $post->ID );
+		}
+		return $caps;
 	}
 
 	/**
