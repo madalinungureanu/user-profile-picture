@@ -64,8 +64,11 @@ class Options {
 	 */
 	public static function get_defaults() {
 		$defaults = array(
-			'load_gutenberg'      => 'on',
-			'disable_image_sizes' => 'off',
+			'load_gutenberg'       => 'on',
+			'disable_image_sizes'  => 'off',
+			'subscribers_upload'   => 'off',
+			'contributors_upload'  => 'off',
+			'media_files_restrict' => 'off',
 		);
 
 		/**

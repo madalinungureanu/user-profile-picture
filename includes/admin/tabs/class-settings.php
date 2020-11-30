@@ -68,6 +68,24 @@ class Settings {
 					$options = wp_unslash( $_POST['options'] ); // phpcs:ignore
 					Options::update_options( $options );
 					printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'metronet-profile-picture' ) );
+
+					// Add the ability for subscribers to upload files.
+					if ( 'on' === $options['subscribers_upload'] ) {
+						$subscriber = get_role( 'subscriber' );
+						$subscriber->add_cap( 'upload_files' );
+					} else {
+						$subscriber = get_role( 'subscriber' );
+						$subscriber->remove_cap( 'upload_files' );
+					}
+
+					// Add the ability for contributors to upload files.
+					if ( 'on' === $options['contributors_upload'] ) {
+						$contributor = get_role( 'contributor' );
+						$contributor->add_cap( 'upload_files' );
+					} else {
+						$contributor = get_role( 'contributor' );
+						$contributor->remove_cap( 'upload_files' );
+					}
 				}
 				// Get options and defaults.
 				$options = Options::get_options();
@@ -79,7 +97,7 @@ class Settings {
 							<tr>
 								<th scope="row"><?php esc_html_e( 'Gutenberg Blocks', 'metronet-profile-picture' ); ?></th>
 								<td>
-									<input type="hidden" name="options['load_gutenberg']" value="on" />
+									<input type="hidden" name="options[load_gutenberg]" value="on" />
 									<input id="mpp-load-gutenberg" type="checkbox" value="off" name="options[load_gutenberg]" <?php checked( 'off', $options['load_gutenberg'] ); ?> /> <label for="mpp-load-gutenberg"><?php esc_html_e( 'Disable Gutenberg Blocks', 'metronet-profile-picture' ); ?></label>
 									<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
 								</td>
@@ -87,9 +105,33 @@ class Settings {
 							<tr>
 								<th scope="row"><?php esc_html_e( 'Disable Image Sizes?', 'metronet-profile-picture' ); ?></th>
 								<td>
-									<input type="hidden" name="options['disable_image_sizes']" value="off" />
+									<input type="hidden" name="options[disable_image_sizes]" value="off" />
 									<input id="mpp-display-image-sizes" type="checkbox" value="on" name="options[disable_image_sizes]" <?php checked( 'on', $options['disable_image_sizes'] ); ?> /> <label for="mpp-display-image-sizes"><?php esc_html_e( 'Disable Image Sizes', 'metronet-profile-picture' ); ?></label>
 									<p class="description"><?php esc_html_e( 'Select this option to disable the four image sizes User Profile Picture Creates.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Restrict Media Files?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[media_files_restrict]" value="off" />
+									<input id="mpp-media-files-restrict" type="checkbox" value="on" name="options[media_files_restrict]" <?php checked( 'on', $options['media_files_restrict'] ); ?> /> <label for="mpp-media-files-restrict"><?php esc_html_e( 'Restrict Media.', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to limit media files to the logged in user.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Allow Contributors to Upload Files?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[contributors_upload]" value="off" />
+									<input id="mpp-contributor-upload" type="checkbox" value="on" name="options[contributors_upload]" <?php checked( 'on', $options['contributors_upload'] ); ?> /> <label for="mpp-contributor-upload"><?php esc_html_e( 'Allow contributors to upload files.', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to allow those with the contributor role to upload files.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Allow Subscribers to Upload Files?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[subscribers_upload]" value="off" />
+									<input id="mpp-subscriber-upload" type="checkbox" value="on" name="options[subscribers_upload]" <?php checked( 'on', $options['subscribers_upload'] ); ?> /> <label for="mpp-subscriber-upload"><?php esc_html_e( 'Allow subscribers to upload files.', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to allow those with the subscriber role to upload files.' ); ?></p>
 								</td>
 							</tr>
 							<?php
