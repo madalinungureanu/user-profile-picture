@@ -127,11 +127,27 @@ class Settings {
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Allow Contributors to Only Upload Images?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[contributors_only_upload_images]" value="off" />
+									<input id="mpp-contributor-upload-images" type="checkbox" value="on" name="options[contributors_only_upload_images]" <?php checked( 'on', $options['contributors_only_upload_images'] ); ?> /> <label for="mpp-contributor-upload-images"><?php esc_html_e( 'Allow contributors to upload only images.', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to only allow contributors to upload images.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row"><?php esc_html_e( 'Allow Subscribers to Upload Files?', 'metronet-profile-picture' ); ?></th>
 								<td>
 									<input type="hidden" name="options[subscribers_upload]" value="off" />
 									<input id="mpp-subscriber-upload" type="checkbox" value="on" name="options[subscribers_upload]" <?php checked( 'on', $options['subscribers_upload'] ); ?> /> <label for="mpp-subscriber-upload"><?php esc_html_e( 'Allow subscribers to upload files.', 'metronet-profile-picture' ); ?></label>
 									<p class="description"><?php esc_html_e( 'Select this option to allow those with the subscriber role to upload files.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Allow Subscribers to Only Upload Images?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[subscribers_only_upload_images]" value="off" />
+									<input id="mpp-subscriber-upload-images" type="checkbox" value="on" name="options[subscribers_only_upload_images]" <?php checked( 'on', $options['subscribers_only_upload_images'] ); ?> /> <label for="mpp-contributor-upload-images"><?php esc_html_e( 'Allow subscribers to upload only images.', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to only allow subscribers to upload images.' ); ?></p>
 								</td>
 							</tr>
 							<?php

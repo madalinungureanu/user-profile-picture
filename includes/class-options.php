@@ -69,6 +69,8 @@ class Options {
 			'subscribers_upload'   => 'off',
 			'contributors_upload'  => 'off',
 			'media_files_restrict' => 'off',
+			'subscribers_only_upload_images' => 'on',
+			'contributors_only_upload_images' => 'off',
 		);
 
 		/**

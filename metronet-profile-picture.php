@@ -50,7 +50,6 @@ class Metronet_Profile_Picture {
 	 * Class constructor
 	 */
 	public function __construct() {
-
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// Determine if to load Gutenberg or not.
