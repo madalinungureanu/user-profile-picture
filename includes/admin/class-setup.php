@@ -26,6 +26,7 @@ class Setup {
 		add_action( 'init', array( $this, 'add_post_type' ) );
 
 		new \MPP\Includes\Admin\Tabs\Settings();
+		new \MPP\Includes\Admin\Tabs\Modules();
 	}
 
 	/**

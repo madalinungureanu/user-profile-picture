@@ -20,7 +20,7 @@ class Settings {
 	public function __construct() {
 		add_filter( 'mpp_admin_tabs', array( $this, 'add_settings_tab' ), 1, 1 );
 		add_filter( 'mpp_admin_sub_tabs', array( $this, 'add_settings_main_sub_tab' ), 1, 3 );
-		add_filter( 'mpp_output_settings', array( $this, 'output_settings_content' ), 1, 3 );
+		add_action( 'mpp_output_settings', array( $this, 'output_settings_content' ), 1, 3 );
 	}
 
 	/**
