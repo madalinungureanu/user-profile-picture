@@ -53,8 +53,13 @@ jQuery( document ).ready( function( $ ) {
 		//Assign the default view for the media uploader
 
 		var uploader = wp.media({
-			state: 'featured-image',
-			states: [ new wp.media.controller.FeaturedImage() ],
+			states: [ new wp.media.controller.Library({
+				title: metronet_profile_image.set_profile_text,
+				library: wp.media.query({type: 'image'}),
+				multiple: false,
+				date: false,
+				priority: 20,
+			})],
 			title: metronet_profile_image.set_profile_text,
 			button: {
 				text: metronet_profile_image.remove_profile_text
@@ -119,13 +124,10 @@ jQuery( document ).ready( function( $ ) {
 
 		//For when the Add Profile Image is clicked
 		uploader.on( 'select', function() {
-
 			var featured = uploader.state().get('selection').single();
-			wp.media.featuredImage.set( featured ? featured.id : -1 );
 			if ( ! featured.id ) {
 				return;
 			}
-
 			uploader.mt_featured_set( featured.id );
 
 
@@ -133,7 +135,6 @@ jQuery( document ).ready( function( $ ) {
 
 		//When the remove buttons is clicked
 		uploader.on( 'remove', function() {
-			wp.media.featuredImage.set( -1 );
 			mt_remove_profile_image();
 		} );
 

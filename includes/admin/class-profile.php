@@ -148,7 +148,7 @@ class Profile {
 	 **/
 	public function print_media_scripts() {
 		$post_id = Functions::get_post_id( Functions::get_user_id() );
-		wp_enqueue_media( array( 'post' => $post_id ) );
+		wp_enqueue_media();
 		$script_deps = array( 'media-editor' );
 		wp_enqueue_script( 'mt-pp', Functions::get_plugin_url( '/js/mpp.js' ), $script_deps, Functions::get_plugin_version(), true );
 		wp_localize_script(

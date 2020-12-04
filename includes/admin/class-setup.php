@@ -405,8 +405,8 @@ class Setup {
 			);
 		} else {
 			$hook = add_users_page(
-				__( 'Profile Picture', 'metronet-profile-picture' ),
-				__( 'Profile Picture', 'metronet-profile-picture' ),
+				__( 'User Profile Picture Options', 'metronet-profile-picture' ),
+				__( 'Profile Picture Options', 'metronet-profile-picture' ),
 				'manage_options',
 				'mpp',
 				array( '\MPP\Includes\Admin\Setup', 'settings_page' )
