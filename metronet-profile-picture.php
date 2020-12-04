@@ -50,7 +50,6 @@ class Metronet_Profile_Picture {
 	 * Class constructor
 	 */
 	public function __construct() {
-
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// Determine if to load Gutenberg or not.
@@ -58,10 +57,12 @@ class Metronet_Profile_Picture {
 		if ( 'on' === $options['load_gutenberg'] ) {
 			// Include Gutenberg.
 			add_filter( 'block_categories', array( $this, 'add_block_category' ), 10, 2 );
-			new \MPP\Includes\Blocks\Legacy\Blocks();
+			new MPP\Includes\Blocks\Legacy\Blocks();
 		}
 
 		new \MPP\Includes\Ajax();
+		new \MPP\Includes\Media_Restrict();
+		new \MPP\Includes\Blocks\Legacy\Blocks();
 		new \MPP\Includes\Rest();
 		new \MPP\Includes\Avatar_Overrides();
 		new \MPP\Includes\Admin\Setup();
