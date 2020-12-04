@@ -103,6 +103,22 @@ class Settings {
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Generate Image Sizes', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[generate_image_sizes]" value="off" />
+									<input id="mpp-generate-image-sizes" type="checkbox" value="on" name="options[generate_image_sizes]" <?php checked( 'on', $options['generate_image_sizes'] ); ?> /> <label for="mpp-generate-image-sizes"><?php esc_html_e( 'Generate Image Sizes', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Generate User Profie Image sizes for all uploaded images.', 'metronet-profile-picture' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Disable Image Sizes?', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[disable_image_sizes]" value="off" />
+									<input id="mpp-display-image-sizes" type="checkbox" value="on" name="options[disable_image_sizes]" <?php checked( 'on', $options['disable_image_sizes'] ); ?> /> <label for="mpp-display-image-sizes"><?php esc_html_e( 'Disable Image Sizes', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Select this option to disable the four image sizes User Profile Picture Creates.' ); ?></p>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row"><?php esc_html_e( 'Restrict Media Files?', 'metronet-profile-picture' ); ?></th>
 								<td>
 									<input type="hidden" name="options[media_files_restrict]" value="off" />
