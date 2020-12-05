@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
 			$('.column-username img').on('click', function (e) {
 				//Assign the default view for the media uploader
 				$parent = jQuery( this ).closest( 'tr' ); // Find parent table row.
-				this.user_id = $parent.find( '.check-column' ).find( 'input[type=checkbox]' ).val();
+				MPP.user_id = $parent.find( '.check-column' ).find( 'input[type=checkbox]' ).val();
 				var uploader = wp.media({
 					states: [
 						new wp.media.controller.Library({
@@ -71,12 +71,13 @@ jQuery(document).ready(function ($) {
 					$.post(
 						metronet_profile_image_user_list.ajax_url,
 						{
-							action: 'metronet_add_thumbnail',
+							action: 'metronet_user_list_add_thumbnail',
 							thumbnail_id: id,
+							user_id: MPP.user_id,
 							_wpnonce: metronet_profile_image_user_list.nonce,
 						},
 						function (response) {
-							
+							$( '#user-' + MPP.user_id + ' img' ).replaceWith( response.thumb_html )
 						},
 						'json'
 					);
