@@ -20,7 +20,7 @@ class Settings {
 	public function __construct() {
 		add_filter( 'mpp_admin_tabs', array( $this, 'add_settings_tab' ), 1, 1 );
 		add_filter( 'mpp_admin_sub_tabs', array( $this, 'add_settings_main_sub_tab' ), 1, 3 );
-		add_filter( 'mpp_output_settings', array( $this, 'output_settings_content' ), 1, 3 );
+		add_action( 'mpp_output_settings', array( $this, 'output_settings_content' ), 1, 3 );
 	}
 
 	/**
@@ -100,6 +100,14 @@ class Settings {
 									<input type="hidden" name="options[load_gutenberg]" value="on" />
 									<input id="mpp-load-gutenberg" type="checkbox" value="off" name="options[load_gutenberg]" <?php checked( 'off', $options['load_gutenberg'] ); ?> /> <label for="mpp-load-gutenberg"><?php esc_html_e( 'Disable Gutenberg Blocks', 'metronet-profile-picture' ); ?></label>
 									<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Generate Image Sizes', 'metronet-profile-picture' ); ?></th>
+								<td>
+									<input type="hidden" name="options[generate_image_sizes]" value="off" />
+									<input id="mpp-generate-image-sizes" type="checkbox" value="on" name="options[generate_image_sizes]" <?php checked( 'on', $options['generate_image_sizes'] ); ?> /> <label for="mpp-generate-image-sizes"><?php esc_html_e( 'Generate Image Sizes', 'metronet-profile-picture' ); ?></label>
+									<p class="description"><?php esc_html_e( 'Generate User Profie Image sizes for all uploaded images.', 'metronet-profile-picture' ); ?></p>
 								</td>
 							</tr>
 							<tr>
