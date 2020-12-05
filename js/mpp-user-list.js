@@ -4,14 +4,23 @@ jQuery(document).ready(function ($) {
 		init: function() {
 			this.profile_image_click();
 		},
-		ajax_thumbnail_request: function() {
-
-		},
-		ajax_remove_thumbnail_image: function() {
-
+		remove_thumbnail_image: function() {
+			$.post(
+				metronet_profile_image_user_list.ajax_url,
+				{
+					action: 'metronet_user_list_remove_thumbnail',
+					post_id: metronet_profile_image_user_list.user_post_id,
+					user_id: MPP.user_id,
+					_wpnonce: metronet_profile_image_user_list.nonce,
+				},
+				function (response) {
+					$( '#user-' + MPP.user_id + ' img' ).replaceWith( response.thumb_html );
+				},
+				'json'
+			);
 		},
 		profile_image_click: function() {
-			$('.column-username img').on('click', function (e) {
+			$('.column-username').on('click', 'img', function (e) {
 				//Assign the default view for the media uploader
 				$parent = jQuery( this ).closest( 'tr' ); // Find parent table row.
 				MPP.user_id = $parent.find( '.check-column' ).find( 'input[type=checkbox]' ).val();
@@ -94,12 +103,7 @@ jQuery(document).ready(function ($) {
 		
 				//When the remove buttons is clicked
 				uploader.on('remove', function () {
-					this.ajax_remove_thumbnail_image();
-				});
-		
-				//For when the window is closed (update the thumbnail)
-				uploader.on('escape', function () {
-					this.ajax_refresh_thumbnail_image();
+					MPP.remove_thumbnail_image();
 				});
 		
 				//Open the media uploader

@@ -22,6 +22,7 @@ class Ajax {
 		add_action( 'wp_ajax_metronet_get_thumbnail', array( $this, 'ajax_get_thumbnail' ) );
 		add_action( 'wp_ajax_metronet_remove_thumbnail', array( $this, 'ajax_remove_thumbnail' ) );
 		add_action( 'wp_ajax_metronet_user_list_add_thumbnail', array( $this, 'add_user_list_thumbnail' ) );
+		add_action( 'wp_ajax_metronet_user_list_remove_thumbnail', array( $this, 'add_user_list_remove_thumbnail' ) );
 	}
 
 	/**
@@ -168,6 +169,34 @@ class Ajax {
 				'avatar_admin_medium' => get_avatar( $user_id, 64 ),
 				'user_id'             => $user_id,
 				'logged_in_user_id'   => get_current_user_id(),
+			)
+		);
+	}
+
+	/**
+	 * Remove a thumbnail via Ajax.
+	 *
+	 * Removes a featured thumbnail.
+	 */
+	public function add_user_list_remove_thumbnail() {
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			die( '' );
+		}
+		$user_id = isset( $_POST['user_id'] ) ? absint( $_POST['user_id'] ) : 0;
+		$post_id = Functions::get_post_id( $user_id );
+		if ( 0 === $post_id || 0 === $user_id ) {
+			die( '' );
+		}
+		check_ajax_referer( 'mt-update-user-list-avatar' );
+
+		// Save user meta and update thumbnail.
+		update_user_option( $user_id, 'metronet_image_id', 0 );
+		delete_post_meta( $post_id, '_thumbnail_id' );
+		wp_send_json(
+			array(
+				'thumb_html'        => get_avatar( $user_id, 32 ),
+				'user_id'           => $user_id,
+				'logged_in_user_id' => get_current_user_id(),
 			)
 		);
 	}
