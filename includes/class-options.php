@@ -64,14 +64,23 @@ class Options {
 	 */
 	public static function get_defaults() {
 		$defaults = array(
-			'load_gutenberg'                  => 'on',
-			'generate_image_sizes'            => 'off',
-			'disable_image_sizes'             => 'off',
-			'subscribers_upload'              => 'off',
-			'contributors_upload'             => 'off',
-			'media_files_restrict'            => 'off',
-			'subscribers_only_upload_images'  => 'on',
-			'contributors_only_upload_images' => 'off',
+			'load_gutenberg'                       => 'on',
+			'generate_image_sizes'                 => 'off',
+			'disable_image_sizes'                  => 'off',
+			'subscribers_upload'                   => 'off',
+			'contributors_upload'                  => 'off',
+			'media_files_restrict'                 => 'off',
+			'subscribers_only_upload_images'       => 'on',
+			'contributors_only_upload_images'      => 'off',
+			'change_profile_user_list'             => 'off',
+			'multiple_profile_images'              => 'off',
+			'custom_image_sizes_module'            => 'off',
+			'custom_cropping_module'               => 'off',
+			'custom_team_member_module'            => 'off',
+			'front_end_upload_module'              => 'off',
+			'buddypress_bbpress_module'            => 'off',
+			'hide_wordpress_avatar_section'        => 'off',
+			'show_author_avatar_column_post_types' => 'off',
 		);
 
 		/**
