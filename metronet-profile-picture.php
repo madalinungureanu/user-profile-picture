@@ -62,11 +62,11 @@ class Metronet_Profile_Picture {
 
 		new \MPP\Includes\Ajax();
 		new \MPP\Includes\Media_Restrict();
-		new \MPP\Includes\Blocks\Legacy\Blocks();
 		new \MPP\Includes\Rest();
 		new \MPP\Includes\Avatar_Overrides();
 		new \MPP\Includes\Admin\Setup();
 		new \MPP\Includes\Admin\Profile();
+		new \MPP\Includes\Admin\User_List();
 
 	} //end constructor
 
