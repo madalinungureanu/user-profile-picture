@@ -75,6 +75,16 @@ class Functions {
 	}
 
 	/**
+	 * Returns true if on user profile page, false if not.
+	 */
+	public static function is_user_profile_page() {
+		if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE === true ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Gets a user ID for the user.
 	 *
 	 * @return int user_id
