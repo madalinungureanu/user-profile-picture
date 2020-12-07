@@ -59,45 +59,25 @@ class Image_Sizes {
 	/**
 	 * Get options for the image sizes.
 	 */
-	private function get_options() {
-		$image_sizes = wp_get_registered_image_subsizes();
-		$image_sizes = wp_parse_args( $image_sizes, $this->get_defaults() );
-		return $image_sizes;
+	private function get_saved_image_sizes() {
+		$saved_image_sizes = get_option( 'mpp_image_sizes', array() );
+		if ( empty( $saved_image_sizes ) || ! is_array( $saved_image_sizes ) ) {
+			$saved_image_sizes = $this->get_image_sizes();
+			if ( is_array( $saved_image_sizes ) && ! empty( $saved_image_sizes ) ) {
+				update_option( 'mpp_image_sizes', $saved_image_sizes );
+			} else {
+				$saved_image_sizes = array();
+			}
+		}
+		return $saved_image_sizes;
 	}
 
 	/**
-	 * Get the default options for User Profile Picture Image sizes.
-	 *
-	 * @since 3.0.0
+	 * Get built-in extra image sizes.
 	 */
-	private function get_defaults() {
-		$defaults = array(
-			'profile_24'  => array(
-				'width'  => 24,
-				'height' => 24,
-				'crop'   => true,
-			),
-			'profile_48'  => array(
-				'width'  => 48,
-				'height' => 48,
-				'crop'   => true,
-			),
-			'profile_96'  => array(
-				'width'  => 96,
-				'height' => 96,
-				'crop'   => true,
-			),
-			'profile_150' => array(
-				'width'  => 150,
-				'height' => 150,
-				'crop'   => true,
-			),
-			'profile_300' => array(
-				'width'  => 300,
-				'height' => 300,
-				'crop'   => true,
-			),
-		);
+	private function get_image_sizes() {
+		$image_sizes = wp_get_additional_image_sizes();
+		return $image_sizes;
 	}
 
 	/**
@@ -112,7 +92,6 @@ class Image_Sizes {
 				if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 					check_admin_referer( 'save_mpp_module_options' );
 					$options = wp_unslash( $_POST['options'] ); // phpcs:ignore
-				//	Options::update_options( $options );
 					printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'metronet-profile-picture' ) );
 				}
 				wp_register_style(
@@ -123,7 +102,7 @@ class Image_Sizes {
 					'all'
 				);
 				wp_print_styles( array( 'mpp-image-sizes' ) );
-				wp_enqueue_style(
+				wp_enqueue_script(
 					'mpp-image-sizes',
 					Functions::get_plugin_url( '/dist/image-sizes-js.js' ),
 					array( 'jquery' ),
@@ -132,10 +111,11 @@ class Image_Sizes {
 				);
 				Functions::output_svg_sprite();
 				// Get options and defaults.
-				$image_sizes = $this->get_options();
+				$image_sizes = $this->get_saved_image_sizes();
 				?>
 				<div class="mpp-section-header">
 					<h2 class="mpp-heading icon icon-image-sizes"><?php esc_html_e( 'Image Sizes', 'metronet-profile-picture' ); ?></h2>
+					<p class="description"><?php printf( __( 'We recommend %s if you make any changes to the image sizes.', 'metronet-profile-picture' ), '<a href="https://wordpress.org/plugins/regenerate-thumbnails/">Regenerate Thumbnails</a>' ); // phpcs:ignore ?></p>
 				</div>
 				<div class="mpp-option-body">
 					<div id="mpp-image-sizes-table">
@@ -169,9 +149,9 @@ class Image_Sizes {
 											<input class="mpp-image-size-table-height" type="hidden" value="<?php echo esc_attr( $size_data['height'] ); ?>" />
 										</td>
 										<td>
-											<a href="#" class="mpp-button mpp-button-edit mpp-image-size-edit" data-name="<?php echo esc_attr( $name ); ?>" data-width="<?php echo absint( $size_data['width'] ); ?>" data-height="<?php echo absint( $size_data['height'] ); ?>"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-pencil-duotone"></use></svg> <?php esc_html_e( 'Edit', 'metronet-profile-picture' ); ?></a>
-											<a href="#" class="mpp-button mpp-button-delete mpp-image-size-delete" data-name="<?php echo esc_attr( $name ); ?>" data-width="<?php echo absint( $size_data['width'] ); ?>" data-height="<?php echo absint( $size_data['height'] ); ?>"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-trash-alt-duotone"></use></svg> <?php esc_html_e( 'Delete', 'metronet-profile-picture' ); ?></a>
-											<a href="#" class="mpp-button mpp-button-save mpp-image-size-save" style="display: none;"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-save-duotone"></use></svg> <?php esc_html_e( 'Save', 'metronet-profile-picture' ); ?></a>
+											<a href="#" data-nonce="<?php echo esc_attr( wp_create_nonce( 'mpp_edit_size-' . sanitize_title( $name ) ) ); ?>" class="mpp-button mpp-button-info mpp-image-size-edit" data-name="<?php echo esc_attr( $name ); ?>" data-width="<?php echo absint( $size_data['width'] ); ?>" data-height="<?php echo absint( $size_data['height'] ); ?>"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-pencil-duotone"></use></svg> <?php esc_html_e( 'Edit', 'metronet-profile-picture' ); ?></a>
+											<a href="#" data-nonce="<?php echo esc_attr( wp_create_nonce( 'mpp_delete_size-' . sanitize_title( $name ) ) ); ?>" class="mpp-button mpp-button-delete mpp-image-size-delete" data-name="<?php echo esc_attr( $name ); ?>" data-width="<?php echo absint( $size_data['width'] ); ?>" data-height="<?php echo absint( $size_data['height'] ); ?>"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-trash-alt-duotone"></use></svg> <?php esc_html_e( 'Delete', 'metronet-profile-picture' ); ?></a>
+											<a href="#" data-nonce="<?php echo esc_attr( wp_create_nonce( 'mpp_save_size-' . sanitize_title( $name ) ) ); ?>" class="mpp-button mpp-button-save mpp-image-size-save" style="display: none;"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-save-duotone"></use></svg> <?php esc_html_e( 'Save', 'metronet-profile-picture' ); ?></a>
 											<a href="#" class="mpp-button mpp-button-secondary mpp-button-cancel mpp-image-size-cancel" style="display: none;"><svg viewBox="0 0 100 100" class="mpp-icon" aria-hidden="true"><use xlink:href="#mpp-undo-duotone"></use></svg> <?php esc_html_e( 'Cancel', 'metronet-profile-picture' ); ?></a>
 										</td>
 									</tr>

@@ -126,13 +126,6 @@ class Profile {
 	public function print_admin_scripts() {
 		$screen = get_current_screen();
 		if ( 'users_page_mpp' === $screen->id ) {
-			wp_enqueue_script(
-				'mpp-admin-script',
-				Functions::get_plugin_url( '/dist/admin-panel.js' ),
-				array( 'jquery' ),
-				Functions::get_plugin_version(),
-				true
-			);
 			wp_enqueue_style(
 				'mpp-admin-styles',
 				Functions::get_plugin_url( '/dist/admin.css' ),
