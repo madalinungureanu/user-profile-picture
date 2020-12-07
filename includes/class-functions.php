@@ -75,6 +75,29 @@ class Functions {
 	}
 
 	/**
+	 * Output SVG Sprite for MPP.
+	 */
+	public static function output_svg_sprite() {
+		// From Fontawesome.
+		?>
+		<svg width="0" height="0" class="hidden">
+			<symbol aria-hidden="true" data-prefix="fad" data-icon="save" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="mpp-save-duotone">
+				<g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M288 352a64 64 0 1 1-64-64 64 64 0 0 1 64 64z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M433.94 129.94l-83.88-83.88A48 48 0 0 0 316.12 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V163.88a48 48 0 0 0-14.06-33.94zM224 416a64 64 0 1 1 64-64 64 64 0 0 1-64 64zm96-204a12 12 0 0 1-12 12H76a12 12 0 0 1-12-12V108a12 12 0 0 1 12-12h228.52a12 12 0 0 1 8.48 3.52l3.48 3.48a12 12 0 0 1 3.52 8.48z"></path></g>
+			</symbol>
+			<symbol aria-hidden="true" data-prefix="fad" data-icon="pencil" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mpp-pencil-duotone">
+				<g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M96 352H32l-16 64 80 80 64-16v-64H96zM498 74.26l-.11-.11L437.77 14a48.09 48.09 0 0 0-67.9 0l-46.1 46.1a12 12 0 0 0 0 17l111 111a12 12 0 0 0 17 0l46.1-46.1a47.93 47.93 0 0 0 .13-67.74z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M.37 483.85a24 24 0 0 0 19.47 27.8 24.27 24.27 0 0 0 8.33 0l67.32-16.16-79-79zM412.3 210.78l-111-111a12.13 12.13 0 0 0-17.1 0L32 352h64v64h64v64l252.27-252.25a12 12 0 0 0 .03-16.97z"></path></g>
+			</symbol>
+			<symbol aria-hidden="true" data-prefix="fad" data-icon="trash-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="mpp-trash-alt-duotone">
+				<g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V96H32zm272-288a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM128 160a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16zm96 0a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16zm96 0a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16z"></path></g>
+			</symbol>
+			<symbol aria-hidden="true" data-prefix="fad" data-icon="undo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mpp-undo-duotone">
+				<g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M123.31 388.69a12 12 0 0 1 16.38-.54 176 176 0 1 0-29.61-230.61l-46.5 2.22 3.52-64.43A247.45 247.45 0 0 1 256 8c136.66 0 248.1 111.53 248 248.19C503.9 393.07 392.9 504 256 504a247.1 247.1 0 0 1-166.21-63.88l-.49-.46a12 12 0 0 1 0-17z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M11.65 0h48A12 12 0 0 1 71 12.55l-7.42 147.21 147.54-7.06h.58a12 12 0 0 1 12 12V212a12 12 0 0 1-12 12h-200a12 12 0 0 1-12-12V12A12 12 0 0 1 11.65 0z"></path></g>
+			</symbol>
+		</svg>
+		<?php
+	}
+
+	/**
 	 * Returns true if on user profile page, false if not.
 	 */
 	public static function is_user_profile_page() {

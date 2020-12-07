@@ -59,6 +59,9 @@ class Modules {
 
 	/**
 	 * Begin modules routing for the various outputs.
+	 *
+	 * @param string $tab     Current tab.
+	 * @param string $sub_tab Current Sub-tab.
 	 */
 	public function output_modules_content( $tab, $sub_tab = '' ) {
 		if ( 'modules' === $tab ) {
@@ -140,8 +143,6 @@ class Modules {
 									<p class="description"><?php esc_html_e( 'Add user profile fields and create a block to showcase a team member.', 'metronet-profile-picture' ); ?> | <a href="https://github.com/madalinungureanu/user-profile-picture/issues/22" target="_blank">Vote and comment on this feature.</a></p>
 								</td>
 							</tr>
-							
-							
 							<?php
 							/**
 							 * Allow other plugins to run code after the user profile admin Table Row.

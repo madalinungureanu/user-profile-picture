@@ -22,5 +22,8 @@ class Modules {
 		if ( 'on' === $options['hide_wordpress_avatar_section'] ) {
 			new \MPP\Includes\Modules\Hide_WP_Avatar();
 		}
+		if ( 'on' === $options['custom_image_sizes'] ) {
+			new \MPP\Includes\Modules\Image_Sizes();
+		}
 	}
 }
