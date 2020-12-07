@@ -67,6 +67,7 @@ class Metronet_Profile_Picture {
 		new \MPP\Includes\Admin\Setup();
 		new \MPP\Includes\Admin\Profile();
 		new \MPP\Includes\Admin\User_List();
+		new \MPP\Includes\Modules\Modules();
 
 	} //end constructor
 
