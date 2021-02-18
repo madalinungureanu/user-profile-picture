@@ -2,8 +2,8 @@
 Contributors: cozmoslabs, ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
-Tested up to: 5.6
-Stable tag: 2.4.0
+Tested up to: 5.7
+Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -111,6 +111,11 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.5.0 =
+* Released 2021-02-18
+* Medium level (6.5) security fix. Please update as soon as possible.
+* Cleaned up REST user data so only pertitent information is returned to prevent user data leakage to roles with the upload_files capability.
 
 = 2.4.0 =
 * Released 2020-11-17
@@ -344,6 +349,9 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.5.0 =
+Medium level (6.5) security fix. Please update as soon as possible. Cleaned up REST user data so only pertitent information is returned to prevent user data leakage to roles with the upload_files capability.
 
 = 2.4.0 =
 Fixing REST issues. Cleaning up dist scripts. General code cleanup.
