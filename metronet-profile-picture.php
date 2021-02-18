@@ -1730,7 +1730,7 @@ function mpp_get_social_icons( $attributes ) {
 		<?php if ( ! empty( $attributes['socialWordPress'] ) ) : ?>
 			<a href="<?php echo esc_url( $attributes['socialWordPress'] ); ?>">
 				<svg class="icon icon-wordpress" role="img" style="<?php echo 'custom' === $attributes['socialMediaOptions'] ? 'fill:' . esc_attr( $attributes['socialMediaColors'] ) . ';' : ''; ?>">
-					<use href="#wordPress"></use><?php // phpcs:ignore ?>
+					<use href="#wordpress"></use><?php // phpcs:ignore ?>
 				</svg>
 			</a>
 		<?php endif; ?>
