@@ -956,7 +956,7 @@ class Metronet_Profile_Picture {
 	 * @return bool true if the user has permission, false if not
 	 **/
 	public function rest_get_users_permissions_callback() {
-		return current_user_can( 'upload_files' );
+		return current_user_can( 'edit_posts' );
 	}
 
 	/**
