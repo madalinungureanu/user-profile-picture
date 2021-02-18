@@ -10,4 +10,4 @@ Please do pull requests on the dev branch.
 
 ## Documentation
 
-Documentation can be found here: <a href="https://mediaron.com/user-profile-picture/">User Profile Picture Documentation</a>
+Documentation can be found here: <a href="https://www.cozmoslabs.com/user-profile-picture/">User Profile Picture Documentation</a>

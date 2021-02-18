@@ -1,40 +1,32 @@
 === User Profile Picture ===
-Contributors: ronalfy, Alaadiaa
+Contributors: cozmoslabs, ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
-Tested up to: 5.3
-Stable tag: 2.3.10
+Tested up to: 5.7
+Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://mediaron.com/give/
+Donate link: https://cozmoslabs.com/
 
 Set a custom profile image (avatar) for a user using the standard WordPress media upload tool.
 == Description ==
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
 
-<a href="https://mediaron.com/user-profile-picture/">View Documentation and Examples</a>
+<a href="https://www.cozmoslabs.com/user-profile-picture/">View Documentation and Examples</a>
 
 https://www.youtube.com/watch?v=9icnOWWZUpA&rel=0
 
-Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/members/">Members</a> to allow other roles (e.g. subscribers) the ability to upload images.
+Users must have the ability to upload images (typically author role or greater). You can use the plugin <a href="https://wordpress.org/plugins/profile-builder/">Profile Builder</a> to allow other roles (e.g. subscribers) the ability to upload images.
 
 A template tag is supplied for outputting to a theme and the option to override a user's default avatar is also available.
 
-== Gutenberg Compatibility ==
-
-As of version 2.0.0, there is a Gutenberg block for outputting to a post.
-
-As of version 2.1.0, the old block is deprecated but still supported. A new block supports themes, more output control, and better style support. You can see an overview in the video below. Sorry about the audio quality.
-
-https://www.youtube.com/watch?v=k9bDmgunXvM&rel=0
-
 == Documentation and Feedback ==
 
-See the documentation on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
+See the documentation on <a href="https://github.com/madalinungureanu/user-profile-picture">GitHub</a>.
 
-> Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a> or <a href="https://mediaron.com/give/">Give Back</a> to show support.
+> Please <a href="https://wordpress.org/support/plugin/metronet-profile-picture/reviews/#new-post">Rate the Plugin</a>.
 
 == Installation ==
 
@@ -88,7 +80,7 @@ mt_author_box( $post->post_author, array(
 ) );
 `
 
-View the code on <a href="https://github.com/ronalfy/user-profile-picture">GitHub</a>.
+View the code on <a href="https://github.com/madalinungureanu/user-profile-picture">GitHub</a>.
 
 The REST API is currently supported for versions of WordPress 4.4 and up.
 
@@ -107,10 +99,6 @@ Author or greater.
 
 As of 1.5, three image sizes are created: profile_24, profile_48, and profile_96. You are not limited to these sizes, however.
 
-= The image is cropped wrong.  How do I fix this? =
-
-We highly recommend the <a href='http://wordpress.org/extend/plugins/post-thumbnail-editor/'>Post Thumbnail Editor</a> plugin for cropping thumbnails, as you can custom-crop various image sizes without affecting other images.
-
 = Does the plugin work with Multisite? =
 
 Yes, but you'll have to set a new profile image per site.  This is currently a limitation of the way the plugin stores its data.  Ideas to overcome this are welcome.
@@ -123,6 +111,21 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.5.0 =
+* Released 2021-02-18
+* Medium level (6.5) security fix. Please update as soon as possible.
+* Cleaned up REST user data so only pertitent information is returned to prevent user data leakage to roles with the upload_files capability.
+
+= 2.4.0 =
+* Released 2020-11-17
+* Fixing REST issues.
+* Cleaning up dist scripts.
+* General code cleanup.
+
+= 2.3.11 =
+* Released 2020-02-29
+* Added option to disable image sizes.
 
 = 2.3.10 =
 * Released 2019-12-29
@@ -346,6 +349,15 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.5.0 =
+Medium level (6.5) security fix. Please update as soon as possible. Cleaned up REST user data so only pertitent information is returned to prevent user data leakage to roles with the upload_files capability.
+
+= 2.4.0 =
+Fixing REST issues. Cleaning up dist scripts. General code cleanup.
+
+= 2.3.11 =
+Added option to disable image sizes.
 
 = 2.3.10 =
 Added new hook for add-on capability.

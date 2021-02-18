@@ -1,18 +1,18 @@
 <?php // phpcs:ignore
 /*
 Plugin Name: User Profile Picture
-Plugin URI: http://wordpress.org/extend/plugins/metronet-profile-picture/
+Plugin URI: http://wordpress.org/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
-Author: Ronald Huereca
-Version: 2.3.10
+Author: Cozmoslabs
+Version: 2.5.0
 Requires at least: 4.6
-Author URI: https://www.mediaron.com
+Author URI: https://www.cozmoslabs.com
 Contributors: ronalfy
 Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.3.10' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.5.0' );
 define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
 define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
@@ -28,7 +28,7 @@ define( 'METRONET_PROFILE_PICTURE_FILE', __FILE__ );
  * @package  User Profile Picture
  * @author   Ronald Huereca <ronald@mediaron.com>
  * @license  GPL-2.0+
- * @link     https://github.com/ronalfy/user-profile-picture
+ * @link     https://github.com/madalinungureanu/user-profile-picture
  *
  * @since 1.0.0
  */
@@ -198,6 +198,14 @@ class Metronet_Profile_Picture {
 								<p class="description"><?php esc_html_e( 'Select this option if you do not want User Profile Picture to show up in Gutenberg or do not plan on using the blocks.', 'metronet-profile-picture' ); ?></p>
 							</td>
 						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Disable Image Sizes?', 'metronet-profile-picture' ); ?></th>
+							<td>
+								<input type="hidden" name="options['disable_image_sizes']" value="off" />
+								<input id="mpp-display-image-sizes" type="checkbox" value="on" name="options[disable_image_sizes]" <?php checked( 'on', $options['disable_image_sizes'] ); ?> /> <label for="mpp-display-image-sizes"><?php esc_html_e( 'Disable Image Sizes', 'metronet-profile-picture' ); ?></label>
+								<p class="description"><?php esc_html_e( 'Select this option to disable the four image sizes User Profile Picture Creates.' ); ?></p>
+							</td>
+						</tr>
 						<?php
 						/**
 						 * Allow other plugins to run code after the user profile admin Table Row.
@@ -281,7 +289,8 @@ class Metronet_Profile_Picture {
 	 */
 	private function get_defaults() {
 		$defaults = array(
-			'load_gutenberg' => 'on',
+			'load_gutenberg'      => 'on',
+			'disable_image_sizes' => 'off',
 		);
 
 		/**
@@ -715,6 +724,12 @@ class Metronet_Profile_Picture {
 		$post_type_args = apply_filters( 'mpp_post_type_args', $post_type_args );
 		register_post_type( 'mt_pp', $post_type_args );
 
+		// Determine if to load image sizes or not.
+		$options             = $this->get_options();
+		$display_image_sizes = true;
+		if ( 'on' === $options['disable_image_sizes'] ) {
+			$display_image_sizes = false;
+		}
 		/**
 		 * Filter the the creation of image sizes.
 		 *
@@ -722,7 +737,7 @@ class Metronet_Profile_Picture {
 		 *
 		 * @param bool Whether to allow image size creation or not
 		 */
-		if ( apply_filters( 'mpp_add_image_sizes', true ) ) {
+		if ( apply_filters( 'mpp_add_image_sizes', $display_image_sizes ) ) {
 			add_image_size( 'profile_24', 24, 24, true );
 			add_image_size( 'profile_48', 48, 48, true );
 			add_image_size( 'profile_96', 96, 96, true );
@@ -941,7 +956,7 @@ class Metronet_Profile_Picture {
 	 * @return bool true if the user has permission, false if not
 	 **/
 	public function rest_get_users_permissions_callback() {
-		return current_user_can( 'upload_files' );
+		return current_user_can( 'edit_posts' );
 	}
 
 	/**
@@ -959,16 +974,18 @@ class Metronet_Profile_Picture {
 			'mpp/v2',
 			'/profile-image/me',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'rest_api_put_profile' ),
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'rest_api_put_profile' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 		register_rest_route(
 			'mpp/v2',
 			'/profile-image/change',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'rest_api_change_profile_image' ),
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'rest_api_change_profile_image' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 		register_rest_route(
@@ -994,9 +1011,10 @@ class Metronet_Profile_Picture {
 			'mpp/v1',
 			'/user/(?P<id>\d+)',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'rest_api_get_profile' ),
-				'args'     => array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'rest_api_get_profile' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
 					'id' => array(
 						'validate_callback' => array( $this, 'rest_api_validate' ),
 						'sanitize_callback' => array( $this, 'rest_api_sanitize' ),
@@ -1036,28 +1054,32 @@ class Metronet_Profile_Picture {
 			$profile_post_id   = absint( get_user_option( 'metronet_post_id', $result->data->ID ) );
 			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 			if ( ! $post_thumbnail_id ) {
-				$result->data->has_profile_picture = false;
-				$result->data->profile_picture_id  = 0;
-				$result->data->default_image       = self::get_plugin_url( 'img/mystery.png' );
-				$result->data->profile_pictures    = array(
+				$user_data                      = new stdClass();
+				$user_data->ID                  = $result->data->ID;
+				$user_data->display_name        = $result->data->display_name;
+				$user_data->has_profile_picture = false;
+				$user_data->profile_picture_id  = 0;
+				$user_data->default_image       = self::get_plugin_url( 'img/mystery.png' );
+				$user_data->profile_pictures    = array(
 					'avatar' => get_avatar( $result->data->ID ),
 				);
-				$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
-				$return[ $result->data->ID ]       = $result->data;
+				$user_data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
+				$return[ $result->data->ID ]    = $user_data;
 				continue;
 			}
-			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
-			$result->data->display_name        = $result->data->display_name;
-			$result->data->has_profile_picture = true;
-			$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
-			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
+			$user_data->ID                  = $result->data->ID;
+			$user_data->description         = get_user_meta( $result->data->ID, 'description', true );
+			$user_data->display_name        = $result->data->display_name;
+			$user_data->has_profile_picture = true;
+			$user_data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
+			$user_data->description         = get_user_meta( $result->data->ID, 'description', true );
 
 			// Get attachment URL.
 			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
 
-			$result->data->profile_picture_id = $post_thumbnail_id;
-			$result->data->default_image      = self::get_plugin_url( 'img/mystery.png' );
-			$result->data->profile_pictures   = array(
+			$user_data->profile_picture_id = $post_thumbnail_id;
+			$user_data->default_image      = self::get_plugin_url( 'img/mystery.png' );
+			$user_data->profile_pictures   = array(
 				'24'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
 				'48'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
 				'96'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
@@ -1067,8 +1089,8 @@ class Metronet_Profile_Picture {
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
 			);
-			$result->data->permalink          = get_author_posts_url( $result->data->ID );
-			$return[ $result->data->ID ]      = $result->data;
+			$user_data->permalink          = get_author_posts_url( $result->data->ID );
+			$return[ $result->data->ID ]   = $user_data;
 		}
 		return $return;
 	}

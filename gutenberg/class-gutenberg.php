@@ -78,7 +78,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'profileImgID'                    => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => '',
 					),
 					'profileURL'                      => array(
@@ -86,15 +86,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'padding'                         => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'border'                          => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'borderRounded'                   => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'borderColor'                     => array(
@@ -130,15 +130,15 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => 'inherit',
 					),
 					'headerFontSize'                  => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 24,
 					),
 					'buttonFontSize'                  => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 16,
 					),
 					'profileFontSize'                 => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 18,
 					),
 					'profileAvatarShape'              => array(
@@ -146,27 +146,27 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => 'square',
 					),
 					'showName'                        => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showTitle'                       => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showDescription'                 => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showViewPosts'                   => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'showWebsite'                     => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'user_id'                         => array(
-						'type'    => 'int',
+						'type'    => 'number',
 						'default' => 0,
 					),
 					'socialFacebook'                  => array(
@@ -270,7 +270,7 @@ class Metronet_Profile_Picture_Gutenberg {
 						'default' => '',
 					),
 					'showSocialMedia'                 => array(
-						'type'    => 'bool',
+						'type'    => 'boolean',
 						'default' => true,
 					),
 					'profileName'                     => array(
@@ -364,7 +364,14 @@ class Metronet_Profile_Picture_Gutenberg {
 							<?php echo wp_kses_post( $attributes['profileContent'] ); ?>
 						</div><!-- .mpp-profile-text -->
 						<?php endif; ?>
-						<div class="mpp-profile-meta" style="font-size: <?php echo esc_attr( $attributes['fontSize'] ); ?>px;">
+						<?php
+						$font_size       = isset( $attributes['fontSize'] ) ? $attributes['fontSize'] : false;
+						$font_size_style = '';
+						if ( $font_size ) {
+							$font_size_style = 'font-size: ' . $font_size . 'px';
+						}
+						?>
+						<div class="mpp-profile-meta" style="<?php echo esc_attr( $font_size_style ); ?>">
 							<?php if ( $attributes['showViewPosts'] ) : ?>
 								<div class="mpp-profile-link alignleft">
 									<a href="<?php echo esc_url( $attributes['profileURL'] ); ?>" style="color: <?php echo esc_attr( $attributes['profileLinkColor'] ); ?>;"><?php esc_html_e( 'View all posts by', 'metronet-profile-picture' ); ?> <?php echo esc_html( $attributes['profileName'] ); ?></a>
