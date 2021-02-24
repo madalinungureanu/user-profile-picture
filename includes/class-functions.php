@@ -305,6 +305,24 @@ class Functions {
 	}
 
 	/**
+	 * Get the Plugin Documentation URL.
+	 *
+	 * @since 3.0.0
+	 */
+	public static function get_plugin_docs_url() {
+		/**
+		 * Filer the output of the plugin documentation page.
+		 *
+		 * Potentially change branding of the plugin.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string Plugin documentation URL.
+		 */
+		return apply_filters( 'mpp_documentation_link', 'https://www.cozmoslabs.com/user-profile-picture/' );
+	}
+
+	/**
 	 * Return the plugin description for the plugin.
 	 *
 	 * @return string plugin description.

@@ -65,6 +65,9 @@ class Settings {
 			if ( empty( $sub_tab ) || 'settings' === $sub_tab ) {
 				if ( isset( $_POST['submit'] ) && isset( $_POST['options'] ) ) {
 					check_admin_referer( 'save_mpp_options' );
+					if ( ! current_user_can( 'manage_options' ) ) {
+						wp_die( 'Failed Permissions Check' );
+					}
 					$options = wp_unslash( $_POST['options'] ); // phpcs:ignore
 					Options::update_options( $options );
 					printf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Your options have been saved.', 'metronet-profile-picture' ) );
