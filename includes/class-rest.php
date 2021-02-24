@@ -111,7 +111,7 @@ class Rest {
 		 * @param string User role for users
 		 */
 		$capabilities = apply_filters( 'mpp_gutenberg_user_role', 'authors' );
-		$user_query   = new WP_User_Query(
+		$user_query   = new \WP_User_Query(
 			array(
 				'who'     => $capabilities,
 				'orderby' => 'display_name',
@@ -124,28 +124,32 @@ class Rest {
 			$profile_post_id   = absint( get_user_option( 'metronet_post_id', $result->data->ID ) );
 			$post_thumbnail_id = get_post_thumbnail_id( $profile_post_id );
 			if ( ! $post_thumbnail_id ) {
-				$result->data->has_profile_picture = false;
-				$result->data->profile_picture_id  = 0;
-				$result->data->default_image       = self::get_plugin_url( 'img/mystery.png' );
-				$result->data->profile_pictures    = array(
+				$user_data                      = new \stdClass();
+				$user_data->ID                  = $result->data->ID;
+				$user_data->display_name        = $result->data->display_name;
+				$user_data->has_profile_picture = false;
+				$user_data->profile_picture_id  = 0;
+				$user_data->default_image       = \Metronet_Profile_Picture::get_plugin_url( 'img/mystery.png' );
+				$user_data->profile_pictures    = array(
 					'avatar' => get_avatar( $result->data->ID ),
 				);
-				$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
-				$return[ $result->data->ID ]       = $result->data;
+				$user_data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
+				$return[ $result->data->ID ]    = $user_data;
 				continue;
 			}
-			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
-			$result->data->display_name        = $result->data->display_name;
-			$result->data->has_profile_picture = true;
-			$result->data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
-			$result->data->description         = get_user_meta( $result->data->ID, 'description', true );
+			$user_data->ID                  = $result->data->ID;
+			$user_data->description         = get_user_meta( $result->data->ID, 'description', true );
+			$user_data->display_name        = $result->data->display_name;
+			$user_data->has_profile_picture = true;
+			$user_data->is_user_logged_in   = ( get_current_user_id() == $result->data->ID ) ? true : false; // phpcs:ignore
+			$user_data->description         = get_user_meta( $result->data->ID, 'description', true );
 
 			// Get attachment URL.
 			$attachment_url = wp_get_attachment_url( $post_thumbnail_id );
 
-			$result->data->profile_picture_id = $post_thumbnail_id;
-			$result->data->default_image      = self::get_plugin_url( 'img/mystery.png' );
-			$result->data->profile_pictures   = array(
+			$user_data->profile_picture_id = $post_thumbnail_id;
+			$user_data->default_image      = \Metronet_Profile_Picture::get_plugin_url( 'img/mystery.png' );
+			$user_data->profile_pictures   = array(
 				'24'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_24', false, '' ),
 				'48'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_48', false, '' ),
 				'96'        => wp_get_attachment_image_url( $post_thumbnail_id, 'profile_96', false, '' ),
@@ -155,8 +159,8 @@ class Rest {
 				'avatar'    => get_avatar( $result->data->ID ),
 				'full'      => $attachment_url,
 			);
-			$result->data->permalink          = get_author_posts_url( $result->data->ID );
-			$return[ $result->data->ID ]      = $result->data;
+			$user_data->permalink          = get_author_posts_url( $result->data->ID );
+			$return[ $result->data->ID ]   = $user_data;
 		}
 		return $return;
 	}
