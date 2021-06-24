@@ -21,7 +21,7 @@ class Setup {
 	public function __construct() {
 		// For the admin interface.
 		add_action( 'admin_menu', array( $this, 'register_settings_menu' ) );
-		add_action( 'plugin_action_links_' . Functions::get_plugin_slug(), array( $this, 'plugin_settings_link' ) );
+		add_action( 'plugin_action_links_' . Functions::get_plugin_file(), array( $this, 'plugin_settings_link' ) );
 
 		add_action( 'init', array( $this, 'add_post_type' ) );
 
@@ -88,24 +88,16 @@ class Setup {
 	 */
 	public function plugin_settings_link( $settings ) {
 		$admin_settings_links = array();
-		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
-			$admin_settings_links[] = sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( admin_url( 'admin.php?page=mpp' ) ),
-				esc_html__( 'Settings', 'metronet-profile-picture' )
-			);
-		} else {
-			$admin_settings_links[] = sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( admin_url( 'users.php?page=mpp' ) ),
-				esc_html__( 'Options', 'metronet-profile-picture' )
-			);
-			$admin_settings_links[] = sprintf(
-				'<a href="%s" target="_blank">%s</a>',
-				esc_url( $this->get_plugin_docs_url() ),
-				esc_html__( 'Documentation', 'metronet-profile-picture' )
-			);
-		}
+		$admin_settings_links[] = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'users.php?page=mpp' ) ),
+			esc_html__( 'Options', 'metronet-profile-picture' )
+		);
+		$admin_settings_links[] = sprintf(
+			'<a href="%s" target="_blank">%s</a>',
+			esc_url( Functions::get_plugin_docs_url() ),
+			esc_html__( 'Documentation', 'metronet-profile-picture' )
+		);
 		if ( ! is_array( $settings ) ) {
 			return $admin_settings_links;
 		} else {
@@ -394,24 +386,12 @@ class Setup {
 	 * @since 2.3.0
 	 */
 	public function register_settings_menu() {
-		if ( defined( 'USER_PROFILE_PICTURE_ENHANCED' ) ) {
-			$hook = add_menu_page(
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
-				__( 'User Profile Picture', 'metronet-profile-picture' ),
-				'manage_options',
-				'mpp',
-				array( '\MPP\Includes\Admin\Setup', 'settings_page' ),
-				'dashicons-groups',
-				100
-			);
-		} else {
-			$hook = add_users_page(
-				__( 'User Profile Picture Options', 'metronet-profile-picture' ),
-				__( 'Profile Picture Options', 'metronet-profile-picture' ),
-				'manage_options',
-				'mpp',
-				array( '\MPP\Includes\Admin\Setup', 'settings_page' )
-			);
-		}
+		$hook = add_users_page(
+			__( 'User Profile Picture Options', 'metronet-profile-picture' ),
+			__( 'Profile Picture Options', 'metronet-profile-picture' ),
+			'manage_options',
+			'mpp',
+			array( '\MPP\Includes\Admin\Setup', 'settings_page' )
+		);
 	}
 }
