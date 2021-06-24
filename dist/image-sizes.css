@@ -1,3 +1,119 @@
-.mpp-button{padding:10px 20px;border-radius:5px;background:#722727;color:#fff;cursor:pointer;border:1px solid #e0e4e9;transition:background-color .5s ease;text-decoration:none;display:inline-block;vertical-align:middle;font-size:14px}.mpp-button:hover{color:#fff;background:#983434}.mpp-button.mpp-button-info{background:#6c757d;color:#fff}.mpp-button.mpp-button-info:hover{background:#868e96}.mpp-button.mpp-button-danger{background:#721c24;color:#fff}.mpp-button.mpp-button-danger:hover{background:#9b2631}.mpp-button.mpp-button-edit{background:#f8f9fa;color:#000}.mpp-button.mpp-button-edit:hover{background:#fff}.mpp-button.mpp-button-delete{background:#721c24;color:#fff}.mpp-button.mpp-button-delete:hover{background:#9b2631}.mpp-button.mpp-button-lg{padding:20px 30px;font-size:2em}.mpp-button.mpp-button-save{background:#22721c;color:#fff}.mpp-button.mpp-button-save:hover{color:#fff;background:#2e9b26}.mpp-button .mpp-icon-button{text-align:middle;display:inline-block;width:16px;height:16px}.mpp-button svg{width:16px;height:16px;vertical-align:middle}#mpp-image-sizes-table thead th,#mpp-image-sizes-table tfoot th{font-weight:700;background:#58a0db;color:#fff;padding:10px 5px;text-align:center}#mpp-image-sizes-table tbody td{text-align:center}.mpp-option-fieldset{margin-top:30px}.mpp-option-fieldset fieldset{margin-top:16px;background:#f9fafb;padding:16px;border:1px solid #e8ebee;border-radius:2px}.mpp-option-fieldset label{display:block;font-weight:700;margin-bottom:.8em}.mpp-option-fieldset .mpp-field{margin-bottom:1.5em}.mpp-option-fieldset .mpp-field-input,.mpp-option-fieldset .mpp-field-textarea{display:block;width:100%;padding:10px;border-radius:5px;border:2px solid #c2cad4;color:#121116;font-size:1.1em;line-height:1.7em}.mpp-option-fieldset .mpp-field-input:focus,.mpp-option-fieldset .mpp-field-textarea:focus{border:2px solid #444}.mpp-option-fieldset .mpp-field-save{margin-top:1em}
+.mpp-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #722727;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #e0e4e9;
+  transition: background-color 0.5s ease;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+}
+.mpp-button:hover {
+  color: #fff;
+  background: #983434;
+}
+.mpp-button.mpp-button-info {
+  background: #6c757d;
+  color: #fff;
+}
+.mpp-button.mpp-button-info:hover {
+  background: #868e96;
+}
+.mpp-button.mpp-button-danger {
+  background: #721c24;
+  color: #fff;
+}
+.mpp-button.mpp-button-danger:hover {
+  background: #9b2631;
+}
+.mpp-button.mpp-button-edit {
+  background: #f8f9fa;
+  color: #000;
+}
+.mpp-button.mpp-button-edit:hover {
+  background: white;
+}
+.mpp-button.mpp-button-delete {
+  background: #721c24;
+  color: #fff;
+}
+.mpp-button.mpp-button-delete:hover {
+  background: #9b2631;
+}
+.mpp-button.mpp-button-lg {
+  padding: 20px 30px;
+  font-size: 2em;
+}
+.mpp-button.mpp-button-save {
+  background: #22721c;
+  color: #fff;
+}
+.mpp-button.mpp-button-save:hover {
+  color: #fff;
+  background: #2e9b26;
+}
+.mpp-button .mpp-icon-button {
+  text-align: middle;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+.mpp-button svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#mpp-image-sizes-table thead th,
+#mpp-image-sizes-table tfoot th {
+  font-weight: 700;
+  background: #58a0db;
+  color: #fff;
+  padding: 10px 5px;
+  text-align: center;
+}
+#mpp-image-sizes-table tbody td {
+  text-align: center;
+}
+
+.mpp-option-fieldset {
+  margin-top: 30px;
+}
+.mpp-option-fieldset fieldset {
+  margin-top: 16px;
+  background: #F9FAFB;
+  padding: 16px;
+  border: 1px solid #E8EBEE;
+  border-radius: 2px;
+}
+.mpp-option-fieldset label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.8em;
+}
+.mpp-option-fieldset .mpp-field {
+  margin-bottom: 1.5em;
+}
+.mpp-option-fieldset .mpp-field-input,
+.mpp-option-fieldset .mpp-field-textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #c2cad4;
+  color: #121116;
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+.mpp-option-fieldset .mpp-field-input:focus,
+.mpp-option-fieldset .mpp-field-textarea:focus {
+  border: 2px solid #444;
+}
+.mpp-option-fieldset .mpp-field-save {
+  margin-top: 1em;
+}
 
 /*# sourceMappingURL=image-sizes.css.map*/
