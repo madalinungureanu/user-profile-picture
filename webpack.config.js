@@ -10,6 +10,8 @@ module.exports = {
 		'blocks.style.build': ['./src/block/style.scss'],
 		'profile-picture': ['./src/scss/profile-picture.scss'],
 		'admin': ['./src/scss/admin.scss'],
+		'image-sizes': ['./src/scss/image-sizes.scss'],
+		'image-sizes-js': ['./src/image-sizes/image-sizes.js']
 	},
 	output: {
 		filename: '[name].js',

@@ -1,3 +1,18 @@
-.upp-admin-wrap{max-width:1050px;margin:25px 40px 0 20px}.upp-admin-wrap h1{color:#333;font-size:2.8em;font-weight:400;line-height:1.2em;margin:0;padding-top:35px}.upp-admin-wrap .upp-info-text{font-size:15px;max-width:1050px}
+.upp-admin-wrap {
+  max-width: 1050px;
+  margin: 25px 40px 0 20px;
+}
+.upp-admin-wrap h1 {
+  color: #333333;
+  font-size: 2.8em;
+  font-weight: 400;
+  line-height: 1.2em;
+  margin: 0;
+  padding-top: 35px;
+}
+.upp-admin-wrap .upp-info-text {
+  font-size: 15px;
+  max-width: 1050px;
+}
 
 /*# sourceMappingURL=admin.css.map*/

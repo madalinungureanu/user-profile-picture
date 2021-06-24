@@ -1,0 +1,50 @@
+@import "buttons.scss";
+#mpp-image-sizes-table {
+	thead th,
+	tfoot th {
+		font-weight: 700;
+		background: #58a0db;
+		color: #fff;
+		padding: 10px 5px;
+		text-align: center;
+	}
+	tbody td {
+		text-align: center;
+	}
+}
+.mpp-option-fieldset {
+	margin-top: 30px;
+	fieldset {
+		margin-top: 16px;
+		background: #F9FAFB;
+		padding: 16px;
+		border: 1px solid #E8EBEE;
+		border-radius: 2px;
+	}
+	label {
+		display: block;
+		font-weight: 700;
+		margin-bottom: 0.8em;
+	}
+	.mpp-field {
+		margin-bottom: 1.5em;
+	}
+	.mpp-field-input,
+	.mpp-field-textarea {
+		display: block;
+		width: 100%;
+		padding: 10px;
+		border-radius: 5px;
+		border: 2px solid #c2cad4;
+		color: #121116;
+		font-size: 1.1em;
+		line-height: 1.7em;
+		&:focus {
+			border: 2px solid #444;
+		}
+	}
+	.mpp-field-save {
+		margin-top: 1em;
+	}
+}
+

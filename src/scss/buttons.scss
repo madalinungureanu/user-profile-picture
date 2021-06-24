@@ -1,0 +1,70 @@
+@import "variables.scss";
+
+.mpp-button {
+	padding: 10px 20px;
+	border-radius: 5px;
+	background: $accent_color;
+	color: #fff;
+	cursor: pointer;
+	border: 1px solid #e0e4e9;
+	transition: background-color 0.5s ease;
+	text-decoration: none;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	&:hover {
+		color: #fff;
+		background: lighten($accent_color, 10%);
+	}
+	&.mpp-button-info {
+		background: $secondary_button_color;
+		color: $secondary_button_color_text;
+		&:hover {
+			background: lighten($secondary_button_color, 10%);
+		}
+	}
+	&.mpp-button-danger {
+		background: $danger_button_color;
+		color: $danger_button_color_text;
+		&:hover {
+			background: lighten($danger_button_color, 10%);
+		}
+	}
+	&.mpp-button-edit {
+		background: $edit_button_color;
+		color: $edit_button_color_text;
+		&:hover {
+			background: lighten($edit_button_color, 10%);
+		}
+	}
+	&.mpp-button-delete {
+		background: $delete_button_color;
+		color: $delete_button_color_text;
+		&:hover {
+			background: lighten($delete_button_color, 10%);
+		}
+	}
+	&.mpp-button-lg {
+		padding: 20px 30px;
+		font-size: 2em;
+	}
+	&.mpp-button-save {
+		background: $save_button_color;
+		color: $save_button_color_text;
+		&:hover {
+			color: #fff;
+			background: lighten($save_button_color, 10%);
+		}
+	}
+	.mpp-icon-button {
+		text-align: middle;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+	}
+	svg {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+	}
+}
