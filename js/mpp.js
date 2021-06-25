@@ -6,7 +6,8 @@ jQuery( document ).ready( function( $ ) {
 		$.post( metronet_profile_image.ajax_url, {
 				action: 'metronet_get_thumbnail',
 				post_id: post_id,
-				_wpnonce: metronet_profile_image.nonce
+				_wpnonce: metronet_profile_image.nonce,
+				user_id: jQuery( "#metronet_profile_id" ).val(),
 			},
 			function( response ) {
 				jQuery( "#metronet-profile-image" ).html( mt_display_block( response.thumb_html ) );

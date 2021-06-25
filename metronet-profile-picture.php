@@ -319,7 +319,7 @@ class Metronet_Profile_Picture {
 		if ( 0 === $post_id || 0 === $user_id || 0 === $thumbnail_id || 'mt_pp' !== get_post_type( $post_id ) ) {
 			die( '' );
 		}
-		check_ajax_referer( "mt-update-post_$post_id" );
+		check_ajax_referer( "mt-update-post_$user_id" );
 
 		// Save user meta.
 		update_user_option( $user_id, 'metronet_post_id', $post_id );
@@ -368,8 +368,9 @@ class Metronet_Profile_Picture {
 		if ( ! current_user_can( 'upload_files' ) ) {
 			die( '' );
 		}
+		$user_id = isset( $_POST['user_id'] ) ? absint( $_POST['user_id'] ) : 0;
 		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
-		check_ajax_referer( "mt-update-post_$post_id" );
+		check_ajax_referer( "mt-update-post_$user_id" );
 		$post    = get_post( $post_id );
 		$user_id = 0;
 		if ( $post ) {
@@ -428,7 +429,7 @@ class Metronet_Profile_Picture {
 		if ( 0 === $post_id || 0 === $user_id ) {
 			die( '' );
 		}
-		check_ajax_referer( "mt-update-post_$post_id" );
+		check_ajax_referer( "mt-update-post_$user_id" );
 
 		$thumb_html  = '<a style="display:block" href="#" class="mpp_add_media default-image">';
 		$thumb_html .= sprintf( '<img style="display:block" src="%s" width="150" height="150" title="%s" />', self::get_plugin_url( 'img/mystery.png' ), esc_attr__( 'Upload or Change Profile Picture', 'metronet-profile-picture' ) );
@@ -869,6 +870,7 @@ class Metronet_Profile_Picture {
 	 **/
 	public function print_media_scripts() {
 		$post_id = $this->get_post_id( $this->get_user_id() );
+		$user_id = $this->get_user_id();
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		$script_deps = array( 'media-editor' );
 		wp_enqueue_script( 'mt-pp', self::get_plugin_url( '/js/mpp.js' ), $script_deps, METRONET_PROFILE_PICTURE_VERSION, true );
@@ -881,7 +883,7 @@ class Metronet_Profile_Picture {
 				'crop'                => __( 'Crop Thumbnail', 'metronet-profile-picture' ),
 				'ajax_url'            => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'user_post_id'        => absint( $post_id ),
-				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $post_id ) ),
+				'nonce'               => wp_create_nonce( 'mt-update-post_' . absint( $user_id ) ),
 				'loading_gif'         => esc_url( self::get_plugin_url( '/img/loading.gif' ) ),
 			)
 		);
