@@ -111,7 +111,7 @@ class Metronet_Profile_Picture {
 		$options = $this->get_options();
 		if ( 'on' === $options['load_gutenberg'] ) {
 			// Include Gutenberg.
-			add_filter( 'block_categories', array( $this, 'add_block_category' ), 10, 2 );
+			add_filter( 'block_categories_all', array( $this, 'add_block_category' ), 10, 2 );
 			include_once self::get_plugin_dir( '/gutenberg/class-gutenberg.php' );
 			new Metronet_Profile_Picture_Gutenberg();
 		}
