@@ -35,7 +35,7 @@
 		"mini-css-extract-plugin": "^0.9.0",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
 		"postcss-loader": "^3.0.0",
-		"qs": "^6.9.4",
+		"qs": "^6.9.7",
 		"re-resizable": "^6.7.0",
 		"react": "^16.14.0",
 		"react-color-gradient-picker": "^0.1.2",
