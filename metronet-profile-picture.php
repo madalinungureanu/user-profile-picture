@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Cozmoslabs
-Version: 2.6.0
+Version: 2.6.1
 Requires at least: 4.6
 Author URI: https://www.cozmoslabs.com
 Contributors: ronalfy
