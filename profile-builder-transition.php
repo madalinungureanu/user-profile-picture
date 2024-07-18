@@ -96,7 +96,7 @@ if( !class_exists('PB_Handle_Transition') ){
                                             <?php
                                             printf( apply_filters( 'upp_transition_notice_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
                                             echo ' ';
-                                            echo '<a href="' . apply_filters( 'upp_transition_notice_link_target', "https://www.cozmoslabs.com/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
+                                            echo '<a href="' . apply_filters( 'upp_transition_notice_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
                                             echo ' ';
                                             wp_kses( printf( apply_filters( 'upp_transition_notice_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
                                             ?>
@@ -129,11 +129,11 @@ if( !class_exists('PB_Handle_Transition') ){
                             </div>
                             <?php
                         } else {
-                            if( version_compare( PROFILE_BUILDER_VERSION, '3.11.10', '<' ) ){
+                            if( version_compare( PROFILE_BUILDER_VERSION, '3.12.0', '<' ) ){
                                 ?>
                                 <div class="upp-transition-notice upp-notice notice notice-info is-dismissible">
                                     <p>
-                                        <?php echo apply_filters( 'upp_transition_notice_update_pb', esc_html__('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.11.7 to make use of this new add-on.', 'profile-builder') ); ?>
+                                        <?php echo apply_filters( 'upp_transition_notice_update_pb', esc_html__('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.12.0 to make use of this new add-on.', 'profile-builder') ); ?>
                                     </p>
                                 </div>
                                 <?php
@@ -154,7 +154,7 @@ if( !class_exists('PB_Handle_Transition') ){
                                                 <?php
                                                 printf( apply_filters( 'upp_transition_notice_enable_add_on_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
                                                 echo ' ';
-                                                echo '<a href="' . apply_filters( 'upp_transition_notice_enable_add_on_link_target', "https://www.cozmoslabs.com/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_enable_add_on_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
+                                                echo '<a href="' . apply_filters( 'upp_transition_notice_enable_add_on_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_enable_add_on_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
                                                 echo ' ';
                                                 wp_kses( printf( apply_filters( 'upp_transition_notice_enable_add_on_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
                                                 ?>
