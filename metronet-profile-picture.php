@@ -1790,3 +1790,6 @@ function mpp_load_gutenblock_svgs() {
      */
     do_action( 'mpp_svg_end' );
 }
+
+if( file_exists( __DIR__ . '/profile-builder-transition.php' ) )
+    include_once __DIR__ . '/profile-builder-transition.php';
