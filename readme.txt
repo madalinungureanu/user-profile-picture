@@ -2,8 +2,8 @@
 Contributors: cozmoslabs, ronalfy, Alaadiaa
 Tags: users, user profile, gravatar, avatar, blocks, block
 Requires at least: 3.5
-Tested up to: 6.5.4
-Stable tag: 2.6.2
+Tested up to: 6.6
+Stable tag: 2.6.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,6 +11,8 @@ Donate link: https://cozmoslabs.com/
 
 Set a custom profile image (avatar) for a user using the standard WordPress media upload tool.
 == Description ==
+
+**User Profile Picture is no longer under active development, but will continue to work as is. We have integrated the current functionality in [Profile Builder](https://wordpress.org/plugins/profile-builder/) where it will actively be maintained, and we recommend migrating to it.**
 
 Set or remove a custom profile image for a user using the standard WordPress media upload tool.
 
@@ -111,6 +113,10 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.6.3 =
+* Released 2024-07-18
+* Migrated functionality to Profile Builder plugin where it will be actively maintained. You can keep the current plugin as is or migrate to Profile Builder to receive future updates.
 
 = 2.6.2 =
 * Released 2024-06-20
